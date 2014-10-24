@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
-# Use sqlite3 as the database for Active Record
 gem "mysql2", "~> 0.3.14"
 
 # Use SCSS for stylesheets
@@ -32,14 +31,14 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'kaminari', "0.14.1"
 
-# Use unicorn as the app server
-# gem 'unicorn'
+gem 'puma'
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
+gem 'capistrano', '~> 3.2.0'
+gem 'capistrano3-puma' , group: :development
+gem 'capistrano-rvm'
+gem 'capistrano-bundler', '~> 1.1.2'
+gem 'capistrano-rails', '~> 1.1'
 
-# Use debugger
-# gem 'debugger', group: [:development, :test]
+gem 'devise'
