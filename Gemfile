@@ -41,4 +41,6 @@ gem 'capistrano-rvm'
 gem 'capistrano-bundler', '~> 1.1.2'
 gem 'capistrano-rails', '~> 1.1'
 
+gem 'nokogiri', '~> 1.6.3.1'
+
 gem 'devise'
