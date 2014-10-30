@@ -9,4 +9,6 @@ XiaomaTofelAdmin::Application.routes.draw do
     post :upload_vocabulary, on: :collection
   end
 
+  resources :grammar_questions
+
 end
