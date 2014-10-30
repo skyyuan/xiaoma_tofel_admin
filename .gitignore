@@ -14,3 +14,13 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+/app/models/.keep
+/app/models/concerns/.keep
+/.DS_Store
+/config/.DS_Store
+/db/.DS_Store
+/public/system/.DS_Store
+/public/system/xml/.DS_Store
+/public/system/xls/
+/public/system/xml/word/
+/public/.DS_Store

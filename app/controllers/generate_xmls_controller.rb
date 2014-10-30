@@ -13,7 +13,9 @@ class GenerateXmlsController < ApplicationController
     b = Nokogiri::XML::Builder.new do |xml|
       #选项题
       #if params[:type] == 'radio'
-        xml.assessmentItem 'xmlns'=>"http://www.imsglobal.org/xsd/imsqti_v2p1", 'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance", 'xsi:schemaLocation'=>"http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd", 'identifier'=>"choice", 'title'=>"Unattended Luggage", 'adaptive'=>"false", 'timeDependent'=>"false" do
+        xml.assessmentItem 'xmlns'=>"http://www.imsglobal.org/xsd/imsqti_v2p1", 'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance",
+        'xsi:schemaLocation'=>"http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd", 'identifier'=>"choice",
+        'title'=>"Unattended Luggage", 'adaptive'=>"false", 'timeDependent'=>"false" do
           xml.responseDeclaration 'identifier'=>"RESPONSE", 'cardinality'=>"single", 'baseType'=>"identifier" do
             xml.correctResponse do
               xml.value "ChoiceA"

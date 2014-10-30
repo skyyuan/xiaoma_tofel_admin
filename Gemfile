@@ -43,4 +43,6 @@ gem 'capistrano-rails', '~> 1.1'
 
 gem 'nokogiri', '~> 1.6.3.1'
 
+gem 'spreadsheet'
+
 gem 'devise'
