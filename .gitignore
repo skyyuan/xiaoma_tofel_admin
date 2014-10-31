@@ -24,3 +24,5 @@
 /public/system/xls/
 /public/system/xml/word/
 /public/.DS_Store
+/app/.DS_Store
+/app/controllers/.DS_Store
