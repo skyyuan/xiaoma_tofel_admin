@@ -45,4 +45,8 @@ gem 'nokogiri', '~> 1.6.3.1'
 
 gem 'spreadsheet'
 
+gem 'slim'
+gem 'sinatra', require: false
+gem 'sidekiq'
+
 gem 'devise'
