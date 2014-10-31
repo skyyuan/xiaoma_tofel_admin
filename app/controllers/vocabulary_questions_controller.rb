@@ -5,6 +5,7 @@ require 'spreadsheet'
 class VocabularyQuestionsController < ApplicationController
 
   def index
+    @vocabularies = VocabularyQuestion.order("id desc").page(params[:page]).per(15)
   end
 
   def index_upload
@@ -12,8 +13,8 @@ class VocabularyQuestionsController < ApplicationController
   end
 
   def upload_vocabulary
-    if params[:file].present?
-      file = params[:file]
+    if params[:upload].present?
+      file = params[:upload]
       file_name = file.original_filename.split(".")
       if file_name.last == 'xls'
         File.open("#{Rails.root}/public/system/xls/#{file.original_filename}", "wb+") do |f|
@@ -23,7 +24,7 @@ class VocabularyQuestionsController < ApplicationController
         book = Spreadsheet.open "#{Rails.root}/public/system/xls/#{file.original_filename}"
         sheet1 = book.worksheet 0
         sheet1.each do |row|
-          next if row[0] == 'TPO编号'
+          next if row[0] == 'TPO编号' || row[1].blank?
           rand_num = rand(1..4)
           b = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
             xml.assessmentItem 'xmlns'=>"http://www.imsglobal.org/xsd/imsqti_v2p1", 'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance",
@@ -69,10 +70,16 @@ class VocabularyQuestionsController < ApplicationController
               xml.responseProcessing 'template'=>"http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"
             end
           end
+          if File.exist?("#{Rails.root}/public/system/xml/word/#{row[2]}.xml") == true
+            system("rm public/system/xml/word/#{row[2]}.xml")
+          end
           xml_file = File.new("#{Rails.root}/public/system/xml/word/#{row[2]}.xml", 'wb') #{ |f| f.write(b.to_xml) }
           xml_file.puts b.to_xml #写入数据
           xml_file.close #关闭文件流
-
+          @voc = VocabularyQuestion.find_by_word(row[2])
+          if @voc.present?
+            @voc.destroy
+          end
           group = VocabularyGroup.find_by_sequence_number(row[1])
           count = VocabularyQuestion.where(vocabulary_group_id: group.id).count
           vocabulary = VocabularyQuestion.new

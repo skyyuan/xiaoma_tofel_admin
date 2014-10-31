@@ -1,0 +1,13 @@
+h1{font-size: 30px;}
+h5{font-size: 14px;}
+h1,h5{color:#fff;}
+.list-group a.list-group-item.active {background-color: #5ac18a;border:none;}
+.list-group a{padding:21px 90px;text-align: center;}
+.nav{background-color:#5ac18a;}
+p{line-height: 40px;}
+#page{margin:-7px 180px;}
+#myTab li a{padding:20px 15px;font-weight: bold;color:#000;}
+#myTab li.active a{color:#fff;background-color: #5ac18a}
+#voc_list .navbar-form{margin-top:0px;}
+.a1{color:#fff;}
+.a2{color:#000;}

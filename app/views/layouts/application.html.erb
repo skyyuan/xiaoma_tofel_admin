@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>XiaomaTofelAdmin</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <title>小马托福后台管理</title>
+  <%= stylesheet_link_tag    "application", "bootstrap.min", "g", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+  <%= yield :head %>
 </head>
 <body>
-
-<%= yield %>
-
+  <div class="header w1500 mid">
+    <img  class="logo">
+    <h1 style="color:#fff;">小马托福</h1>
+    <h5 style="color:#fff;">后台管理</h5>
+  </div>
+  <div class="main h885 mid">
+    <%= render "layouts/left" %>
+    <%= yield %>
+  </div>
+  <%= yield :tail %>
+  <script>
+    $(function(){
+    $('#myTab li:eq(1) a').tab('show')
+      })
+  </script>
+  <script type="text/javascript">
+    function showinfo(obj){
+      var pos=obj.value.lastIndexOf("\\");
+      var pos1=obj.value.lastIndexOf("\.");
+      var filename=obj.value.substring(pos+1,pos1);
+       document.getElementById("filename1").innerText=filename;
+    }
+  </script>
 </body>
 </html>
