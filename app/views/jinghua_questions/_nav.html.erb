@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs" role="tablist" id="myTab">
+  <li class="<%='active' if action_name == 'index' && controller_name == 'jinghua_questions' %>"><a href="<%= jinghua_questions_path %>">口语精华列表</a></li>
+  <li class="<%='active' if action_name == 'new' && controller_name == 'jinghua_questions' %>"><a href="<%= new_jinghua_question_path %>">批量录入</a></li>
+</ul>

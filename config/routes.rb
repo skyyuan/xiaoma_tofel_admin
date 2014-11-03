@@ -13,4 +13,6 @@ XiaomaTofelAdmin::Application.routes.draw do
 
   resources :grammar_questions
 
+  resources :jinghua_questions
+
 end

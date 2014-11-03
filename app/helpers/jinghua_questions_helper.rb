@@ -1,0 +1,2 @@
+module JinghuaQuestionsHelper
+end

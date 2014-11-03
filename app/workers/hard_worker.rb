@@ -74,7 +74,7 @@ class HardWorker
       vocabulary.word = row[2]
       vocabulary.save
     end
-    system("rm public/system/xls/#{file.original_filename}")
+    system("rm public/system/xls/#{name}")
     sleep(60)
   end
 end

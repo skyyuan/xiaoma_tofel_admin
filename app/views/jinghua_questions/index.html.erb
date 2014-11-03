@@ -1,0 +1,59 @@
+<%- content_for :head do %>
+  <style type="text/css">
+    .pagination{
+      margin: 0 auto;
+    }
+    .pagination span{
+      padding: 3px 5px;
+      font-size: 14px;
+    }
+    .pagination a{
+      padding-right: 0;
+    }
+  </style>
+<% end %>
+<div class="content W730">
+  <%= render "nav" %>
+  <div class="tab-content">
+
+<!-- list1 -->
+    <div class="tab-pane active" id="voc_list">
+
+      <!-- <form class="navbar-form navbar-left" role="search"> -->
+          <div class="form-group form1">
+            <%#=  select_tag "unit", options_from_collection_for_select(VocabularyGroup.all, "id", "sequence_number",params[:unit]),:prompt=>'单元',class: "form-control se1", style: "width:150px;height:40px;"   %>
+              <!-- <input type="text" class="form-control fr" placeholder="Search"> -->
+              <!-- <input type="image" src="<%#=asset_path 'i1.png'%>" class="search"> -->
+          </div>
+      <!-- </form> -->
+
+      <!-- table -->
+      <table class="table table-bordered table-striped " id="table1">
+        <tr class="info" id="tr1" >
+          <td >分类</td>
+          <td>题号</td>
+          <td>题目</td>
+          <td>操作</td>
+        </tr>
+        <% @questions.each do |question| %>
+          <tr id="tr2">
+            <td><%=question.content_type %></td>
+            <td><%=question.id %></td>
+            <td><%=truncate(question.content, length: 17) %></td>
+            <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <!-- page -->
+      <!-- <form class="pagination" id="page"> -->
+      <!-- </form> -->
+
+      <div class="text-center">
+        <%= paginate @questions %>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :tail do %>
+<% end %>
