@@ -1,0 +1,34 @@
+//unit
+ var url=location.search;
+ var Request = new Object();
+  if(url.indexOf("?")!=-1)
+  {
+    var str = url.substr(1); //去掉?号
+    strs = str.split("&");
+    for(var i=0;i<strs.length;i++)
+    {
+      Request[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+    }
+  }
+
+$(function(){
+ var se =  Request["se"],
+     inputtext1=Request["inputtext1"],
+     inputtext2=Request["inputtext2"];
+$("#unit").text(se);
+$("#gra").html(inputtext1);
+$("#gram").html(inputtext2);
+ });
+
+//grammer
+
+  $(function(){
+    $("#new_gra").bind("click",function(){
+     $("#form3").show();
+    });
+  });
+  $(function(){
+    $("#btn_sub").bind("click",function(){
+      window.location.href="/grammar_questions";
+    });
+  });
