@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs" role="tablist" id="myTab">
+  <li class="<%='active' if action_name == 'index' %>"><a href="<%=grammar_questions_path%>">语法列表</a></li>
+  <li class="<%='active' if action_name =='edit_title' || action_name =='select_unit' || action_name =='new' %>"><a href="<%=select_unit_grammar_questions_path%>">语法录入</a></li>
+</ul>

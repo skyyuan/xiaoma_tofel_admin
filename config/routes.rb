@@ -11,7 +11,10 @@ XiaomaTofelAdmin::Application.routes.draw do
     post :upload_vocabulary, on: :collection
   end
 
-  resources :grammar_questions
+  resources :grammar_questions do
+    get :select_unit, on: :collection
+    get :edit_title, on: :collection
+  end
 
   resources :jinghua_questions
 
