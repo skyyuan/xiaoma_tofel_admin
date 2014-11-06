@@ -1,0 +1,15 @@
+<div class="content W730">
+  <%= render "nav" %>
+  <div class="tab-content">
+    <div class="tab-pane active" id="voc_entry">
+      <p style="color:red;"><%=flash[:notice] %></p>
+      <p class="unit">请输入要录入的语法单元：&nbsp;&nbsp;&nbsp;Unit</p>
+      <%= form_tag edit_title_grammar_questions_path, :method => "get", :class => "navbar-form navbar-left" do %>
+        <div class="form-group">
+          <%=  select_tag "unit_id", options_from_collection_for_select(@unit, "id", "sequence_number",params[:unit]),:prompt=>'单元',class: "form-control se2"  %><br>
+          <button type="submit" class="btn btn-default b1" id="btn_sub">确定</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

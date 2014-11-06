@@ -1,0 +1,42 @@
+<div class="content W730">
+  <%= render "nav" %>
+  <div class="tab-content">
+    <div class="tab-pane active" id="voc_list">
+
+      <form class="navbar-form navbar-left" role="search">
+       <div class="form-group form1">
+         <select class="form-control se1" style="width:150px;height:40px;">
+           <option>unit1</option>
+           <option>unit2</option>
+           <option>unit3</option>
+           <option>unit3</option>
+           <option>unit3</option>
+           <option>unit3</option>
+         </select>
+         <input type="text" class="form-control fr" placeholder="Search">
+         <input type="image" src=".<%=asset_path 'i1.png'%>" class="search">
+       </div>
+      </form>
+
+
+      <table class="table table-bordered table-striped " id="table1">
+        <tr class="info" id="tr1" >
+           <td>单元</td>
+           <td>几题</td>
+           <td>操作</td>
+        </tr>
+        <% @grammars.each do |grammar| %>
+
+          <tr id="tr2">
+            <td>Unit：<%=grammar.grammar_group_id %></td>
+            <td><%=grammar.sequence_number %></td>
+            <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <%= paginate @grammars %>
+
+    </div>
+  </div>
+</div>
