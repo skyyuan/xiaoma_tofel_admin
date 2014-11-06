@@ -1,0 +1,2 @@
+module JijingGroupsHelper
+end

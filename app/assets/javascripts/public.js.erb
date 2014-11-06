@@ -32,3 +32,11 @@ $("#gram").html(inputtext2);
       window.location.href="/grammar_questions";
     });
   });
+  /* sidebar*/
+$(document).ready(function(){
+  $("#firstpane .menu_body:eq(0)").show();
+  $("#firstpane a.menu_head").click(function(){
+    $(this).next("div.menu_body").slideToggle(300).siblings("div.menu_body").slideUp("slow");
+  });
+
+});

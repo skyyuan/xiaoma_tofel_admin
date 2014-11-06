@@ -33,3 +33,4 @@
 *.idea
 /app/assets/stylesheets/src/.DS_Store
 /public/system/*
+/db/migrate/.DS_Store

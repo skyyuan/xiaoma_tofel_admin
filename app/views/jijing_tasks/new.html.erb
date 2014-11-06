@@ -1,0 +1,27 @@
+<div class="content W730">
+  <%= render "jijing_questions/nav" %>
+  <div class="tab-pane" id="voc_entry">
+    <nav class="navbar navbar-default" role="navigation" id="navbar">
+      <%=form_tag jijing_tasks_path do %>
+        <select class="se1" id="se1" name="task_name">
+         <option selected>题目部分</option>
+         <option value="Task1">Task1</option>
+         <option value="Task2">Task2</option>
+         <option value="Task3">Task3</option>
+         <option value="Task4">Task4</option>
+         <option value="Task5">Task5</option>
+         <option value="Task6">Task6</option>
+        </select>
+        <select class="se2" id="se2" name="number">
+          <option selected>题号</option>
+          <% (1..200).each do |i| %>
+             <option value="<%=i%>"><%=i%></option>
+          <% end %>
+        </select>
+        <input type="hidden" name="group_id" value="<%=params[:group_id]%>">
+        <input type="hidden" name="id" value="<%=params[:task_id]%>">
+        <a href="#"><input type="submit" value="确定" class="but_1" id="but_1"></a>
+      <% end %>
+    </nav>
+  </div>
+</div>
