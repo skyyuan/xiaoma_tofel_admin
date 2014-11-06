@@ -11,6 +11,8 @@ XiaomaTofelAdmin::Application.routes.draw do
     post :upload_vocabulary, on: :collection
   end
 
+  resources :grammar_groups
+
   resources :grammar_questions do
     get :select_unit, on: :collection
     get :edit_title, on: :collection
@@ -26,4 +28,9 @@ XiaomaTofelAdmin::Application.routes.draw do
     end
   end
 
+  resources :jijing_questions
+
+  resources :jijing_groups
+
+  resources :jijing_tasks
 end

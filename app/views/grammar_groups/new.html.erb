@@ -1,0 +1,21 @@
+<%- content_for :head do %>
+  <style type="text/css">
+    select.se1 {
+    width: 80px;
+    margin-left: 15px;
+    }
+  </style>
+<% end %>
+<div class="content W730">
+  <%= render "grammar_questions/nav" %>
+  <div class="tab-pane" id="voc_entry">
+    <p style="color:red;"><%=flash[:notice] %></p>
+    <nav class="navbar navbar-default" role="navigation" id="navbar">
+      <%=form_tag grammar_groups_path do %>
+        请选择类型：<%=  select_tag "type_id", options_from_collection_for_select(@types, "id", "name",params[:type_id]),:prompt=>'类型',class: "se1"  %>
+        请输入Unit:<input type="text" name="unit" >
+        <button type="submit" class="btn btn-default b1" id="btn_sub">确定</button>
+      <% end %>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="content W730">
+  <%= render "jijing_questions/nav" %>
+  <div class="tab-pane" id="voc_entry">
+    <p>
+      <% @jijing_groups.each do |group| %>
+        <a href="<%=new_jijing_task_path(group_id: group.id)%>"><%=group.name%></a>
+      <% end %>
+      <img src="<%=asset_path 'i3.png'%>" id="i3">新机经
+    </p>
+    <%= form_tag jijing_groups_path do %>
+      <input type="text" name="name">
+      <input type="submit" >
+    <% end %>
+  </div>
+</div>
