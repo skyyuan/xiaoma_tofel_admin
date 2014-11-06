@@ -1,0 +1,55 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gread", "data-turbolinks-track" => true %>
+<% end %>
+
+<!-- right content -->
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <!-- list1 -->
+    <div class="tab-pane active" id="voc_list">
+
+      <%= form_tag dictation_questions_path, :method => 'get', :class => 'navbar-form navbar-left _filter_form', :role => 'search' do %>
+      <!-- <form class="navbar-form navbar-left" role="search"> -->
+        <div class="form-group form1">
+          <%= select_tag :unit, options_for_select(DictationGroup.name_for_selection, selected: params[:unit]), :prompt => '全部', :class => 'form-control se1 _filter_unit', style: 'width:150px;height:40px;' %><br>
+        </div>
+      <!-- </form> -->
+      <% end %>
+
+      <!-- table -->
+      <table class="table table-bordered table-striped " id="table1">
+        <tr class="info" id="tr1" >
+          <td >单元</td>
+          <td>题号</td>
+          <td>操作</td>
+        </tr>
+        <% @dictation_questions.each do |dictation_question| %>
+          <tr id="tr2">
+            <td>Unit&nbsp;&nbsp;&nbsp;<%= dictation_question.dictation_group.name %></td>
+            <td><%= dictation_question.sequence_number %></td>
+            <td>
+              <%= link_to '查看', dictation_question_path(dictation_question, from: 'index') %>
+              <%= link_to '编辑', edit_dictation_question_path(dictation_question, from: 'index') %>
+              <%= link_to '删除', dictation_question_path(dictation_question, unit: params[:unit]), method: :delete, data: {confirm: '确定删除？'} %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <%= paginate @dictation_questions %>
+    </div>
+  </div>
+</div>
+
+<%= content_for :tail do %>
+  <script type="text/javascript">
+    $(document).on('page:change', function(){
+      $('._filter_unit').change(function(){
+        $('._filter_form').trigger('submit');
+      })
+    })
+  </script>
+<% end %>

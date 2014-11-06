@@ -15,4 +15,12 @@ XiaomaTofelAdmin::Application.routes.draw do
 
   resources :jinghua_questions
 
+  resources :dictation_questions do
+    collection do
+      get :choose_unit
+      # get :add_dictation_group
+      # post :create_dictation_group
+    end
+  end
+
 end

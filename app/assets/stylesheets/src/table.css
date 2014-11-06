@@ -1,5 +1,5 @@
  table{margin-top:-10px;}
  #table1{width:93%;margin-left:3.5%;}
  #table1 tr td{padding:20px;}
- td{width:200px;text-align: center;height:60px;line-height: 30px;}
+ td{text-align: center;height:60px;line-height: 30px;}
  .table-striped>tbody>tr:nth-child(odd)>td
