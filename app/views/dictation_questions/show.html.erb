@@ -1,0 +1,27 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gread", "data-turbolinks-track" => true %>
+<% end %>
+
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <% current_unit = @dictation_question.dictation_group.name %>
+  <span class="span1">当前录入单元：unit<div id="unit"><%= current_unit %></div></span>
+  <span class="span2"><%= link_to '更改', choose_unit_dictation_questions_path %></span>
+
+  <div class="tab-content">
+    <div class="" id="voc_entry">
+      <p>unit<%= current_unit %>:已录入<%= @dictation_question_amount %>个听写</p>
+      <p class="p1"><%= @dictation_question.audio_url %></p>
+      <p class="p2"><%= @dictation_question.sample %></p>
+      <% if params[:from] == 'index' %>
+        <%= link_to '修改', edit_dictation_question_path(@dictation_question, from: params[:from]), id: 'btn4', class: 'btn btn-default btn-lg active', style: 'margin-left:260px;' %>
+        <!-- <a href="#" class="btn btn-default btn-lg active" id="btn4" onclick="history.back(-2)" style="margin-left:260px;">修改</a> -->
+      <% else %>
+        <%= link_to '继续录入', new_dictation_question_path, id: 'btn3', class: 'btn btn-primary btn-lg active' %>
+        <%= link_to '返回修改', edit_dictation_question_path(@dictation_question), id: 'btn4', class: 'btn btn-default btn-lg active' %>
+      <% end %>
+    </div>
+  </div>
+</div>

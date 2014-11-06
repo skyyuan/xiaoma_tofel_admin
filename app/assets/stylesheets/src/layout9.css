@@ -1,0 +1,8 @@
+#form6{margin-top:20px;}
+#form6 label{font-weight: normal;}
+#form6 textarea,#form6 input{width:560px;margin-left:-10px;font-size: 12px;}
+#form6 textarea{height:140px;}
+#form6 input{height:40px;}
+#form6 label{font-size: 12px;}
+#navbar p{padding-left:280px;margin-bottom:-5px;font-size: 12px;}
+#navbar p span{color:#000;padding-left:0px;padding-right:20px;}

@@ -1,0 +1,21 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gread", "data-turbolinks-track" => true %>
+<% end %>
+
+<!-- right content -->
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <div class="tab-content">
+    <div class="tab-pane1" id="voc_entry">
+      <p class="unit">请选择要录入的听写单元：&nbsp;&nbsp;&nbsp;unit</p>
+      <%= form_tag new_dictation_question_path, method: :get, class: "navbar-form navbar-left", role: "search" do %>
+        <div class="form-group">
+          <%= select_tag :unit, options_for_select(DictationGroup.short_name_for_selection), :class => 'form-control se2' %><br>
+          <button type="submit" class="btn btn-default b1">确定</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

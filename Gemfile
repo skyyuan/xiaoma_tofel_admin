@@ -50,3 +50,5 @@ gem 'sinatra', require: false
 gem 'sidekiq'
 
 gem 'devise'
+
+gem "quiet_assets", :group => :development

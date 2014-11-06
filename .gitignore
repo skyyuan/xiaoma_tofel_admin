@@ -30,5 +30,6 @@
 /app/assets/images/.DS_Store
 /app/assets/javascripts/.DS_Store
 /app/assets/stylesheets/.DS_Store
+*.idea
 /app/assets/stylesheets/src/.DS_Store
 /public/system/*
