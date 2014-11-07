@@ -4,7 +4,7 @@ class GrammarQuestionsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-    @grammars = GrammarQuestion.order("created_at desc").page(params[:page]).per(10)
+    @grammars = GrammarQuestion.order("created_at desc").page(params[:page])
   end
 
   def select_unit

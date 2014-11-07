@@ -1,21 +1,26 @@
 <%- content_for :head do %>
-  <style type="text/css">
-    select.se1 {
-    width: 80px;
-    margin-left: 15px;
-    }
-  </style>
+  <%= stylesheet_link_tag    "g8" %>
+<style type="text/css">
+.se_type{margin-left: 150px;}
+.se_type .se1{margin-left: -7px;margin-top: -3px;}
+.se_unit{margin-top:-32px;margin-left:300px;}
+</style>
 <% end %>
 <div class="content W730">
   <%= render "grammar_questions/nav" %>
   <div class="tab-pane" id="voc_entry">
     <p style="color:red;"><%=flash[:notice] %></p>
-    <nav class="navbar navbar-default" role="navigation" id="navbar">
-      <%=form_tag grammar_groups_path do %>
-        请选择类型：<%=  select_tag "type_id", options_from_collection_for_select(@types, "id", "name",params[:type_id]),:prompt=>'类型',class: "se1"  %>
-        请输入Unit:<input type="text" name="unit" >
-        <button type="submit" class="btn btn-default b1" id="btn_sub">确定</button>
-      <% end %>
-    </nav>
+    <%=form_tag grammar_groups_path, class: "" do %>
+      <nav class="navbar navbar-default" role="navigation" id="navbar">
+
+       <div class="se_type">
+         请选择<%=  select_tag "type_id", options_from_collection_for_select(@types, "id", "name",params[:type_id]),:prompt=>'类型',class: "se1"  %>
+       </div>
+       <div class="se_unit">
+         请输入Unit:<input type="text" name="unit" >
+       </div>
+      </nav>
+      <button type="submit" class="btn btn-default b1" id="btn_sub">确定</button>
+    <% end %>
   </div>
 </div>

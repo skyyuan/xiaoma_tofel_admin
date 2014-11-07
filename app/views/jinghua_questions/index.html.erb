@@ -1,16 +1,5 @@
 <%- content_for :head do %>
-  <style type="text/css">
-    .pagination{
-      margin: 0 auto;
-    }
-    .pagination span{
-      padding: 3px 5px;
-      font-size: 14px;
-    }
-    .pagination a{
-      padding-right: 0;
-    }
-  </style>
+  <%= stylesheet_link_tag    "g" %>
 <% end %>
 <div class="content W730">
   <%= render "nav" %>
@@ -33,7 +22,7 @@
           <tr id="tr2">
             <td><%=question.content_type %></td>
             <td><%=question.id %></td>
-            <td><%=truncate(question.content, length: 17) %></td>
+            <td><%=truncate(question.content, length: 20) %></td>
             <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
           </tr>
         <% end %>
