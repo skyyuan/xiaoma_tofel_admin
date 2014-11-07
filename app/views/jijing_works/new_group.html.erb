@@ -1,0 +1,19 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag    "g8" %>
+<% end %>
+<div class="content W730">
+  <%= render "nav" %>
+  <div class="tab-pane" id="voc_entry">
+    <p>
+      <% @jijing_groups.each do |group| %>
+        <a href="<%=new_type_jijing_works_path(group_id: group.id)%>"><%=group.name%></a>
+      <% end %>
+      <img src="<%=asset_path 'i3.png'%>" id="i3">新机经
+    </p>
+    <%= form_tag jijing_groups_path do %>
+      <input type="text" name="name">
+      <input type="hidden" name="type" value="1">
+      <input type="submit" >
+    <% end %>
+  </div>
+</div>

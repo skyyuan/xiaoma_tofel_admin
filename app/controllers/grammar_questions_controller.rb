@@ -51,4 +51,12 @@ class GrammarQuestionsController < ApplicationController
       render json: {result: 0}
     end
   end
+
+  def destroy
+    grammar = GrammarQuestion.find params[:id]
+    if grammar.destroy
+      system("rm public/system/xml/syntax/#{params[:id]}.xml")
+    end
+    redirect_to grammar_questions_path
+  end
 end
