@@ -2,7 +2,7 @@
 class JinghuaQuestionsController < ApplicationController
 
   def index
-    @questions = JinghuaQuestion.order("id desc").page(params[:page]).per(10)
+    @questions = JinghuaQuestion.order("id desc").page(params[:page])
   end
 
   def new
