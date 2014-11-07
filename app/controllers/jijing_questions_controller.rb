@@ -1,7 +1,7 @@
 # encoding: utf-8
 class JijingQuestionsController < ApplicationController
   def index
-    @questions = JijingQuestion.order("created_at desc").page(params[:page]).per(10)
+    @questions = JijingQuestion.order("created_at desc").page(params[:page])
   end
 
   def new
