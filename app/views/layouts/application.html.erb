@@ -2,9 +2,8 @@
 <html>
 <head>
   <title>小马托福后台管理</title>
-  <%#= stylesheet_link_tag    "application", "bootstrap.min", "g", media: "all", "data-turbolinks-track" => true %>
   <%= yield :head %>
-  <%= stylesheet_link_tag    "bootstrap.min", media: "all" %>
+  <%= stylesheet_link_tag    "application", "bootstrap.min", "g", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -20,9 +19,9 @@
   </div>
   <%= yield :tail %>
   <script>
-    $(function(){
-    $('#myTab li:eq(1) a').tab('show')
-      })
+    // $(function(){
+    // $('#myTab li:eq(1) a').tab('show');
+    //   })
   </script>
   <script type="text/javascript">
     function showinfo(obj){
@@ -31,6 +30,21 @@
       var filename=obj.value.substring(pos+1,pos1);
        document.getElementById("filename1").innerText=filename;
     }
+  </script>
+  <script type=text/javascript>
+    $(document).ready(function(){
+      $("#firstpane .menu_body:eq(0)").show();
+      $("#firstpane p.menu_head").click(function(){
+        $(this).addClass("current").next("div.menu_body").slideToggle(300).siblings("div.menu_body").slideUp("slow");
+        $(this).siblings().removeClass("current");
+      });
+      $("#secondpane .menu_body:eq(0)").show();
+      $("#secondpane p.menu_head").mouseover(function(){
+        $(this).addClass("current").next("div.menu_body").slideDown(500).siblings("div.menu_body").slideUp("slow");
+        $(this).siblings().removeClass("current");
+      });
+
+    });
   </script>
 </body>
 </html>

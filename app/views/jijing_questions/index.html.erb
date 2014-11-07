@@ -1,0 +1,45 @@
+<%- content_for :head do %>
+  <style type="text/css">
+    .pagination{
+      margin: 0 auto;
+    }
+    .pagination span{
+      padding: 3px 5px;
+      font-size: 14px;
+    }
+    .pagination a{
+      padding-right: 0;
+    }
+  </style>
+<% end %>
+<div class="content W730">
+  <%= render "nav" %>
+  <div class="tab-content">
+       <!-- list1 -->
+    <div class="tab-pane active" id="voc_list">
+      <div class="form-group form1">
+      </div>
+      <table class="table table-bordered table-striped " id="table1">
+        <tr class="info" id="tr1" >
+           <td >题目部分</td>
+           <td>题号</td>
+           <td>题目</td>
+           <td>操作</td>
+        </tr>
+        <% @questions.each do |question| %>
+          <tr id="tr2">
+            <td><%=question.jijing_task.name %></td>
+            <td><%=question.sequence_number %></td>
+            <td><%=question.content %></td>
+            <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
+          </tr>
+        <% end %>
+      </table>
+      <div class="text-center">
+        <%= paginate @questions %>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :tail do %>
+<% end %>
