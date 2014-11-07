@@ -1,3 +1,4 @@
+html{overflow-x:hidden;}
 h1{font-size: 30px;}
 h5{font-size: 14px;}
 h1,h5{color:#fff;}
@@ -22,3 +23,6 @@ p.p1{background:#999;padding:15px 20px;margin-left:30px;}
 p.p2{line-height:22px;padding-left:50px;padding-top: 30px;padding-bottom: 80px;}
 hr{width:680px;margin-left:20px;}
 .from{border:1px solid #ccc;border-radius: 4px;padding:10px 30px;margin-left:10px;}
+.side_nav{width:250px;height:65px;background: #ebebeb;border:1px solid #ddd;display: block;color:#555;}
+.side_nav:link,.side_nav:visited{color:#555;}
+.side_nav:hover{text-decoration: none;width:250px;height:65px;background: #ddd;}

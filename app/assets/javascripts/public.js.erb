@@ -40,3 +40,21 @@ $(document).ready(function(){
   });
 
 });
+
+$(document).ready(function(){
+$("#firstpane .menu_body1").hide();
+$("#firstpane .menu_head1").click(function(){
+$(this).next("div.menu_body1").slideToggle(300).siblings("div.menu_body1").slideUp("slow");
+$("div.menu_body2").css("display","none");
+});
+
+});
+
+$(document).ready(function(){
+$("#firstpane .menu_body2").hide();
+$("#firstpane .menu_head2").click(function(){
+$(this).next("div.menu_body2").slideToggle(300).siblings("div.menu_body2").slideUp("slow");
+$("div.menu_body1").css("display","none");
+});
+
+});

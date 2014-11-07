@@ -7,6 +7,10 @@ class JijingGroupsController < ApplicationController
     jijing_group = JijingGroup.new
     jijing_group.name = params[:name]
     jijing_group.save
-    redirect_to jijing_groups_path
+    if params[:type].present?
+      redirect_to new_group_jijing_works_path
+    else
+      redirect_to jijing_groups_path
+    end
   end
 end

@@ -1,0 +1,25 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag "g8" %>
+<% end %>
+<div class="content W730">
+  <%=render 'nav' %>
+  <div class="tab-pane" id="voc_entry">
+    <nav class="navbar navbar-default" role="navigation" id="navbar">
+      <%=form_tag new_jijing_work_path, method: 'get' do %>
+        <select class="se1" id="se1" name="type_name">
+         <option selected>题目</option>
+         <option>独立写作</option>
+         <option>综合写作</option>
+        </select>
+        <select class="se2" id="se2" name="number">
+          <option selected>题号</option>
+          <% (1..15).each do |i| %>
+            <option value="<%=i%>"><%=i%></option>
+          <% end %>
+        </select>
+        <input type="hidden" value="<%=params[:group_id]%>" name="group_id">
+        <a href="#"><input type="submit" value="确定" class="but_1" id="but_1"></a>
+      <% end %>
+    </nav>
+  </div>
+</div>

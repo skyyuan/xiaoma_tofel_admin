@@ -1,0 +1,27 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag "g8" %>
+<% end %>
+<div class="content W730">
+  <%= render "nav" %>
+  <div class="tab-content">
+    <div class="tab-pane active" id="voc_list">
+      <table class="table table-bordered table-striped " id="table1">
+        <tr class="info" id="tr1" >
+           <td >题目部分</td>
+           <td>题号</td>
+           <td>题目</td>
+           <td>操作</td>
+        </tr>
+        <% @works.each do |work| %>
+          <tr id="tr2">
+            <td><%=work.content_type%></td>
+            <td><%=work.sequence_number%></td>
+            <td><%=work.content%></td>
+            <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
+          </tr>
+        <% end %>
+      </table>
+      <%= paginate @works %>
+    </div>
+  </div>
+</div>

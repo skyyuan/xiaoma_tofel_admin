@@ -1,9 +1,6 @@
 require 'sidekiq/web'
 XiaomaTofelAdmin::Application.routes.draw do
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
   root to: "vocabulary_questions#index"
   mount Sidekiq::Web => '/sidekiq'
   resources :vocabulary_questions do
@@ -33,4 +30,9 @@ XiaomaTofelAdmin::Application.routes.draw do
   resources :jijing_groups
 
   resources :jijing_tasks
+
+  resources :jijing_works do
+    get :new_group, on: :collection
+    get :new_type, on: :collection
+  end
 end
