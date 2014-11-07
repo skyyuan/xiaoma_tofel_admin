@@ -3,7 +3,7 @@
 class VocabularyQuestionsController < ApplicationController
 
   def index
-    @vocabularies = VocabularyQuestion.order("id desc").page(params[:page]).per(10)
+    @vocabularies = VocabularyQuestion.order("id desc").page(params[:page])
   end
 
   def index_upload
