@@ -26,4 +26,11 @@ XiaomaTofelAdmin::Application.routes.draw do
     end
   end
 
+  resources :oral_questions do
+    collection do
+      get :choose_range
+      get :unit_list
+    end
+  end
+
 end

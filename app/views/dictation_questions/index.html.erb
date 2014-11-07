@@ -1,5 +1,5 @@
 <%= content_for :head do %>
-  <%= stylesheet_link_tag "gread", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "gread" %>
 <% end %>
 
 <!-- right content -->
@@ -13,11 +13,9 @@
     <div class="tab-pane active" id="voc_list">
 
       <%= form_tag dictation_questions_path, :method => 'get', :class => 'navbar-form navbar-left _filter_form', :role => 'search' do %>
-      <!-- <form class="navbar-form navbar-left" role="search"> -->
         <div class="form-group form1">
           <%= select_tag :unit, options_for_select(DictationGroup.name_for_selection, selected: params[:unit]), :prompt => '全部', :class => 'form-control se1 _filter_unit', style: 'width:150px;height:40px;' %><br>
         </div>
-      <!-- </form> -->
       <% end %>
 
       <!-- table -->
@@ -46,7 +44,7 @@
 
 <%= content_for :tail do %>
   <script type="text/javascript">
-    $(document).on('page:change', function(){
+    $(document).ready(function(){
       $('._filter_unit').change(function(){
         $('._filter_form').trigger('submit');
       })

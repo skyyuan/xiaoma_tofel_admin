@@ -4,7 +4,7 @@
      <a href="<%= grammar_questions_path %>" class="list-group-item <%='active' if controller_name == 'grammar_questions' %>">语法</a>
      <a href="<%= jinghua_questions_path %>" class="list-group-item <%='active' if controller_name == 'jinghua_questions' %>">批改</a>
      <a href="<%= dictation_questions_path %>" class="list-group-item <%= 'active' if @left_nav == 'dictation_questions' %>">听写</a>
-     <a href="#" class="list-group-item">跟读</a>
+     <a href="<%= oral_questions_path %>" class="list-group-item <%= 'active' if @left_nav == 'oral_questions' %>">跟读</a>
      <a href="#" class="list-group-item">记忆复写</a>
      <a href="#" class="list-group-item">配音</a>
      <a href="#" class="list-group-item">tpo题库</a>

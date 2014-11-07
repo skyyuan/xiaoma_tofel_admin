@@ -1,5 +1,5 @@
 <%= content_for :head do %>
-  <%= stylesheet_link_tag "gread", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "gread" %>
 <% end %>
 
 <div class="content W730">
@@ -12,7 +12,7 @@
 
   <div class="tab-content">
     <div class="" id="voc_entry">
-      <p>unit<%= current_unit %>:已录入<%= @dictation_question_amount %>个听写</p>
+      <p><% unless params[:from] == 'index' %>unit<%= current_unit %>:已录入<%= @dictation_question_amount %>个听写<% end %></p>
       <p class="p1"><%= @dictation_question.audio_url %></p>
       <p class="p2"><%= @dictation_question.sample %></p>
       <% if params[:from] == 'index' %>

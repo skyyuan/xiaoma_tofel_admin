@@ -7,7 +7,7 @@ class DictationQuestionsController < ApplicationController
     @top_nav = 'list'
     session[:_tofel_dictation_question] = nil
     query_params = {}
-    query_params.merge!('dictation_groups.name' => params[:unit]) if params[:unit].present?
+    query_params.merge!('dictation_groups.id' => params[:unit]) if params[:unit].present?
     @dictation_questions = DictationQuestion.joins(:dictation_group).includes(:dictation_group).where(query_params).order('dictation_groups.name, sequence_number').page(params[:page])
   end
 
@@ -19,9 +19,8 @@ class DictationQuestionsController < ApplicationController
   def new
     @left_nav = 'dictation_questions'
     session[:_tofel_dictation_question] ||= params[:unit]
-    redirect_to dictation_questions_path and return unless DictationGroup.names.include?(session[:_tofel_dictation_question])
-    @unit = session[:_tofel_dictation_question]
-    # redirect_to dictation_questions_path and return if session[:_tofel_dictation_question].blank?
+    redirect_to dictation_questions_path and return unless DictationGroup.ids.include?(session[:_tofel_dictation_question].to_i)
+    @unit = DictationGroup.where(id: session[:_tofel_dictation_question]).first.name
     @dictation_question = DictationQuestion.new
   end
 
