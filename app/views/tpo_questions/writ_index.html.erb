@@ -22,7 +22,7 @@
             <td><%=question.tpo_type.name %></td>
             <td><%=truncate(question.content, length: 17) %></td>
             <td><a href="#">查看</a><a href="#">编辑</a>
-              <%= link_to '删除', "/tpo_questions/#{question.id}", :confirm => '确定删除?', :method => :delete %>
+              <%= link_to '删除', "/tpo_questions/#{question.id}", data: { confirm: '确定删除?' }, :method => :delete %>
             </td>
           </tr>
         <% end %>
