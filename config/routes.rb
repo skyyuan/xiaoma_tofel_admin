@@ -35,4 +35,11 @@ XiaomaTofelAdmin::Application.routes.draw do
     get :new_group, on: :collection
     get :new_type, on: :collection
   end
+
+  resources :tpo_questions do
+    get :writ_index, on: :collection
+    get :writ_new_type, on: :collection
+    post :writ_new_type_create, on: :collection
+    get :writ_new, on: :collection
+  end
 end
