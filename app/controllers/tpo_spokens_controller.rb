@@ -70,7 +70,7 @@ class TpoSpokensController < ApplicationController
     tpo = TpoQuestion.find params[:id]
     if tpo.tpo_type.name == "Integrated"
       tpo.destroy
-      system("rm public/system/xml/syntax/#{params[:id]}.xml")
+      system("rm public/system/xml/writing/#{params[:id]}.xml")
     else
       tpo.destroy
     end
