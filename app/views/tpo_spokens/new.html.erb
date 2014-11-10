@@ -5,10 +5,10 @@
   <%=render 'nav' %>
   <!-- list2 -->
   <div class="tab-pane" id="voc_entry">
-    <%=form_tag tpo_questions_path, class: "form-horizontal", id: "form6" do %>
+    <%=form_tag tpo_spokens_path, class: "form-horizontal", id: "form6" do %>
 
       <nav class="navbar navbar-default" role="navigation" id="navbar">
-        <p><span><%=@type.tpo_group.name %></span><span><%=@type.name %></span><span><a href="<%= new_type_tpo_listens_path %>">更改</a></span></p>
+        <p><span><%=@type.tpo_group.name %></span><span><%=@type.name %></span><span><a href="<%= new_type_tpo_spokens_path %>">更改</a></span></p>
       </nav>
       <% if @type.name == 'Task3' || @type.name == 'Task4' %>
          <div class="form-shade1" >
@@ -48,7 +48,7 @@
            <div class="form-group" >
                <label for="inputtext2" class="col-sm-2 control-label">音频地址：</label>
                <div class="col-sm-10">
-                    <input type="text" name="url"class="form-control" id="inputtext2" placeholder="">
+                    <input type="text" name="url" class="form-control" id="inputtext2" placeholder="">
                </div>
            </div>
            <div class="form-group">
