@@ -1,5 +1,6 @@
 <%- content_for :head do %>
   <%= stylesheet_link_tag "gtpo" %>
+
 <% end %>
 <div class="content W730">
   <%=render 'nav' %>
@@ -35,8 +36,8 @@
                </div>
            </div>
          </div>
-      <% end %>
-      <div class="form-shade2" >
+
+        <div class="form-shade2" >
         <p class="bold">Question:</p>
          <div class="form-group">
              <label for="inputtext1" class="col-sm-2 control-label">作文题目：</label>
@@ -59,7 +60,64 @@
        </div>
        <input type="hidden" name="type_id" value="<%=params[:type_id]%>">
        <button type="submit" class="btn btn-default b1" id="btn_sub">提交</button>
+      <% else %>
+        <div class="form-shade2" >
+          <p class="bold">Question:</p>
+           <div class="form-group">
+               <label for="inputtext1" class="col-sm-2 control-label">作文题目：</label>
+               <div class="col-sm-10">
+                <textarea class="form-control" rows="3" name="content"></textarea>
+               </div>
+           </div>
+            <div class="form-group" >
+               <label for="inputtext2" class="col-sm-2 control-label">解析：</label>
+               <div class="col-sm-10">
+                <textarea class="form-control" rows="3" name="resolution"></textarea>
+               </div>
+           </div>
+             <div class="form-group speaking" id="speaking-form">
+               <label for="inputtext1" class="col-sm-2 control-label">答案范例：</label>
+               <div class="col-sm-10">
+                  <select class="form-control se1" name="standpoint[]">
+                    <option value="同意">同意</option>
+                    <option value="反对">反对</option>
+                    <option value="中立">中立</option>
+                  </select>
+                </div>
+               <div class="col-sm-10">
+                <textarea class="form-control sample" rows="3" name="sample[]" style="margin-top: 10px;margin-left: 100px;"></textarea>
+               </div>
+           </div>
+         </div>
+         <p  id="new_gra"><img src="<%=asset_path 'i3.png'%>">新语法点</p>
+         <input type="hidden" name="type_id" value="<%=params[:type_id]%>">
+         <button type="submit" class="btn btn-default b1" id="btn_sub">提交</button>
+      <% end %>
 
     <% end %>
   </div>
 </div>
+<% content_for :tail do %>
+  <script>
+   $(function(){
+
+    $("#new_gra").bind("click",function(){
+      html = '<div class="form-group speaking" id="speaking-form">' +
+             '<label for="inputtext1" class="col-sm-2 control-label">答案范例：</label>' +
+             '<div class="col-sm-10">' +
+             '<select class="form-control se1" name="standpoint[]">' +
+             '<option value="同意">同意</option>' +
+             '<option value="反对">反对</option>' +
+             '<option value="中立">中立</option>' +
+             '</select>' +
+             '</div>' +
+             '<div class="col-sm-10">' +
+             '<textarea class="form-control" name="sample[]"  rows="3" style="margin-top: 10px;margin-left: 100px;"></textarea>' +
+             '</div>' +
+             '</div>';
+      $(".speaking:last").after(html);
+
+    })
+  })
+</script>
+<% end %>

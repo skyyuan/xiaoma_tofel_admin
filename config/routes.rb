@@ -52,4 +52,9 @@ XiaomaTofelAdmin::Application.routes.draw do
     post :writ_new_type_create, on: :collection
     get :writ_new, on: :collection
   end
+
+  resources :tpo_listens do
+    get :new_type, on: :collection
+    post :new_type_create, on: :collection
+  end
 end
