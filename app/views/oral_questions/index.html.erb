@@ -22,14 +22,13 @@
       <table class="table table-bordered table-striped " id="table1">
         <tr class="info" id="tr1" >
           <td >单元</td>
-          <td>题号</td>
           <td>操作</td>
         </tr>
-        <% @oral_questions.each do |oral_question| %>
+        <% @oral_groups.each do |oral_group| %>
           <tr id="tr2">
-            <td>Unit&nbsp;&nbsp;&nbsp;<%= oral_question.oral_group.sequence_number %></td>
-            <td><%= oral_question.sequence_number %></td>
+            <td>Unit&nbsp;&nbsp;&nbsp;<%= oral_group.sequence_number %></td>
             <td>
+              <% oral_question = oral_group.oral_questions.first %>
               <%= link_to '查看', oral_question_path(oral_question, from: 'index') %>
               <%= link_to '编辑', edit_oral_question_path(oral_question, from: 'index') %>
               <%= link_to '删除', oral_question_path(oral_question, unit: params[:unit]), method: :delete, data: {confirm: '确定删除？'} %>
@@ -37,7 +36,7 @@
           </tr>
         <% end %>
       </table>
-      <%= paginate @oral_questions %>
+      <%= paginate @oral_groups %>
     </div>
   </div>
 </div>

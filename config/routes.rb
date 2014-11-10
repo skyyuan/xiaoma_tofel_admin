@@ -29,6 +29,7 @@ XiaomaTofelAdmin::Application.routes.draw do
     collection do
       get :choose_range
       get :unit_list
+      get :next_unit
     end
   end
 

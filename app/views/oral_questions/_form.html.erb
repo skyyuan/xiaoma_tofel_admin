@@ -5,10 +5,53 @@
   </div>
 </div>
 
-<div class="form-group">
-  <label for="oral_question_original_text" class="col-sm-2 control-label">跟读原文翻译：</label>
-  <div class="col-sm-10">
-    <%= f.text_area :original_text, class: 'form-control', rows: 3 %>
+<% if @from == 'edit' %>
+  <% @oral_questions.each_with_index do |oral_question, idx| %>
+    <div class="form-shade _oral_content">
+      <div class="form-group group2" >
+        <% unless idx.zero? %><a href="javascript:void(0);" class="_delete_oral_content" style="margin-left: 630px;">删除</a><% end %>
+        <label for="inputtext1" class="col-sm-2 control-label">跟读原文翻译：</label>
+        <div class="col-sm-10">
+          <%= text_area_tag :'original_text[]', oral_question.original_text, class: 'form-control', rows: 4 %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else%>
+  <div class="form-group">
+    <label for="oral_question_original_text" class="col-sm-2 control-label">跟读原文翻译：</label>
+    <div class="col-sm-10">
+      <%= text_area_tag :'original_text[]', nil, class: 'form-control', rows: 3 %>
+    </div>
+  </div>
+<% end %>
+<div class="form-shade _oral_question_templete _oral_content" style="display:none;">
+  <div class="form-group group2" >
+    <a href="javascript:void(0);" class="_delete_oral_content" style="margin-left: 630px;">删除</a>
+    <label for="inputtext1" class="col-sm-2 control-label">跟读原文翻译：</label>
+    <div class="col-sm-10">
+      <%= text_area_tag :'original_text[]', nil, class: 'form-control', rows: 4 %>
+    </div>
   </div>
 </div>
-<button type="submit" class="btn btn-default b1" id="btn_sub">提交</button>
+<p class="para _add_oral_question"><img src="<%= asset_path 'i3.png'%>">新原文翻译</p>
+<button type="submit" class="btn btn-default b1 _btn" id="btn_sub">提交</button>
+
+<%= content_for :tail do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('._add_oral_question').on('click', function(event){
+        var templ = $('._oral_question_templete:last');
+        templ.before(templ.clone().show());
+      })
+
+      $('._oral_form').on('click', '._delete_oral_content', function(event){
+        $(this).closest('._oral_content').remove();
+      })
+
+      $('._btn').on('click', function(){
+        $('._oral_question_templete:last').remove();
+      })
+    })
+  </script>
+<% end %>
