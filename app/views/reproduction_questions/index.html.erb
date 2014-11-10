@@ -1,0 +1,34 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "grember" %>
+<% end %>
+
+<!-- right content -->
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <!-- list1 -->
+    <div class="tab-pane active" id="voc_list">
+      <!-- table -->
+      <table class="table table-bordered table-striped " id="table1">
+        <tr class="info" id="tr1" >
+          <td>题号</td>
+          <td>操作</td>
+        </tr>
+        <% @reproduction_questions.each do |reproduction_question| %>
+          <tr id="tr2">
+            <td><%= reproduction_question.sequence_number %></td>
+            <td>
+              <%= link_to '查看', reproduction_question_path(reproduction_question, from: 'index') %>
+              <%= link_to '编辑', edit_reproduction_question_path(reproduction_question, from: 'index') %>
+              <%= link_to '删除', reproduction_question_path(reproduction_question), method: :delete, data: {confirm: '确定删除？'} %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <%= paginate @reproduction_questions %>
+    </div>
+  </div>
+</div>

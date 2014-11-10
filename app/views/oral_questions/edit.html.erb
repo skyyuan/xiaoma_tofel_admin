@@ -1,0 +1,20 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gread" %>
+<% end %>
+
+<!-- right content -->
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <span class="span1">当前录入单元：unit<div id="unit"><%= @first_oral_question.oral_group.sequence_number %></div></span>
+  <span class="span2"><%= link_to '更改', choose_range_oral_questions_path %></span>
+
+  <div class="tab-content">
+    <div class="" id="voc_entry">
+      <%= form_for @first_oral_question, url: oral_question_path(from: params[:from]), method: :put, html: {class: 'form-horizontal _oral_form', id: 'form6'} do |f| %>
+        <%= render 'form', f: f %>
+      <% end %>
+    </div>
+  </div>
+</div>

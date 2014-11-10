@@ -8,14 +8,12 @@
   <%= render 'top_nav' %>
 
   <span class="span1">当前录入单元：unit<div id="unit"><%= @unit %></div></span>
-  <span class="span2"><%= link_to '更改', choose_unit_dictation_questions_path %></span>
+  <span class="span2"><%= link_to '更改', choose_range_oral_questions_path %></span>
 
   <div class="tab-content">
     <div class="" id="voc_entry">
-      <%= form_for @dictation_question, html: {class: 'form-horizontal', id: 'form6'} do |f| %>
-      <%#= form_for @acceptance_draft, url: admin_acceptance_draft_path, method: :put, html: {id: 'draft_form', class: "form-horizontal", role: "form", style: 'width: 80%;'} do  |f| %>
+      <%= form_for @oral_question, html: {class: 'form-horizontal _oral_form', id: 'form6'} do |f| %>
         <%= render 'form', f: f %>
-      <!--</form>-->
       <% end %>
     </div>
   </div>

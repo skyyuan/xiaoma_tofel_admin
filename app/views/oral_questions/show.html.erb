@@ -1,0 +1,32 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gread" %>
+<% end %>
+
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <% current_unit = @first_oral_question.oral_group.sequence_number %>
+  <span class="span1">当前录入单元：unit<div id="unit"><%= current_unit %></div></span>
+  <span class="span2"><%= link_to '更改', choose_range_oral_questions_path %></span>
+
+  <div class="tab-content">
+    <div class="" id="voc_entry">
+      <p><% unless params[:from] == 'index' %>unit<%= current_unit %>:已录入<%= @oral_questions.count %>个听写<% end %></p>
+
+      <p class="bold">地址:</p>
+      <p class="w680"><%= @first_oral_question.data_url %></p>
+      <% @oral_questions.each_with_index do |oral_question, idx| %>
+        <p class="bold">翻译（<%= idx + 1 %>）:</p>
+        <p class="w680"><%= oral_question.original_text %></p>
+      <% end %>
+
+      <% if params[:from] == 'index' %>
+        <%= link_to '修改', edit_oral_question_path(@first_oral_question, from: params[:from]), id: 'btn4', class: 'btn btn-default btn-lg active', style: 'margin-left:260px;' %>
+      <% else %>
+        <%= link_to '继续录入', next_unit_oral_questions_path(current_unit: current_unit), id: 'btn3', class: 'btn btn-primary btn-lg active' %>
+        <%= link_to '返回修改', edit_oral_question_path(@first_oral_question), id: 'btn4', class: 'btn btn-default btn-lg active' %>
+      <% end %>
+    </div>
+  </div>
+</div>
