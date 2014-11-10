@@ -1,0 +1,2 @@
+module JijingWorksHelper
+end

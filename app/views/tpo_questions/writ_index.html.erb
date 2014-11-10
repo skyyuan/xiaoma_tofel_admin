@@ -1,5 +1,5 @@
 <%- content_for :head do %>
-  <%= stylesheet_link_tag    "g" %>
+  <%= stylesheet_link_tag    "g8" %>
 <% end %>
 <div class="content W730">
   <%= render "nav" %>
@@ -7,30 +7,26 @@
 
 <!-- list1 -->
     <div class="tab-pane active" id="voc_list">
-      <div class="form-group form1">
-      </div>
 
       <!-- table -->
       <table class="table table-bordered table-striped " id="table1">
         <tr class="info" id="tr1" >
-          <td >分类</td>
-          <td>题号</td>
+          <td >单元</td>
           <td>题目</td>
+          <td>内容</td>
           <td>操作</td>
         </tr>
         <% @questions.each do |question| %>
           <tr id="tr2">
-            <td><%=question.content_type %></td>
-            <td><%=question.id %></td>
-            <td><%=truncate(question.content, length: 20) %></td>
-            <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
+            <td><%=question.tpo_type.tpo_group.name %></td>
+            <td><%=question.tpo_type.name %></td>
+            <td><%=truncate(question.content, length: 17) %></td>
+            <td><a href="#">查看</a><a href="#">编辑</a>
+              <%= link_to '删除', "/tpo_questions/#{question.id}", data: { confirm: '确定删除?' }, :method => :delete %>
+            </td>
           </tr>
         <% end %>
       </table>
-
-      <!-- page -->
-      <!-- <form class="pagination" id="page"> -->
-      <!-- </form> -->
 
       <div class="text-center">
         <%= paginate @questions %>

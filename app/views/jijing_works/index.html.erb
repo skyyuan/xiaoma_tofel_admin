@@ -1,13 +1,10 @@
 <%- content_for :head do %>
-  <%= stylesheet_link_tag    "g8" %>
+  <%= stylesheet_link_tag "g8" %>
 <% end %>
 <div class="content W730">
   <%= render "nav" %>
   <div class="tab-content">
-       <!-- list1 -->
     <div class="tab-pane active" id="voc_list">
-      <div class="form-group form1">
-      </div>
       <table class="table table-bordered table-striped " id="table1">
         <tr class="info" id="tr1" >
            <td >题目部分</td>
@@ -15,20 +12,16 @@
            <td>题目</td>
            <td>操作</td>
         </tr>
-        <% @questions.each do |question| %>
+        <% @works.each do |work| %>
           <tr id="tr2">
-            <td><%=question.jijing_task.name %></td>
-            <td><%=question.sequence_number %></td>
-            <td><%=question.content %></td>
+            <td><%=work.content_type%></td>
+            <td><%=work.sequence_number%></td>
+            <td><%=work.content%></td>
             <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
           </tr>
         <% end %>
       </table>
-      <div class="text-center">
-        <%= paginate @questions %>
-      </div>
+      <%= paginate @works %>
     </div>
   </div>
 </div>
-<% content_for :tail do %>
-<% end %>
