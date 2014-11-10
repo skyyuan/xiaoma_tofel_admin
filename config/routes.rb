@@ -53,7 +53,7 @@ XiaomaTofelAdmin::Application.routes.draw do
     get :writ_new, on: :collection
   end
 
-  resources :tpo_listens do
+  resources :tpo_spokens do
     get :new_type, on: :collection
     post :new_type_create, on: :collection
   end

@@ -4,7 +4,8 @@ class TpoQuestionsController < ApplicationController
   end
 
   def writ_index
-    @questions = TpoQuestion.order("created_at desc").page(params[:page])
+    type_id = TpoType.where(name: ["Integrated","Independent"]).map &:id
+    @questions = TpoQuestion.where(tpo_type_id: type_id).order("created_at desc").page(params[:page])
   end
 
   def writ_new_type
