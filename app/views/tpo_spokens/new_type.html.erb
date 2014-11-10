@@ -1,0 +1,24 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag "g8" %>
+<% end %>
+<div class="content W730">
+  <%=render 'nav' %>
+  <div class="tab-pane" id="voc_entry">
+    <p style="color:red;"><%=flash[:notice] %></p>
+    <nav class="navbar navbar-default" role="navigation" id="navbar">
+      <%=form_tag new_type_create_tpo_listens_path do %>
+        <%=  select_tag "group_id", options_from_collection_for_select(@groups, "id", "name",params[:group_id]),:prompt=>'套数',class: "se1"  %>
+        <select class="se2" id="se2" name="type_name">
+          <option value="">题目</option>
+          <option value="Task1">Task1</option>
+          <option value="Task2">Task2</option>
+          <option value="Task3">Task3</option>
+          <option value="Task4">Task4</option>
+          <option value="Task5">Task5</option>
+          <option value="Task6">Task6</option>
+        </select>
+        <a href="#"><input type="submit" value="确定" class="but_1" id="but_1"></a>
+      <% end %>
+    </nav>
+  </div>
+</div>

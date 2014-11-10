@@ -1,0 +1,89 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag "gtpo" %>
+<% end %>
+<div class="content W730">
+  <%=render 'nav' %>
+  <!-- list2 -->
+  <div class="tab-pane" id="voc_entry">
+    <%=form_tag tpo_questions_path, class: "form-horizontal", id: "form6" do %>
+
+      <nav class="navbar navbar-default" role="navigation" id="navbar">
+        <p><span><%=@type.tpo_group.name %></span><span><%=@type.name %></span><span><a href="<%= new_type_tpo_listens_path %>">更改</a></span></p>
+      </nav>
+      <% if @type.name == 'Task3' || @type.name == 'Task4' %>
+         <div class="form-shade1" >
+          <p class="bold">Reading Part:</p>
+          <div class="form-group" >
+               <label for="inputtext2" class="col-sm-2 control-label">文章标题：</label>
+               <div class="col-sm-10">
+                    <input type="text" name="title" class="form-control" id="inputtext2" placeholder="">
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="inputtext1" class="col-sm-2 control-label">文章内容</label>
+               <div class="col-sm-10">
+                <textarea class="form-control" rows="3" name="contents_articles"></textarea>
+               </div>
+           </div>
+         </div>
+         <div class="form-shade1" >
+          <p class="bold">Listening Part:</p>
+           <div class="form-group" >
+               <label for="inputtext2" class="col-sm-2 control-label">音频地址：</label>
+               <div class="col-sm-10">
+                    <input type="text" name="url"class="form-control" id="inputtext2" placeholder="">
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="inputtext1" class="col-sm-2 control-label">听力原文：</label>
+               <div class="col-sm-10">
+                <textarea class="form-control" rows="3" name="listening_script"></textarea>
+               </div>
+           </div>
+         </div>
+      <% end %>
+      <% if @type.name == 'Task5' || @type.name == 'Task6' %>
+         <div class="form-shade1" >
+          <p class="bold">Listening Part:</p>
+           <div class="form-group" >
+               <label for="inputtext2" class="col-sm-2 control-label">音频地址：</label>
+               <div class="col-sm-10">
+                    <input type="text" name="url"class="form-control" id="inputtext2" placeholder="">
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="inputtext1" class="col-sm-2 control-label">听力原文：</label>
+               <div class="col-sm-10">
+                <textarea class="form-control" rows="3" name="listening_script"></textarea>
+               </div>
+           </div>
+         </div>
+      <% end %>
+      <div class="form-shade2" >
+        <p class="bold">Question:</p>
+         <div class="form-group">
+             <label for="inputtext1" class="col-sm-2 control-label">作文题目：</label>
+             <div class="col-sm-10">
+              <textarea class="form-control" rows="3" name="content"></textarea>
+             </div>
+         </div>
+
+         <div class="form-group" >
+             <label for="inputtext1" class="col-sm-2 control-label">范例：</label>
+             <div class="col-sm-10">
+              <textarea class="form-control" rows="3" name="sample"></textarea>
+             </div>
+         </div>
+         <div class="form-group" >
+             <label for="inputtext2" class="col-sm-2 control-label">名师讲解：</label>
+             <div class="col-sm-10">
+               <input type="text" name="analysis" class="form-control" id="inputtext2" placeholder="输入视频地址">
+             </div>
+         </div>
+       </div>
+       <input type="hidden" name="type_id" value="<%=params[:type_id]%>">
+       <button type="submit" class="btn btn-default b1" id="btn_sub">提交</button>
+
+    <% end %>
+  </div>
+</div>
