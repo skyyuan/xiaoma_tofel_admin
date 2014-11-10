@@ -11,6 +11,6 @@ class OralGroup < ActiveRecord::Base
   # end
 
   def self.unit_for_selection
-    OralGroup.order('sequence_number').map {|oral_group| ["unit#{oral_group.sequence_number}", oral_group.id]}
+    OralGroup.order('CONVERT(sequence_number,SIGNED)').map {|oral_group| ["unit#{oral_group.sequence_number}", oral_group.id]}
   end
 end

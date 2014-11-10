@@ -1,0 +1,93 @@
+<div class="form-group ">
+  <label for="reproduction_question_content" class="col-sm-2 control-label">题干：</label>
+  <div class="col-sm-10">
+    <%= f.text_area :content, class: 'form-control', rows: 3 %>
+  </div>
+</div>
+
+<% if @from == 'edit' %>
+  <% @reproduction_question.reproduction_samples.each_with_index do |reproduction_sample, idx| %>
+    <div class="form-shade _sample_content" >
+      <div class="form-group group2" >
+        <% unless idx.zero? %><a href="javascript:void(0);" class="_delete_sample_content">删除</a><% end %>
+        <label for="inputtext1" class="col-sm-2 control-label">复写内容：</label>
+        <div class="col-sm-10">
+          <%= text_area_tag :'en[]', reproduction_sample.en, class: 'form-control', rows: 4 %>
+        </div>
+      </div>
+      <div class="form-group group2" >
+        <label for="inputtext1" class="col-sm-2 control-label">翻译：</label>
+        <div class="col-sm-10">
+          <%= text_area_tag :'ch[]', reproduction_sample.ch, class: 'form-control', rows: 4 %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="form-shade" >
+    <div class="form-group " id="group1">
+      <label for="inputtext1" class="col-sm-2 control-label">复写内容：</label>
+      <div class="col-sm-10">
+        <%= text_area_tag :'en[]', nil, class: 'form-control', rows: 4 %>
+      </div>
+    </div>
+    <div class="form-group group2" >
+      <label for="inputtext1" class="col-sm-2 control-label">翻译：</label>
+      <div class="col-sm-10">
+        <%= text_area_tag :'ch[]', nil, class: 'form-control', rows: 4 %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-shade _sample_content" >
+    <div class="form-group group2" >
+      <a href="javascript:void(0);" class="_delete_sample_content">删除</a>
+      <label for="inputtext1" class="col-sm-2 control-label">复写内容：</label>
+      <div class="col-sm-10">
+        <%= text_area_tag :'en[]', nil, class: 'form-control', rows: 4 %>
+      </div>
+    </div>
+    <div class="form-group group2" >
+      <label for="inputtext1" class="col-sm-2 control-label">翻译：</label>
+      <div class="col-sm-10">
+        <%= text_area_tag :'ch[]', nil, class: 'form-control', rows: 4 %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="form-shade _reproduction_sample_templete _sample_content" style="display:none;">
+  <div class="form-group group2" >
+    <a href="javascript:void(0);" class="_delete_sample_content">删除</a>
+    <label for="inputtext1" class="col-sm-2 control-label">复写内容：</label>
+    <div class="col-sm-10">
+      <%= text_area_tag :'en[]', nil, class: 'form-control', rows: 4 %>
+    </div>
+  </div>
+  <div class="form-group group2" >
+    <label for="inputtext1" class="col-sm-2 control-label">翻译：</label>
+    <div class="col-sm-10">
+      <%= text_area_tag :'ch[]', nil, class: 'form-control', rows: 4 %>
+    </div>
+  </div>
+</div>
+<p class="para _add_reproduction_sample"><img src="<%= asset_path 'i3.png'%>">新段落</p>
+<button type="submit" class="btn btn-default b1 _btn" id="btn_sub">保存</button>
+
+<%= content_for :tail do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('._add_reproduction_sample').on('click', function(event){
+        var templ = $('._reproduction_sample_templete:last');
+        templ.before(templ.clone().show());
+      })
+
+      $('._reproduction_form').on('click', '._delete_sample_content', function(event){
+        $(this).closest('._sample_content').remove();
+      })
+
+      $('._btn').on('click', function(){
+        $('._reproduction_sample_templete:last').remove();
+      })
+    })
+  </script>
+<% end %>

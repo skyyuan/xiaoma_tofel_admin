@@ -56,9 +56,11 @@ class DictationQuestionsController < ApplicationController
     dictation_question = DictationQuestion.find(params[:id])
     dictation_group_id = dictation_question.dictation_group_id
     sequence_number = dictation_question.sequence_number
-    if dictation_question.destroy
-      DictationQuestion.where('dictation_group_id = ? and sequence_number > ? ', dictation_group_id, sequence_number).each do |dictation_question|
-        dictation_question.decrement!(:sequence_number)
+    DictationQuestion.transaction do
+      if dictation_question.destroy
+        DictationQuestion.where('dictation_group_id = ? and sequence_number > ? ', dictation_group_id, sequence_number).each do |dictation_question|
+          dictation_question.decrement!(:sequence_number)
+        end
       end
     end
     redirect_to dictation_questions_path(unit: params[:unit])

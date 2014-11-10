@@ -1,0 +1,25 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gread" %>
+<% end %>
+
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <div class="tab-content">
+    <div class="" id="voc_entry">
+      <p><% unless params[:from] == 'index' %>已录入<%= @reproduction_question_amount %>个记忆复写<% end %></p>
+      <p class="num"><%= @reproduction_question.content %></p>
+      <% @reproduction_question.reproduction_samples.each do |reproduction_sample| %>
+        <p class="p1"><%= reproduction_sample.en %></p>
+        <p class="p2"><%= reproduction_sample.ch %></p>
+      <% end %>
+      <% if params[:from] == 'index' %>
+        <%= link_to '修改', edit_reproduction_question_path(@reproduction_question, from: params[:from]), id: 'btn4', class: 'btn btn-default btn-lg active', style: 'margin-left:260px;' %>
+      <% else %>
+        <%= link_to '继续录入', new_reproduction_question_path, id: 'btn3', class: 'btn btn-primary btn-lg active' %>
+        <%= link_to '返回修改', edit_reproduction_question_path(@reproduction_question), id: 'btn4', class: 'btn btn-default btn-lg active' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -35,6 +35,8 @@ XiaomaTofelAdmin::Application.routes.draw do
     end
   end
 
+  resources :reproduction_questions
+
   resources :jijing_questions
 
   resources :jijing_groups

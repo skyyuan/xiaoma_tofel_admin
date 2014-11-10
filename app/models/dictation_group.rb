@@ -6,10 +6,10 @@ class DictationGroup < ActiveRecord::Base
   has_many :dictation_questions
 
   def self.short_name_for_selection
-    DictationGroup.order('name').map {|dictation_group| [dictation_group.name, dictation_group.id]}
+    DictationGroup.order('CONVERT(name,SIGNED)').map {|dictation_group| [dictation_group.name, dictation_group.id]}
   end
 
   def self.name_for_selection
-    DictationGroup.order('name').map {|dictation_group| ["unit#{dictation_group.name}", dictation_group.id]}
+    DictationGroup.order('CONVERT(name,SIGNED)').map {|dictation_group| ["unit#{dictation_group.name}", dictation_group.id]}
   end
 end

@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs" role="tablist" id="myTab">
+  <li class="<%= 'active' if @top_nav == 'list' %>"><a href="<%= reproduction_questions_path %>" role="tab" class="black">记忆复写列表</a></li>
+  <li class="<%= 'active' if @top_nav != 'list' %>"><a href="<%= new_reproduction_question_path %>" role="tab">记忆复写录入</a></li>
+</ul>

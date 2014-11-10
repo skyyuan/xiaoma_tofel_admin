@@ -5,6 +5,6 @@ class OralOrigin < ActiveRecord::Base
   has_many :oral_groups
 
   def self.name_for_selection
-    OralOrigin.order('name').map {|oral_origin| [oral_origin.name.split('tpo')[1], oral_origin.id]}
+    OralOrigin.where(true).map {|oral_origin| [oral_origin.name.split('tpo')[1], oral_origin.id]}
   end
 end
