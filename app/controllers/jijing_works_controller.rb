@@ -1,3 +1,4 @@
+# encoding: utf-8
 class JijingWorksController < ApplicationController
   def index
     @works = JijingWork.order("created_at desc").page(params[:page])
