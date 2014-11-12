@@ -10,11 +10,20 @@
 <body>
   <div class="header w1500 mid">
     <img  class="logo">
+      <span style="padding-left: 700px;">
+        <% if current_admin %>
+          <%=current_admin.email%> | <%= link_to('登出', destroy_admin_session_path, :method => :delete) %>
+          <%#= link_to('修改密碼', edit_registration_path(:admin)) %>
+        <% end %>
+      </span>
     <h1 style="color:#fff;">小马托福</h1>
     <h5 style="color:#fff;">后台管理</h5>
   </div>
   <div class="main h885 mid">
-    <%= render "layouts/left" %>
+    <% if current_admin %>
+      <%= render "layouts/left" %>
+    <% end %>
+
     <%= yield %>
     <div style="clear:both"></div>
   </div>
