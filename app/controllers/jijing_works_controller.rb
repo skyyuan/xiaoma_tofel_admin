@@ -25,8 +25,16 @@ class JijingWorksController < ApplicationController
       if params[:resolution].present?
         WorkResolution.create(content: params[:resolution],jijing_work_id: work.id)
       end
-      if params[:sample].present?
-        WorkSample.create(standpoint: 1, content: params[:sample],jijing_work_id: work.id,user_id: 1)
+      if params[:type_name] == "独立写作"
+        if params[:sample].present?
+          params[:standpoint].each_with_index do |standpoint,i|
+            WorkSample.create(content: params[:sample][i],standpoint: standpoint,jijing_work_id: work.id,user_id: 1)
+          end
+        end
+      else
+        if params[:sample].present?
+          WorkSample.create(content: params[:sample],jijing_work_id: work.id,user_id: 1)
+        end
       end
       redirect_to jijing_works_path
     else
