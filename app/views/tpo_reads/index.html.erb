@@ -20,12 +20,12 @@
         </tr>
         <% @tpo_questions.each do |tpo_question| %>
           <tr id="tr2">
-            <td><%= tpo_question.tpo_type.tpo_group %></td>
-            <td><%= "#{tpo_question.tpo_type}#{tpo_question.sequence_number}" %></td>
+            <td><%= tpo_question.tpo_type.tpo_group.name %></td>
+            <td><%= "#{tpo_question.tpo_type.name}#{tpo_question.sequence_number}" %></td>
             <td>
-              <%= link_to '查看', tpo_question_path(tpo_question, from: 'index') %>
-              <%= link_to '编辑', edit_tpo_question_path(tpo_question, from: 'index') %>
-              <%= link_to '删除', tpo_question_path(tpo_question), method: :delete, data: {confirm: '确定删除？'} %>
+              <%= link_to '查看', tpo_read_path(tpo_question, from: 'index') %>
+              <%= link_to '编辑', edit_tpo_read_path(tpo_question, from: 'index') %>
+              <%= link_to '删除', tpo_read_path(tpo_question), method: :delete, data: {confirm: '确定删除？'} %>
             </td>
           </tr>
         <% end %>

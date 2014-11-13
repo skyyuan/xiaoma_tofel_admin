@@ -1,10 +1,17 @@
 <nav class="navbar navbar-default" role="navigation" id="navbar">
-  <p><span>TPO33，Passage1<span style="padding-left:10px;"><a href="#" onclick="history.go(-2)">更改</a></span></span></p>
+  <p>
+    <span><%= "#{@tpo_group_name},Passage#{session[:_tofel_tpo_read_type] || @tpo_question.sequence_number}" %>
+      <span style="padding-left:10px;">
+        <%= link_to '更改', choose_range_tpo_reads_path %>
+      </span>
+    </span>
+  </p>
 </nav>
 <div class="form-group ">
   <label for="inputtext1" class="col-sm-2 control-label" >文章标题：</label>
   <div class="col-sm-1">
-    <%= text_field_tag :title, nil, class: 'form-control question-answer', placeholder: '文章标题', style: 'width:90px' %>
+    <% title_value = @from == 'edit' ? @tpo_question_content[:title] : nil %>
+    <%= text_field_tag :title, title_value, class: 'form-control question-answer', placeholder: '文章标题', style: 'width:90px' %>
   </div>
 </div>
 

@@ -39,18 +39,18 @@ class TpoQuestion < ActiveRecord::Base
                 # 多选
                 # <value>ChoiceA</value>
                 # <value>ChoiceB</value>
-                tpo_question_options[:answer].each do |answer|
+                (tpo_question_options[:answer] || []).each do |answer|
                   xml.value answer
                 end
               when '3'
                 # 托拽
                 # <value>F G1</value>
                 # <value>C G2</value>
-                tpo_question_options[:answer1].each do |answer|
+                (tpo_question_options[:answer1] || []).each do |answer|
                   xml.value "#{answer} G1"
                 end
 
-                tpo_question_options[:answer2].each do |answer|
+                (tpo_question_options[:answer2] || []).each do |answer|
                   xml.value "#{answer} G2"
                 end
               end
@@ -121,7 +121,7 @@ class TpoQuestion < ActiveRecord::Base
 
   def parse_xml_to_object
     content_xml = Nokogiri::XML(content)
-    tpo_questions = Hash.new([])
+    tpo_questions = {en: [], ch: []}
     tpo_questions[:title] = content_xml.css('assessmentItem').attribute('title').content
     content_xml.css('itemBody p_en').each do |p_en|
       tpo_questions[:en].push(p_en.content)
@@ -141,7 +141,7 @@ class TpoQuestion < ActiveRecord::Base
     tpo_questions[:tpo_question] = {}
     question_nums.times do |idx|
       num = (idx + 1).to_s
-      tpo_questions[:tpo_question][num] = Hash.new([])
+      tpo_questions[:tpo_question][num] = {}
       question_options = tpo_questions[:tpo_question][num]
       question_options[:option] = {}
       # 托拽题
@@ -152,6 +152,8 @@ class TpoQuestion < ActiveRecord::Base
         gaps = gap_match_interaction.search('blockquote p gap')
         question_options[:G1] = gaps[0].previous.try(:content)
         question_options[:G2] = gaps[1].previous.try(:content)
+        tpo_questions[:tpo_question][num][:answer1] = []
+        tpo_questions[:tpo_question][num][:answer2] = []
         response_declarations[idx].search('correctResponse value').each do |answer|
           answer_content = answer.content
           if answer_content.include?('G1')
@@ -163,8 +165,9 @@ class TpoQuestion < ActiveRecord::Base
         # question_options[:analysis] = gap_match_interaction.previous('p')[0].content
         # question_options[:audio] = gap_match_interaction.previous('audio')[0].search('source')[0].attribute('src')
       else # 单/多选题
+        tpo_questions[:tpo_question][num][:answer] = []
         choice_interaction = choice_interactions[idx]
-        question_options[:question_type] = choice_interaction.attribute('maxChoices')
+        question_options[:question_type] = choice_interaction.attribute('maxChoices').content
         question_options[:prompt] = choice_interaction.search('prompt')[0].content
         options = choice_interaction.search('simpleChoice')
         # options.count.times do |choice_idx|
@@ -177,10 +180,10 @@ class TpoQuestion < ActiveRecord::Base
         # question_options[:audio] = choice_interaction.previous('audio')[0].search('source')[0].attribute('src')
       end
       options.count.times do |choice_idx|
-        question_options[:option][options[choice_idx].attribute('identifier')] = options[choice_idx].content
+        question_options[:option][options[choice_idx].attribute('identifier').content] = options[choice_idx].content
       end
       question_options[:analysis] = analysis[idx].content
-      question_options[:audio] = audios[idx].search('source')[0].attribute('src')
+      question_options[:audio] = audios[idx].search('source')[0].attribute('src').content
     end
     puts "~~~~~~~~~~~~~~~~~~tpo_questions~~~~~#{tpo_questions}"
     tpo_questions

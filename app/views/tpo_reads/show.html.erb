@@ -6,125 +6,101 @@
   <!-- Nav tabs -->
   <%= render 'top_nav' %>
 
-  <%# current_unit = @first_oral_question.oral_group.sequence_number %>
-  <span class="span1">当前录入单元：unit<div id="unit"><%#= current_unit %></div></span>
-  <span class="span2"><%#= link_to '更改', choose_range_oral_questions_path %></span>
-
   <div class="tab-content">
     <div class="" id="voc_entry">
       <form class="form-horizontal " role="form" method="get" action="" id="form6" style="height:1300px">
         <nav class="navbar navbar-default" role="navigation" id="navbar">
-          <p><span>TPO33，Passage1<span style="padding-left:10px;"><a href="#" onclick="history.go(-2)">更改</a></span></span></p>
+          <p><span><%= @tpo_group.name %>，Passage<%= @tpo_question.sequence_number %><span style="padding-left:10px;"><%= link_to '更改', choose_range_tpo_reads_path %></span></span></p>
         </nav>
 
-        <p style="text-align:center;font-size:6px;width:700px;line-height:20px;">paper</p>
+        <p style="text-align:center;font-size:6px;width:700px;line-height:20px;">
+          <%= @tpo_question_content[:title] %>
+        </p>
         <div >
-          <p style="font-size:6px;width:700px;line-height:20px;">Articles considered advertisements include those that are solicitations for a business, product or service, or are public relations pieces designed to promote a company or individual. Wikispam articles are usually noted for sales-oriented language and external links to a commercial website. However, a differentiation should be made between spam articles and legitimate articles about commercial entities.
-            文章认为广告包括那些为招揽业务，产品或服务，或者是为了促进公司或个人的公关片。Wikispam文章往往又是销售导向的语言和外部链接的商业网站。然而，要区分垃圾邮件的文章和有关商业机构的合法物品之间进行。</p>
-          <p style="font-size:6px;width:700px;line-height:20px;">Blatant examples of advertising masquerading as articles can be speedily deleted by tagging the articles with {{db-spam}}. The same applies to pages in userspace. Other advertisements posted on Wikipedia can be dealt with by either proposed deletion or listing them on Wikipedia:Articles for deletion. On some occasions, the content can be removed temporarily on the basis of a suspected copyright violation, since the text is often copied from another website and posted anonymously. Before trying to get an advertisement masquerading as an article deleted, please check the article's history to see if an acceptable revision exists there. If so, please revert to the latest acceptable version of the article.</p>
-          <p style="font-size:6px;width:700px;line-height:20px;">广告伪装成文章，公然的例子可以通过标记的文章，被迅速删除{ { DB-垃圾邮件} } 。这同样适用于在用户空间中的页面。张贴在维基百科的其他广告可以通过建议删除或处理，列出他们在维基百科：文章删除。在某些情况下，可以将内容暂时涉嫌侵犯版权的基础上去掉，因为文本往往是从其他网站复制，并张贴匿名。在试图让一个广告伪装成一篇文章被删除，请检查物品的历史，看是否存在有一个可以接受的版本。如果是的话，请回复到文章的最新可接受版本。</p>
-          <p style="font-size:6px;width:700px;line-height:20px;">When an article on an otherwise encyclopedic topic has the tone of an advertisement, the article can often be salvaged by rewriting it in a neutral point of view. Elements of articles about products or services with brand names can also be combined under a common topic or category to facilitate unbiased and collaborative information by including information about the competition and about different alternatives.</p>
-          <p style="font-size:6px;width:700px;line-height:20px;">当一个原本百科全书主题的文章有广告的基调，文章往往可以在一个中立的角度重写它打捞上来。关于产品或服务的品牌文章内容，也可以在一个共同的主题或分类结合了包括对竞争和关于不同的选择信息，以便公正和协作信息。</p>
+          <% @tpo_question_content[:en].each_with_index do |en, idx| %>
+            <p style="font-size:6px;width:700px;line-height:20px;">
+               <%= en %>
+            </p>
+            <p style="font-size:6px;width:700px;line-height:20px;">
+              <%= @tpo_question_content[:ch][idx] %>
+            </p>
+          <% end %>
         </div>
         <p >Qestions</p>
         <hr style="width: 610px;margin-right: 30px;float: right;margin-top: -29px;">
-        <div class="radio-list" style=" margin-left: 53px;margin-top: -9px;">
-          <label> 1.Does the source meet the requirements of Wikipedia:Reliable sources?</label>
-          <div class="radio">
+        <%
+          tpo_questions = @tpo_question_content[:tpo_question]
+          question_count = tpo_questions.size
+        %>
+        <% question_count.times do |idx| %>
+          <div class="radio-list" style=" margin-left: 53px;margin-top: -9px;">
+            <%
+              num = (idx + 1).to_s
+              question = tpo_questions[num]
+            %>
             <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-              A.Does the source meet the requirements of Wikipedia:Reliable sources?
+              <% question_types = TpoQuestion::READ_QUESTION_TYPE.values %>
+              <% if %w(1 2).include?(question[:question_type]) %>
+                <%= "#{question_types[question[:question_type].to_i]}--#{num}.#{question[:prompt]}" %>
+              <% else %>
+                <p>G1<%= question[:G1] %></p>
+                <p>G2<%= question[:G2] %></p>
+              <% end %>
             </label>
-          </div>
-
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-              B. When an article on an otherwise encyclopedic topic has the tone of an advertisement.
-            </label>
-          </div>
-
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-              C. Other advertisements posted on Wikipedia can be dealt with by either proposed deletion.
-            </label>
-          </div>
-
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-
-              D. Elements of articles about products or services with brand names can also be combined.
-            </label>
-          </div>
-        </div>
-
-        <div class="form-shade" style="height:120px" >
-          <div class="form-group " id="group1">
-            <label for="inputtext1" class="col-sm-2 control-label">解析：</label>
-
-            <label for="inputtext1" style="margin-left:105px;" >
-              正确答案：D<br><br>
-              目的主旨题。开头学生说出自己的困难：需要些心理学课程的文献综述，但是不知道如何寻找材料。
-            </label>
-            <p style="margin-top:35px">名师讲解：<span><a>http://getpocket.com/a/queue/</a></span></p>
-
-            <hr style="width: 610px;">
-            <div class="radio-list" style=" margin-left: 53px;margin-top: -9px;">
-              <label>2.Does the source meet the requirements of Wikipedia:Reliable sources?</label>
+            <% question[:option].each do |choice, choice_content| %>
               <div class="radio">
                 <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                  A.Articles considered advertisements include those that are solicitations for a business.
+                  <%= "#{choice.gsub(/^choice/, '')}.#{choice_content}" %>
                 </label>
               </div>
+            <% end %>
+          </div>
 
-              <div class="radio">
-                <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                  B. When an article on an otherwise encyclopedic topic has the tone of an advertisement.
-                </label>
-              </div>
+          <div class="form-shade" style="height:120px" >
+            <div class="form-group " id="group1">
+              <label for="inputtext1" class="col-sm-2 control-label">解析：</label>
 
-              <div class="radio">
-                <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                  C. Other advertisements posted on Wikipedia can be dealt with by either proposed deletion.
-                </label>
-              </div>
+              <label for="inputtext1" style="margin-left:105px;" >
+                正确答案：
+                <% if question[:question_type] == '3' %>
+                  <%
+                    answer1 = question[:answer1].map{|choice| choice.gsub(/^choice/, '')}.join
+                    answer2 = question[:answer2].map{|choice| choice.gsub(/^choice/, '')}.join
+                  %>
+                  <%= "#{answer1}/#{answer2}" %>
+                <% else %>
+                  <%= question[:answer].map{|choice| choice.gsub(/^choice/, '')}.join %>
+                <% end %>
+                <br><br>
+                <%= question[:analysis] %>
+              </label>
+              <p style="margin-top:35px">
+                名师讲解：
+                <span><a><%= question[:audio] %></a></span>
+              </p>
+              <!-- <hr style="width: 610px;"> -->
+              <!-- <div class="form-shade" style="height:120px" >
+                <div class="form-group " id="group1">
+                  <label for="inputtext1" class="col-sm-2 control-label">解析：</label>
 
-              <div class="radio">
-                <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                  <label for="inputtext1" style="margin-left:105px;" >
 
-                  D. Elements of articles about products or services with brand names can also be combined.
-                </label>
-              </div>
-            </div>
+                    正确答案：<%=  %><br><br>
+                    目的主旨题。开头学生说出自己的困难：需要些心理学课程的文献综述，但是不知道如何寻找材料。
+                  </label>
+                  <p style="margin-top:35px">名师讲解：<span><a>http://getpocket.com/a/queue/</a></span></p>
 
-            <div class="form-shade" style="height:120px" >
-              <div class="form-group " id="group1">
-                <label for="inputtext1" class="col-sm-2 control-label">解析：</label>
-
-                <label for="inputtext1" style="margin-left:105px;" >
-
-                  正确答案：D<br><br>
-                  目的主旨题。开头学生说出自己的困难：需要些心理学课程的文献综述，但是不知道如何寻找材料。
-                </label>
-                <p style="margin-top:35px">名师讲解：<span><a>http://getpocket.com/a/queue/</a></span></p>
-
-                <div class="tab-pane active" id="voc_entry">
-                  <a href="index.html">
-                    <button type="button" class="btn btn-primary active" id="btn3" style="width:85px;height:32px">继续录入</button>
-                  </a>
-                  <button type="button" class="btn btn-default active" id="btn4"style="width:85px;height:32px" onclick="history.back(-1)">返回修改</button>
+                  <div class="tab-pane active" id="voc_entry">
+                    <a href="index.html">
+                      <button type="button" class="btn btn-primary active" id="btn3" style="width:85px;height:32px">继续录入</button>
+                    </a>
+                    <button type="button" class="btn btn-default active" id="btn4"style="width:85px;height:32px" onclick="history.back(-1)">返回修改</button>
+                  </div>
                 </div>
-
-              </div>
+              </div> -->
             </div>
           </div>
-        </div>
+        <% end %>
       </form>
     </div>
     <!-- <div class="" id="voc_entry">
