@@ -1,0 +1,36 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gread1" %>
+<% end %>
+
+<!-- right content -->
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <!-- list1 -->
+    <div class="tab-pane active" id="voc_list">
+      <!-- table -->
+      <table class="table table-bordered table-striped " id="table1">
+        <tr class="info" id="tr1" >
+          <td >Tpo套数</td>
+          <td>题目部分</td>
+          <td>操作</td>
+        </tr>
+        <% @tpo_questions.each do |tpo_question| %>
+          <tr id="tr2">
+            <td><%= tpo_question.tpo_type.tpo_group %></td>
+            <td><%= "#{tpo_question.tpo_type}#{tpo_question.sequence_number}" %></td>
+            <td>
+              <%= link_to '查看', tpo_question_path(tpo_question, from: 'index') %>
+              <%= link_to '编辑', edit_tpo_question_path(tpo_question, from: 'index') %>
+              <%= link_to '删除', tpo_question_path(tpo_question), method: :delete, data: {confirm: '确定删除？'} %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <%= paginate @tpo_questions %>
+    </div>
+  </div>
+</div>

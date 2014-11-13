@@ -1,0 +1,31 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gread1" %>
+<% end %>
+
+<!-- right content -->
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <div class="tab-content">
+
+    <div class="" id="voc_entry">
+      <%= form_tag new_tpo_read_path, method: :get, class: "navbar-form navbar-left", role: "search" do %>
+        <div class="form-group" >
+          <p >请输入要录入的阅读部分：&nbsp;&nbsp;&nbsp;</p>
+          <%= select_tag :tpo_group, options_for_select(TpoGroup.name_for_selection), :class => 'form-control _tpo' %>
+        </div>
+        <div class="form-group" >
+          <p>&nbsp;</p>
+          <%= select_tag :tpo_type, options_for_select(TpoType::READ_TYPE.invert.to_a), data: {sources: @sources}, id: 'se_unit', :class => 'form-control _unit' %><br>
+        </div>
+        <div class="form-group group1" >
+          <p></p>
+        </div>
+        <div class="form-group " >
+         <button type="submit" class="btn btn-default b1" id="btn_read">确定</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
