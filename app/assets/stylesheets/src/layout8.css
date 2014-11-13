@@ -1,8 +1,8 @@
 span.caret{padding-left:0px;}
 nav.navbar{background-color: #b2d4dc;width: 680px;min-height:36px;margin-left: 25px;margin-top:40px;}
 select{height:40px;border:none;background:none;}
-select.se1{width:80px;margin-left:225px;}
-select.se2{width:60px;margin-left:30px;}
+select.se1{margin-left:225px;}
+select.se2{margin-left:30px;}
 .navbar a{color:#000;}
 input.but_1{margin-left:20px;border:none;background:none;}
 p{padding-left:30px;}
