@@ -33,9 +33,9 @@ class HardWorker
           end
           xml.itemBody do
             xml.explanation "#{row[3]}#{row[2]}"
-            xml.symbols "#{row[4]}"
+            xml.symbols ""
             xml.audio do
-              xml.url "#{row[5]}"
+              xml.url ""
             end
             xml.choiceInteraction 'responseIdentifier'=>"RESPONSE", 'shuffle'=>"false", 'maxChoices'=>"1" do
               xml.prompt "#{row[1]}"
@@ -61,14 +61,13 @@ class HardWorker
       xml_file = File.new("#{Rails.root}/public/system/xml/word/#{row[1]}.xml", 'wb') #{ |f| f.write(b.to_xml) }
       xml_file.puts b.to_xml #写入数据
       xml_file.close #关闭文件流
-      @voc = VocabularyQuestion.find_by_word(row[1])
-      if @voc.present?
-        @voc.destroy
-      end
+      vocabulary = VocabularyQuestion.find_by_word(row[1])
       group = VocabularyGroup.find_by_sequence_number(row[0])
-      count = VocabularyQuestion.where(vocabulary_group_id: group.id).count
-      vocabulary = VocabularyQuestion.new
-      vocabulary.sequence_number = count + 1
+      if !vocabulary.present?
+        vocabulary = VocabularyQuestion.new
+        count = VocabularyQuestion.where(vocabulary_group_id: group.id).count
+        vocabulary.sequence_number = count + 1
+      end
       vocabulary.content = b.to_xml
       vocabulary.vocabulary_group_id = group.id
       vocabulary.word = row[1]
