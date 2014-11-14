@@ -1,4 +1,4 @@
-<div class="form-shade _tpo_question_content" style="height:670px"  >
+<div class="form-shade _tpo_question_content" style="min-height:670px;height:auto !important;"  >
   <div class="form-group group2" >
     <div class="form-group group2" >
       <div class="">
@@ -87,24 +87,26 @@
 
   <div class=" form-group group2 _checkbox_answer">
     <label for="inputtext1" class="col-sm-2 control-label">正确选项：</label>
-    <% if @from == 'edit' %>
-      <% question[:option].keys.each do |choice_value| %>
-        <label class="checkbox-inline _checkbox_content">
-          <%= check_box_tag "tpo_question[#{num}][answer][]", choice_value, question[:answer].include?(choice_value), id: nil %><%= choice_value.gsub(/^choice/, '') %>
-        </label>
+    <div style="width:557px;float:left;">
+      <% if @from == 'edit' %>
+        <% question[:option].keys.each do |choice_value| %>
+          <label class="checkbox-inline _checkbox_content">
+            <%= check_box_tag "tpo_question[#{num}][answer][]", choice_value, question[:answer].include?(choice_value), id: nil %><%= choice_value.gsub(/^choice/, '') %>
+          </label>
+        <% end %>
+      <% else %>
+        <% TpoQuestion::READ_QUESTION_MULTIPLE_CHOICE.each do |key, value| %>
+          <label class="checkbox-inline _checkbox_content">
+            <%= check_box_tag "tpo_question[#{num}][answer][]", value, nil, id: nil %><%= key %>
+          </label>
+        <% end %>
       <% end %>
-    <% else %>
-      <% TpoQuestion::READ_QUESTION_MULTIPLE_CHOICE.each do |key, value| %>
-        <label class="checkbox-inline _checkbox_content">
-          <%= check_box_tag "tpo_question[#{num}][answer][]", value, nil, id: nil %><%= key %>
-        </label>
-      <% end %>
-    <% end %>
-    <!--choice answer tempelte begin -->
-    <label class="checkbox-inline _checkbox_answer_templete _checkbox_content" style="display:none;">
-      <%= check_box_tag "tpo_question[#{num}][answer][]", 'choiceA', nil, id: nil %><label class="_answer_text">A</label>
-    </label>
-    <!--choice answer tempelte end -->
+      <!--choice answer tempelte begin -->
+      <label class="checkbox-inline _checkbox_answer_templete _checkbox_content" style="display:none;">
+        <%= check_box_tag "tpo_question[#{num}][answer][]", 'choiceA', nil, id: nil %><label class="_answer_text">A</label>
+      </label>
+      <!--choice answer tempelte end -->
+    </div>
   </div>
 
   <div class="form-group group2" >

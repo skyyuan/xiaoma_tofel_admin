@@ -1,15 +1,29 @@
-<!-- 第一类单选题 begin -->
-<%= render 'simple_choice', num: 1 %>
-<!-- 第一类单选题 end -->
+<% if @from == 'edit' %>
+  <% @tpo_question_content[:tpo_question].each_with_index do |_questions, idx| %>
+    <% _question_num = idx + 1 %>
+    <% _question_type = _questions[1][:question_type] %>
+    <% if _question_type == '1' %>
+      <%= render 'simple_choice', num: _question_num %>
+    <% elsif _question_type == '2' %>
+      <%= render 'multiple_choice', num: _question_num %>
+    <% elsif _question_type == '3' %>
+      <%= render 'gap_match_interaction', num: _question_num %>
+    <% end %>
+  <% end %>
+<% else %>
+  <!-- 第一类单选题 begin -->
+  <%= render 'simple_choice', num: 1 %>
+  <!-- 第一类单选题 end -->
 
-<!-- 第二类多选题 begin -->
-<%= render 'multiple_choice', num: 2 %>
-<!-- 第二类多选题 end -->
+  <!-- 第二类多选题 begin -->
+  <%= render 'multiple_choice', num: 2 %>
+  <!-- 第二类多选题 end -->
 
-<!-- 第三类归纳题 begin -->
-<%= render 'gap_match_interaction', num: 3 %>
+  <!-- 第三类归纳题 begin -->
+  <%= render 'gap_match_interaction', num: 3 %>
 
-<!-- 第三类归纳题 end -->
+  <!-- 第三类归纳题 end -->
+<% end %>
 
 <p class="para _add_question_content"><img src="<%= asset_path 'i3.png'%>">新题目</p>
 

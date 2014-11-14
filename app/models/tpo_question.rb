@@ -82,6 +82,7 @@ class TpoQuestion < ActiveRecord::Base
 
             if question_type == '3'
               xml.gapMatchInteraction 'responseIdentifier' => "RESPONSE#{num}", 'shuffle' => "true" do
+                xml.prompt tpo_question_options[:prompt]
                 tpo_question_options[:option].each do |option, content|
                   xml.gapText content, 'identifier' => option, 'matchMax' => "1"
                 end
@@ -150,6 +151,7 @@ class TpoQuestion < ActiveRecord::Base
         question_options[:options]
         options = gap_match_interaction.search('gapText')
         gaps = gap_match_interaction.search('blockquote p gap')
+        question_options[:prompt] = gap_match_interaction.search('prompt')[0].content
         question_options[:G1] = gaps[0].previous.try(:content)
         question_options[:G2] = gaps[1].previous.try(:content)
         tpo_questions[:tpo_question][num][:answer1] = []

@@ -26,99 +26,78 @@
             </p>
           <% end %>
         </div>
-        <p >Qestions</p>
-        <hr style="width: 610px;margin-right: 30px;float: right;margin-top: -29px;">
+
         <%
           tpo_questions = @tpo_question_content[:tpo_question]
           question_count = tpo_questions.size
         %>
         <% question_count.times do |idx| %>
-          <div class="radio-list" style=" margin-left: 53px;margin-top: -9px;">
-            <%
-              num = (idx + 1).to_s
-              question = tpo_questions[num]
-            %>
-            <label>
-              <% question_types = TpoQuestion::READ_QUESTION_TYPE.values %>
-              <% if %w(1 2).include?(question[:question_type]) %>
-                <%= "#{question_types[question[:question_type].to_i]}--#{num}.#{question[:prompt]}" %>
-              <% else %>
-                <p>G1<%= question[:G1] %></p>
-                <p>G2<%= question[:G2] %></p>
+          <div>
+            <% if idx.zero? %>
+              <p >Qestions</p><hr style="width: 610px;margin-right: 30px;float: right;margin-top: -29px;">
+            <% else %>
+              <hr style="width: 610px;">
+            <% end %>
+            <div class="radio-list" style=" margin-left: 53px;margin-top: -9px;">
+              <%
+                num = (idx + 1).to_s
+                question = tpo_questions[num]
+              %>
+              <label>
+                <% question_types = TpoQuestion::READ_QUESTION_TYPE.values %>
+                <%= "#{question_types[(question[:question_type].to_i - 1)]}--#{num}.#{question[:prompt]}" %>
+                <% if question[:question_type] == '3' %>
+                  <p><%= question[:G1] %></p>
+                  <p><%= question[:G2] %></p>
+                <% end %>
+              </label>
+
+              <% question[:option].each do |choice, choice_content| %>
+                <div class="radio">
+                  <label>
+                    <%= "#{choice.gsub(/^choice/, '')}.#{choice_content}" %>
+                  </label>
+                </div>
               <% end %>
-            </label>
-            <% question[:option].each do |choice, choice_content| %>
-              <div class="radio">
-                <label>
-                  <%= "#{choice.gsub(/^choice/, '')}.#{choice_content}" %>
+            </div>
+
+            <div class="form-shade" style="height:120px" >
+              <div class="form-group " id="group1">
+                <label for="inputtext1" class="col-sm-2 control-label">解析：</label>
+
+                <label for="inputtext1" style="margin-left:105px;" >
+
+                  正确答案：
+                  <% if question[:question_type] == '3' %>
+                    <%
+                      answer1 = question[:answer1].map{|choice| choice.gsub(/^choice/, '')}.join
+                      answer2 = question[:answer2].map{|choice| choice.gsub(/^choice/, '')}.join
+                    %>
+                    <%= (answer1.blank? || answer2.blank?) ? "#{answer1} #{answer2}" : "#{answer1}/#{answer2}" %>
+                  <% else %>
+                    <%= question[:answer].map{|choice| choice.gsub(/^choice/, '')}.join %>
+                  <% end %>
+                  <br><br>
+                  <%= question[:analysis] %>
                 </label>
               </div>
-            <% end %>
-          </div>
+            </div>
 
-          <div class="form-shade" style="height:120px" >
-            <div class="form-group " id="group1">
-              <label for="inputtext1" class="col-sm-2 control-label">解析：</label>
-
-              <label for="inputtext1" style="margin-left:105px;" >
-                正确答案：
-                <% if question[:question_type] == '3' %>
-                  <%
-                    answer1 = question[:answer1].map{|choice| choice.gsub(/^choice/, '')}.join
-                    answer2 = question[:answer2].map{|choice| choice.gsub(/^choice/, '')}.join
-                  %>
-                  <%= "#{answer1}/#{answer2}" %>
-                <% else %>
-                  <%= question[:answer].map{|choice| choice.gsub(/^choice/, '')}.join %>
-                <% end %>
-                <br><br>
-                <%= question[:analysis] %>
-              </label>
-              <p style="margin-top:35px">
-                名师讲解：
-                <span><a><%= question[:audio] %></a></span>
-              </p>
-              <!-- <hr style="width: 610px;"> -->
-              <!-- <div class="form-shade" style="height:120px" >
-                <div class="form-group " id="group1">
-                  <label for="inputtext1" class="col-sm-2 control-label">解析：</label>
-
-                  <label for="inputtext1" style="margin-left:105px;" >
-
-                    正确答案：<%=  %><br><br>
-                    目的主旨题。开头学生说出自己的困难：需要些心理学课程的文献综述，但是不知道如何寻找材料。
-                  </label>
-                  <p style="margin-top:35px">名师讲解：<span><a>http://getpocket.com/a/queue/</a></span></p>
-
-                  <div class="tab-pane active" id="voc_entry">
-                    <a href="index.html">
-                      <button type="button" class="btn btn-primary active" id="btn3" style="width:85px;height:32px">继续录入</button>
-                    </a>
-                    <button type="button" class="btn btn-default active" id="btn4"style="width:85px;height:32px" onclick="history.back(-1)">返回修改</button>
-                  </div>
-                </div>
-              </div> -->
+            <div>
+              <p style="margin-top:35px">名师讲解：<span><a href="javascript:void();"><%= question[:audio] %></a></span></p>
             </div>
           </div>
         <% end %>
+
+        <div class="tab-pane active" id="voc_entry">
+          <% if params[:from] == 'index' %>
+            <%= link_to '修改', edit_tpo_read_path(@tpo_question, from: params[:from]), id: 'btn4', class: 'btn btn-default btn-lg active', style: 'margin-left:260px;' %>
+          <% else %>
+            <%= link_to '继续录入', choose_range_oral_questions_path, id: 'btn3', class: 'btn btn-primary btn-lg active' %>
+            <%= link_to '返回修改', edit_tpo_read_path(@tpo_question), id: 'btn4', class: 'btn btn-default btn-lg active' %>
+          <% end %>
+       </div>
       </form>
     </div>
-    <!-- <div class="" id="voc_entry">
-      <p><%# unless params[:from] == 'index' %>unit<%#= current_unit %>:已录入<%#= @oral_questions.count %>个听写<%# end %></p>
-
-      <p class="bold">地址:</p>
-      <p class="w680"><%#= @first_oral_question.data_url %></p>
-      <%# @oral_questions.each_with_index do |oral_question, idx| %>
-        <p class="bold">翻译（<%#= idx + 1 %>）:</p>
-        <p class="w680"><%#= oral_question.original_text %></p>
-      <%# end %>
-
-      <%# if params[:from] == 'index' %>
-        <%#= link_to '修改', edit_oral_question_path(@first_oral_question, from: params[:from]), id: 'btn4', class: 'btn btn-default btn-lg active', style: 'margin-left:260px;' %>
-      <%# else %>
-        <%#= link_to '继续录入', next_unit_oral_questions_path(current_unit: current_unit), id: 'btn3', class: 'btn btn-primary btn-lg active' %>
-        <%#= link_to '返回修改', edit_oral_question_path(@first_oral_question), id: 'btn4', class: 'btn btn-default btn-lg active' %>
-      <%# #end %>
-    </div> -->
   </div>
 </div>

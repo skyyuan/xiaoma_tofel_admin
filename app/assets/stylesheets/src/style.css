@@ -25,4 +25,5 @@ hr{width:680px;margin-left:20px;}
 .side_nav{width:250px;height:65px;background: #ebebeb;border:1px solid #ddd;display: block;color:#555;}
 .side_nav:link,.side_nav:visited{color:#555;}
 .side_nav:hover{text-decoration: none;width:250px;height:65px;background: #ddd;}
+.side_nav.active{text-decoration: none;width:250px;height:65px;background: #ddd;}
 html{overflow-x:hidden;}

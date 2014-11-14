@@ -5,7 +5,7 @@
         <% unless idx.zero? %>
           <a href="javascript:void(0);" class="_delete_tpo_question_material">删除</a>
         <% end %>
-        <label for="inputtext1" class="col-sm-2 control-label">第2段：</label>
+        <label for="inputtext1" class="col-sm-2 control-label">第<%= idx + 1 %>段：</label>
         <div class="col-sm-10">
           <%= text_area_tag :'en[]', en, class: 'form-control', rows: 4 %>
         </div>
