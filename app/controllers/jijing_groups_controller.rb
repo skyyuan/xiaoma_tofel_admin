@@ -15,7 +15,11 @@ class JijingGroupsController < ApplicationController
         redirect_to jijing_groups_path
       end
     else
-      redirect_to jijing_groups_path, notice: "请输入机经!" and return
+      if params[:type].present?
+        redirect_to new_group_jijing_works_path, notice: "请输入机经!" and return
+      else
+        redirect_to jijing_groups_path, notice: "请输入机经!" and return
+      end
     end
   end
 end

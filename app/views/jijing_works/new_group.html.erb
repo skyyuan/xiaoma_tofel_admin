@@ -26,6 +26,7 @@
 <div class="content W730">
   <%= render "nav" %>
   <div class="tab-pane" id="voc_entry">
+    <p style="color:red;"><%=flash[:notice] %></p>
     <div class="clearfix list">
       <% @jijing_groups.each do |group| %>
         <a href="<%=new_type_jijing_works_path(group_id: group.id)%>"><%=group.name%></a>
