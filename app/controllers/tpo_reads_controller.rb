@@ -64,10 +64,10 @@ class TpoReadsController < ApplicationController
     content = TpoQuestion.read_content_fromat_xml(params)
     tpo_question.content = content
     if tpo_question.save
-      Dir.mkdir("#{Rails.root}/public/system") unless Dir.exist?("#{Rails.root}/public/system")
-      Dir.mkdir("#{Rails.root}/public/system/xml") unless Dir.exist?("#{Rails.root}/public/system/xml")
-      Dir.mkdir("#{Rails.root}/public/system/xml/tpo") unless Dir.exist?("#{Rails.root}/public/system/xml/tpo")
-      Dir.mkdir("#{Rails.root}/public/system/xml/tpo/reads") unless Dir.exist?("#{Rails.root}/public/system/xml/tpo/reads")
+      # Dir.mkdir("#{Rails.root}/public/system") unless Dir.exist?("#{Rails.root}/public/system")
+      # Dir.mkdir("#{Rails.root}/public/system/xml") unless Dir.exist?("#{Rails.root}/public/system/xml")
+      # Dir.mkdir("#{Rails.root}/public/system/xml/tpo") unless Dir.exist?("#{Rails.root}/public/system/xml/tpo")
+      # Dir.mkdir("#{Rails.root}/public/system/xml/tpo/reads") unless Dir.exist?("#{Rails.root}/public/system/xml/tpo/reads")
       File.open("#{Rails.root}/public/system/xml/tpo/reads/#{tpo_question.id}.xml", "wb") do |file|
         file.write content
       end
@@ -119,6 +119,25 @@ class TpoReadsController < ApplicationController
 
   def destroy
     TpoQuestion.find(params[:id]).destroy
+    redirect_to tpo_reads_path
+  end
+
+  def upload_file
+    @top_nav = 'upload_file'
+  end
+
+  def batch_import
+    if params[:tpo_read_file].present?
+      read_file = params[:tpo_read_file]
+      if read_file.original_filename.split(".").last == 'xls'
+        # File.open("#{Rails.root}/public/system/xls/#{read_file.original_filename}", "wb+") do |f|
+        #   f.write(read_file.read)
+        # end
+        TpoQuestion.read_batch_import(read_file)
+      else
+        redirect_to upload_file_tpo_reads_path, notice: "请上传XLS格式文件!" and return
+      end
+    end
     redirect_to tpo_reads_path
   end
 

@@ -1,0 +1,24 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag    "g" %>
+<% end %>
+
+<div class="content W730">
+
+  <%= render "top_nav" %>
+
+  <div class="tab-content">
+    <!-- list3 -->
+    <div class="tab-pane active" id="lot_entry">
+      <p style="color:red;"><%=flash[:notice] %></p>
+      <p class="unit">请上传excle文件:</p>
+      <%= form_tag batch_import_tpo_reads_path, method: :post,class: 'navbar-form navbar-left', :multipart=>true do %>
+        <div class="form-group ">
+          <input type="button" value="上传文件" class="file" onClick="t_file.click()" name="file">
+          <input name="tpo_read_file" type="file" id="t_file"style="display:none"><br>
+          <span><div id="filename1"></div></span><br>
+          <button type="submit" class="btn btn-default b1">确定</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
