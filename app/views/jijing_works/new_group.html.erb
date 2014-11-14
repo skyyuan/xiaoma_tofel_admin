@@ -1,19 +1,52 @@
 <%- content_for :head do %>
   <%= stylesheet_link_tag    "g8" %>
+  <style type="text/css">
+
+  #voc_entry .list{
+    padding-left: 30px;
+    line-height: 40px;
+    margin: 0 0 10px;
+  }
+  #voc_entry .list a{
+    float: left;
+    padding-right: 60px;
+    font-size: 12px;
+    color: #000;
+  }
+    .jijing{
+      float: left;
+      display: none;
+    }
+    .jijing input{
+      height: 20px;
+      line-height: 20px;
+    }
+  </style>
 <% end %>
 <div class="content W730">
   <%= render "nav" %>
   <div class="tab-pane" id="voc_entry">
-    <p>
+    <div class="clearfix list">
       <% @jijing_groups.each do |group| %>
         <a href="<%=new_type_jijing_works_path(group_id: group.id)%>"><%=group.name%></a>
       <% end %>
-      <img src="<%=asset_path 'i3.png'%>" id="i3">新机经
-    </p>
-    <%= form_tag jijing_groups_path do %>
-      <input type="text" name="name">
-      <input type="hidden" name="type" value="1">
-      <input type="submit" >
-    <% end %>
+      <a href="javascript:;" id="i3"><img src="<%=asset_path 'i3.png'%>">新机经</a>
+      <%= form_tag jijing_groups_path,class: 'jijing' do %>
+        <input type="text" name="name">
+        <input type="hidden" name="type" value="1">
+        <input type="submit" >
+      <% end %>
+    </div>
+
   </div>
 </div>
+<!-- 你把form一上去看看 -->
+<%- content_for :tail do %>
+  <script type="text/javascript">
+
+    $('#i3').click(function(){
+      $(this).hide();
+      $(this).parents('#voc_entry').find('.jijing').show();
+    });
+  </script>
+<% end %>
