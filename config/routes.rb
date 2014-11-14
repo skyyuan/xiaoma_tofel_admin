@@ -58,4 +58,11 @@ XiaomaTofelAdmin::Application.routes.draw do
     get :new_type, on: :collection
     post :new_type_create, on: :collection
   end
+
+  resources :tpo_reads do
+    collection do
+      get :choose_range
+      get :change_question_type
+    end
+  end
 end

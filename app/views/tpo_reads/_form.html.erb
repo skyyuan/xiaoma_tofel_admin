@@ -1,0 +1,35 @@
+<nav class="navbar navbar-default" role="navigation" id="navbar">
+  <p>
+    <span><%= "#{@tpo_group_name},Passage#{session[:_tofel_tpo_read_type] || @tpo_question.sequence_number}" %>
+      <span style="padding-left:10px;">
+        <%= link_to '更改', choose_range_tpo_reads_path %>
+      </span>
+    </span>
+  </p>
+</nav>
+<div class="form-group ">
+  <label for="inputtext1" class="col-sm-2 control-label" >文章标题：</label>
+  <div class="col-sm-1">
+    <% title_value = @from == 'edit' ? @tpo_question_content[:title] : nil %>
+    <%= text_field_tag :title, title_value, class: 'form-control question-answer', placeholder: '文章标题', style: 'width:90px' %>
+  </div>
+</div>
+
+<%= render 'read_question_material' %>
+
+<%= render 'read_question_content' %>
+
+<button type="submit" class="btn btn-default b1 _btn" id="btn_sub">提交</button>
+
+<%= content_for :tail do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('._btn').on('click', function(){
+        //$('._tpo_question_content_templete:last').remove();
+        $('._tpo_question_material_templete:hidden').remove();
+        $('._question_choice_templete:hidden').remove();
+        $('._checkbox_answer_templete:hidden').remove();
+      })
+    })
+  </script>
+<% end %>
