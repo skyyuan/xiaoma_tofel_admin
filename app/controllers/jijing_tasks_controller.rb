@@ -1,3 +1,4 @@
+# encoding: utf-8
 class JijingTasksController < ApplicationController
   def new
   end

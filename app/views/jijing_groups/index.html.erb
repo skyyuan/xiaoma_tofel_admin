@@ -11,6 +11,7 @@
       <img src="<%=asset_path 'i3.png'%>" id="i3">新机经
     </p>
     <%= form_tag jijing_groups_path do %>
+      <p style="color:red;"><%=flash[:notice] %></p>
       <input type="text" name="name">
       <input type="submit" >
     <% end %>

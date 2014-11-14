@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 XiaomaTofelAdmin::Application.routes.draw do
 
+  devise_for :admins
   root to: "vocabulary_questions#index"
   mount Sidekiq::Web => '/sidekiq'
   resources :vocabulary_questions do
