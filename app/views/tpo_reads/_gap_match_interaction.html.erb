@@ -4,7 +4,7 @@
       <div class="">
         <label class="question-index">
           第<label class="_question_content_num"><%= num %></label>题：
-          <a class="delete-1-2">删除</a>
+          <a class="delete-1-2 _delete_tpo_question_content">删除</a>
         </label>
         <%= select_tag :"tpo_question[#{num}][question_type]", options_for_select(TpoQuestion::READ_QUESTION_TYPE.invert.to_a, selected: '3'), id: 'se_unit', :class => 'form-control se6 _change_question_type' %>
       </div>
@@ -13,6 +13,8 @@
     <div class="col-sm-10">
       <%
         question_num = num.to_s
+        @tpo_question_content ||= (tpo_question_content ||= nil)
+        @from ||= (change_type ||= nil)
         question = @from == 'edit' ? @tpo_question_content[:tpo_question][question_num] : nil
         prompt_value = @from == 'edit' ? question[:prompt] : nil
       %>
@@ -92,7 +94,7 @@
         <% question[:option].keys.each do |choice_value| %>
           <% alp = choice_value.gsub(/^choice/, '') %>
           <label class="checkbox-inline _checkbox_content <%= '_checkbox_answer_templete' unless %w(A B C D E).include?(alp) %>">
-            <%= check_box_tag "tpo_question[#{num}][answer1][]", choice_value, question[:answer1].include?(choice_value), id: nil %><label class="_answer_text"><%= alp %></label>
+            <%= check_box_tag "tpo_question[#{num}][answer1][]", choice_value, (question[:answer1] || []).include?(choice_value), id: nil %><label class="_answer_text"><%= alp %></label>
           </label>
         <% end %>
       <% else %>
@@ -119,7 +121,7 @@
       <% question[:option].keys.each do |choice_value| %>
         <% alp = choice_value.gsub(/^choice/, '') %>
         <label class="checkbox-inline _checkbox_content <%= '_checkbox_answer_templete' unless %w(A B C D E).include?(alp) %>">
-          <%= check_box_tag "tpo_question[#{num}][answer2][]", choice_value, question[:answer2].include?(choice_value), id: nil %><label class="_answer_text"><%= alp %></label>
+          <%= check_box_tag "tpo_question[#{num}][answer2][]", choice_value, (question[:answer2] || []).include?(choice_value), id: nil %><label class="_answer_text"><%= alp %></label>
         </label>
       <% end %>
     <% else %>

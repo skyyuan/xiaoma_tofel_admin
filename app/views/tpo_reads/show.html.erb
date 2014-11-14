@@ -93,7 +93,7 @@
           <% if params[:from] == 'index' %>
             <%= link_to '修改', edit_tpo_read_path(@tpo_question, from: params[:from]), id: 'btn4', class: 'btn btn-default btn-lg active', style: 'margin-left:260px;' %>
           <% else %>
-            <%= link_to '继续录入', choose_range_oral_questions_path, id: 'btn3', class: 'btn btn-primary btn-lg active' %>
+            <%= link_to '继续录入', choose_range_tpo_reads_path, id: 'btn3', class: 'btn btn-primary btn-lg active' %>
             <%= link_to '返回修改', edit_tpo_read_path(@tpo_question), id: 'btn4', class: 'btn btn-default btn-lg active' %>
           <% end %>
        </div>

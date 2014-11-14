@@ -39,7 +39,13 @@ class TpoReadsController < ApplicationController
       when '3'
         _partial = 'gap_match_interaction'
       end
-      render :partial => _partial, locals: { num: params[:current_question_num] }
+
+      if params[:question_id].present?
+        tpo_question = TpoQuestion.find(params[:question_id])
+        tpo_question_content = tpo_question.parse_xml_to_object
+        change_type = 'edit'
+      end
+      render :partial => _partial, locals: { num: params[:current_question_num], tpo_question_content: tpo_question_content, change_type: change_type }
     end
   end
 
@@ -108,7 +114,7 @@ class TpoReadsController < ApplicationController
         file.write content
       end
     end
-    redirect_to tpo_read_path(tpo_question)
+    redirect_to tpo_read_path(tpo_question, from: params[:from])
   end
 
   def destroy
