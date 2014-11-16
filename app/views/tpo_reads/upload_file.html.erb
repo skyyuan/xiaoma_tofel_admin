@@ -9,7 +9,7 @@
   <div class="tab-content">
     <!-- list3 -->
     <div class="tab-pane active" id="lot_entry">
-      <p style="color:red;"><%=flash[:notice] %></p>
+      <p style="color:red;"><%= flash[:alert] %></p>
       <p class="unit">请上传excle文件:</p>
       <%= form_tag batch_import_tpo_reads_path, method: :post,class: 'navbar-form navbar-left', :multipart=>true do %>
         <div class="form-group ">

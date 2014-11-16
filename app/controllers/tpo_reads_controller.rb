@@ -135,7 +135,7 @@ class TpoReadsController < ApplicationController
         # end
         TpoQuestion.read_batch_import(read_file)
       else
-        redirect_to upload_file_tpo_reads_path, notice: "请上传XLS格式文件!" and return
+        redirect_to upload_file_tpo_reads_path, alert: "请上传XLS格式文件!" and return
       end
     end
     redirect_to tpo_reads_path
