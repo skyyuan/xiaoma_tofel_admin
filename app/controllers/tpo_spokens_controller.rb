@@ -74,11 +74,15 @@ class TpoSpokensController < ApplicationController
 
   def destroy
     tpo = TpoQuestion.find params[:id]
-    if tpo.tpo_type.name == 'Task3' || tpo.tpo_type.name == 'Task4' || tpo.tpo_type.name == 'Task5' || tpo.tpo_type.name == 'Task6'
-      tpo.destroy
-      system("rm public/system/xml/speaking/#{params[:id]}.xml")
-    else
-      tpo.destroy
+    number = tpo.sequence_number
+    type_id = tpo.tpo_type_id
+    system("rm public/system/xml/speaking/#{params[:id]}.xml") if tpo.tpo_type.name == 'Task3' || tpo.tpo_type.name == 'Task4' || tpo.tpo_type.name == 'Task5' || tpo.tpo_type.name == 'Task6'
+    if tpo.destroy
+      questions = TpoQuestion.where("sequence_number > ? and tpo_type_id = ?", number, type_id)
+      questions.each do |quesion|
+        quesion.sequence_number = quesion.sequence_number.to_i - 1
+        quesion.save
+      end
     end
     redirect_to tpo_spokens_path
   end
