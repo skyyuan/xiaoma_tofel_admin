@@ -8,7 +8,7 @@ class GrammarQuestionsController < ApplicationController
   end
 
   def select_unit
-    @unit = GrammarGroup.order("id asc")
+    @unit = GrammarGroup.order("sequence_number asc")
   end
 
   def edit_title
