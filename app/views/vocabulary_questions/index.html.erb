@@ -21,14 +21,12 @@
         <tr class="info" id="tr1" >
           <td >单元</td>
           <td>单词</td>
-          <td>词性</td>
           <td>操作</td>
         </tr>
         <% @vocabularies.each do |voc| %>
           <tr id="tr2">
             <td>Unit：<%=voc.vocabulary_group.sequence_number %></td>
             <td><%=truncate(voc.word, length: 17) %></td>
-            <td></td>
             <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
           </tr>
         <% end %>
