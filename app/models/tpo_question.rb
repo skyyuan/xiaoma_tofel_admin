@@ -262,7 +262,7 @@ class TpoQuestion < ActiveRecord::Base
 
       tpo_group = TpoGroup.where(name: ["tpo#{section_tpo_group_name}", "Tpo#{section_tpo_group_name}"]).first
       if tpo_group
-        tpo_type = TpoType.where(tpo_group_id: tpo_group.id).first
+        tpo_type = TpoType.where(tpo_group_id: tpo_group.id, name: 'Passage').first
         unless tpo_type
           tpo_type = TpoType.new
           tpo_type.name = 'Passage'

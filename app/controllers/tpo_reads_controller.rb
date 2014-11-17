@@ -50,7 +50,7 @@ class TpoReadsController < ApplicationController
   end
 
   def create
-    tpo_type = TpoType.where(tpo_group_id: session[:_tofel_tpo_read_group]).first
+    tpo_type = TpoType.where(tpo_group_id: session[:_tofel_tpo_read_group], name: 'Passage').first
     unless tpo_type
       tpo_type = TpoType.new
       tpo_type.name = 'Passage'
