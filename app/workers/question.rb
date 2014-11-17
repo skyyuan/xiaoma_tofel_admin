@@ -12,7 +12,7 @@ class Question
       next if row[1] == '题目' || row[1].blank?
       question = JinghuaQuestion.new
       question.content = row[1]
-      question.content_type = row[2]
+      question.content_type = row[2].to_i
       question.analysis = row[4]
       question.save
     end
