@@ -19,8 +19,17 @@ input.search{margin-left:660px;margin-top:-110px;}
 #form6 a.delete-1-1{display: inline-block; position: relative;top:8px;right:107px;float: right;}
 #form6 a.delete-1-2{display: inline-block; position: relative;top:8px;right:107px;float: right;}
 #form6 a.delete-1-3{display: inline-block; position: relative;top:-14px;right:-10px;float: right;}
-#form6 a.delete-2{  display: inline-block; position: relative;top: -29px;right: -26px;float: right;}
-#form6 a.delete-3{  display: inline-block; position: relative;top: -41px;right: -4px;float: right;}
+#form6 a.delete-2{display: inline-block; position: relative;top: -29px;right: -26px;float: right;}
+#form6 a.delete-3{display: inline-block; position: relative;top: -41px;right: -4px;float: right;}
+
+#form6 .shade1{min-height:570px;height:auto;!important}
+#form6 .shade2{min-height:670px;height:auto; !important }
+#form6 .shade3{min-height:720px;height:auto; !important }
+#form6 .listen-content{height:100px;text-align:top;!important }
+#form6 .shade4{min-height:120px;height:auto; !important }
+#form6 .teacher-explain{display: inline-block;overflow-wrap: break-word;width: 659px;margin-left: 50px;}
+
+
 /* #form7{font-weight: normal;margin-left:;}*/
 
 /**13
