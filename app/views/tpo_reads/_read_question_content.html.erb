@@ -20,7 +20,7 @@
   <!-- 第二类多选题 end -->
 
   <!-- 第三类归纳题 begin -->
-  <%= render 'gap_match_interaction', num: 3 %>
+  <%#= render 'gap_match_interaction', num: 3 %>
 
   <!-- 第三类归纳题 end -->
 <% end %>
@@ -108,12 +108,26 @@
       });
 
       $('._tpo_read_form').on('change', '._change_question_type', function(event){
-        var question_content_num = $(this).prev('label').children('._question_content_num').html();
+        // var question_content_num = $(this).prev('label').children('._question_content_num').html();
+        var question_content_num = $(this).closest('._tpo_question_content').prevAll('._tpo_question_content').length + 1;
         var question_content = $(this).closest('._tpo_question_content');
         $.get('/tpo_reads/change_question_type', {type: 'change_question', change_question_type_to: $(this).val(), current_question_num: question_content_num}, function(result){
           question_content.replaceWith($(result));
         });
-      })
+      });
+
+      $('._tpo_read_form').on('click', '._delete_tpo_question_content', function(){
+        var next_all_question_contents = $(this).closest('._tpo_question_content').nextAll('._tpo_question_content');
+        $(this).closest('._tpo_question_content').remove();
+        var question_id = $('._tpo_read_form').attr('action').split('/')[2];
+        next_all_question_contents.each(function(idx, ele){
+          var question_content_num = $(ele).prevAll('._tpo_question_content').length + 1;
+          var change_question_type_to = $(ele).find('._change_question_type').val();
+          $.get('/tpo_reads/change_question_type', {type: 'change_question', change_question_type_to: change_question_type_to, current_question_num: question_content_num, question_id: question_id}, function(result){
+            $(ele).replaceWith($(result));
+          });
+        })
+      });
 
     })
   </script>
