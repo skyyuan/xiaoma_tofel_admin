@@ -22,10 +22,11 @@ namespace :xiaoma do
     puts 'improt oral origins and oral origin'
     # tpo start tpo33
     # tpo_num = 33
-    # oral_from = ['conversion1', 'conversion2', 'lecture1', 'lecture2', 'lecture3', 'lecture4']
     tpo_num = 0
-    sequence_number = 198
-    oral_from = ['lecture4', 'lecture3', 'lecture2', 'lecture1', 'conversion2', 'conversion1' ]
+    # sequence_number = 198
+    sequence_number = 0
+    # oral_from = ['lecture4', 'lecture3', 'lecture2', 'lecture1', 'conversion2', 'conversion1' ]
+    oral_from = ['conversion1', 'conversion2', 'lecture1', 'lecture2', 'lecture3', 'lecture4']
     OralOrigin.transaction do
       33.times do |origin_idx|
         # save oral origin
@@ -37,8 +38,8 @@ namespace :xiaoma do
         # sequence_number = 0
         6.times do |group_idx|
           # sequence_number = OralGroup.count + 1
+          sequence_number = sequence_number + 1
           OralGroup.create(sequence_number: sequence_number, name: oral_from[group_idx], oral_origin_id: oral_origin.id)
-          sequence_number = sequence_number - 1
         end
       end
 
