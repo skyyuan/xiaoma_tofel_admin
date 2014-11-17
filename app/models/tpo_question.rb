@@ -128,15 +128,15 @@ class TpoQuestion < ActiveRecord::Base
     alps = ('A'..'G').to_a
     section_sheet.each_with_index do |section_row, section_idx|
       next if section_idx.zero?
-      section_tpo_group_name = section_row[0]
-      section_tpo_type_name = section_row[1]
+      section_tpo_group_name = section_row[0].to_i
+      section_tpo_type_name = section_row[1].to_i
       next if section_tpo_group_name.blank? || section_tpo_type_name.blank?
 
       question_content_rows = [] # 所属文章的小题row number
       questioin_sheet.each_with_index do |question_row, question_idx|
         next if question_idx.zero?
-        question_tpo_group_name = question_row[0]
-        question_tpo_type_name = question_row[1]
+        question_tpo_group_name = question_row[0].to_i
+        question_tpo_type_name = question_row[1].to_i
         next if question_tpo_group_name.blank? || question_tpo_type_name.blank?
         if section_tpo_group_name == question_tpo_group_name && section_tpo_type_name == question_tpo_type_name
           question_content_rows.push(question_idx)
