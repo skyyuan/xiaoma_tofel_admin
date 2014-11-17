@@ -2,7 +2,7 @@ p.bold{margin-left: -20px;}
 .form-shade,.form-shade1,.form-shade2{width:680px;background:#f8f8f8;margin-left:25px;}
 .form-shade{height:240px;margin-bottom: 20px;}
 .form-shade1{height:240px;margin-bottom: 20px;}
-.form-shade2{min-height: 500px;height: auto !important;}
+.form-shade2{height:420px;}
 #form6 .form-group{margin-left:-20px;}
 #form6 textarea{height:110px;}
 #btn3,#btn4{padding:19px 70px;margin-top:20px;}

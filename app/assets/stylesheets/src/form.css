@@ -2,6 +2,26 @@
 select .se2{width:150px;height:40px;} */
 .form-group input.file{margin-left:120px;margin-top:-45px;}
 .form1 input.form-control{width:250px;height:40px;margin-left:440px;margin-top:-65px;}
+.form1 input.form-control{width:250px;height:40px;margin-left:440px;margin-top:-65px;}
+
+#form6 textarea.question-answer{width:560px;height:25px; !important}
+#form6 label.question-index{height:12px;margin-left: 60px;margin-bottom: 0px;!important}
+#form6 #question-checkbox {width:300px;height:15px;}
+
+/* #list4 #question-checkbox input li{width:40px;height:20px;float:left;margin-left:10px;!important}
+#question-checkbox li{width:40px;height:20px;float:left;margin-left:10px;!important}
+ */
+
+
 form.navbar-form{height:60px;}
 input.search{margin-left:660px;margin-top:-110px;}
-/**/
+#form6 .checklist-1{margin-left: 200px;margin-top:-30px}
+#form6 a.delete-1-1{display: inline-block; position: relative;top:8px;right:107px;float: right;}
+#form6 a.delete-1-2{display: inline-block; position: relative;top:8px;right:107px;float: right;}
+#form6 a.delete-1-3{display: inline-block; position: relative;top:-14px;right:-10px;float: right;}
+#form6 a.delete-2{  display: inline-block; position: relative;top: -29px;right: -26px;float: right;}
+#form6 a.delete-3{  display: inline-block; position: relative;top: -41px;right: -4px;float: right;}
+/* #form7{font-weight: normal;margin-left:;}*/
+
+/**13
+

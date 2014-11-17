@@ -75,10 +75,10 @@
                 <textarea class="form-control" rows="3" name="resolution"></textarea>
                </div>
            </div>
-             <div class="form-group speaking" id="speaking-form">
+            <div class="form-group speaking" id="speaking-form">
                <label for="inputtext1" class="col-sm-2 control-label">答案范例：</label>
                <div class="col-sm-10">
-                  <select class="form-control se1" name="standpoint[]">
+                  <select class="form-control se1" name="standpoint[]" style="margin-left: -11px;margin-top: 0px;">
                     <option value="同意">同意</option>
                     <option value="反对">反对</option>
                     <option value="中立">中立</option>
@@ -87,7 +87,7 @@
                <div class="col-sm-10">
                 <textarea class="form-control sample" rows="3" name="sample[]" style="margin-top: 10px;margin-left: 100px;"></textarea>
                </div>
-           </div>
+            </div>
          </div>
          <p  id="new_gra"><img src="<%=asset_path 'i3.png'%>">新语法点</p>
          <input type="hidden" name="type_id" value="<%=params[:type_id]%>">
@@ -105,7 +105,7 @@
       html = '<div class="form-group speaking" id="speaking-form">' +
              '<label for="inputtext1" class="col-sm-2 control-label">答案范例：</label>' +
              '<div class="col-sm-10">' +
-             '<select class="form-control se1" name="standpoint[]">' +
+             '<select class="form-control se1" name="standpoint[]" style="margin-left: -11px;margin-top: 0px;">' +
              '<option value="同意">同意</option>' +
              '<option value="反对">反对</option>' +
              '<option value="中立">中立</option>' +

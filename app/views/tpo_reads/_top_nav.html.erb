@@ -1,0 +1,5 @@
+<ul class="nav nav-tabs" role="tablist" id="myTab">
+  <li class="<%= 'active' if @top_nav == 'list' %>"><a href="<%= tpo_reads_path %>" role="tab" class="black">阅读列表</a></li>
+  <li class="<%= 'active' if @top_nav != 'list' && @top_nav != 'upload_file' %>"><a href="<%= choose_range_tpo_reads_path %>" role="tab">阅读录入</a></li>
+  <li class="<%= 'active' if @top_nav == 'upload_file' %>"><a href="<%= upload_file_tpo_reads_path %>" role="tab">阅读批量录入</a></li>
+</ul>

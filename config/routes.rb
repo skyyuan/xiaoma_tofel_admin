@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 XiaomaTofelAdmin::Application.routes.draw do
 
+  devise_for :admins
   root to: "vocabulary_questions#index"
   mount Sidekiq::Web => '/sidekiq'
   resources :vocabulary_questions do
@@ -56,5 +57,14 @@ XiaomaTofelAdmin::Application.routes.draw do
   resources :tpo_spokens do
     get :new_type, on: :collection
     post :new_type_create, on: :collection
+  end
+
+  resources :tpo_reads do
+    collection do
+      get :choose_range
+      get :change_question_type
+      get :upload_file
+      post :batch_import
+    end
   end
 end

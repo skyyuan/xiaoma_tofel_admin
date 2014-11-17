@@ -88,11 +88,15 @@ class TpoQuestionsController < ApplicationController
 
   def destroy
     tpo = TpoQuestion.find params[:id]
-    if tpo.tpo_type.name == "Integrated"
-      tpo.destroy
-      system("rm public/system/xml/writing/#{params[:id]}.xml")
-    else
-      tpo.destroy
+    number = tpo.sequence_number
+    type_id = tpo.tpo_type_id
+    system("rm public/system/xml/writing/#{params[:id]}.xml") if tpo.tpo_type.name == "Integrated"
+    if tpo.destroy
+      questions = TpoQuestion.where("sequence_number > ? and tpo_type_id = ?", number, type_id)
+      questions.each do |quesion|
+        quesion.sequence_number = quesion.sequence_number.to_i - 1
+        quesion.save
+      end
     end
     redirect_to writ_index_tpo_questions_path
   end

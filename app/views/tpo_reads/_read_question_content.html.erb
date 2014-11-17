@@ -1,0 +1,134 @@
+<% if @from == 'edit' %>
+  <% @tpo_question_content[:tpo_question].each_with_index do |_questions, idx| %>
+    <% _question_num = idx + 1 %>
+    <% _question_type = _questions[1][:question_type] %>
+    <% if _question_type == '1' %>
+      <%= render 'simple_choice', num: _question_num %>
+    <% elsif _question_type == '2' %>
+      <%= render 'multiple_choice', num: _question_num %>
+    <% elsif _question_type == '3' %>
+      <%= render 'gap_match_interaction', num: _question_num %>
+    <% end %>
+  <% end %>
+<% else %>
+  <!-- 第一类单选题 begin -->
+  <%= render 'simple_choice', num: 1 %>
+  <!-- 第一类单选题 end -->
+
+  <!-- 第二类多选题 begin -->
+  <%= render 'multiple_choice', num: 2 %>
+  <!-- 第二类多选题 end -->
+
+  <!-- 第三类归纳题 begin -->
+  <%#= render 'gap_match_interaction', num: 3 %>
+
+  <!-- 第三类归纳题 end -->
+<% end %>
+
+<p class="para _add_question_content"><img src="<%= asset_path 'i3.png'%>">新题目</p>
+
+<%= content_for :tail do  %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      // 删除选项
+      $('._tpo_read_form').on('click', '._delete_tpo_question_choice', function(event){
+        var alps = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+        var closest_div = $(this).closest('._choice');
+        var current_alp = closest_div.find('label').html().match(/[A-Z]/)[0];
+        var next_all_choices = closest_div.nextAll('._question_choice_templete').not(':hidden');
+        var next_all_choices_length = next_all_choices.length;
+        if(next_all_choices_length > 0){
+          var current_indx_of = alps.indexOf(current_alp);
+
+          next_all_choices.each(function(idx, ele){
+            var element = $(ele);
+            element.find('label').html('选项'+ alps[current_indx_of] + '：');
+            var input_names = element.find('input').attr('name').split(alps[current_indx_of + 1]);
+            element.find('input').attr('name', input_names[0] + alps[current_indx_of] + input_names[1]);
+            current_indx_of = current_indx_of + 1;
+          })
+        }
+        // delete answer checkbox
+        var checkbox_current_indx_of = alps.indexOf(current_alp);
+        var checkbox_answers_content_length = $(this).closest('._choice').siblings('._checkbox_answer').length;
+        var checkbox_answers = $(this).closest('._choice').siblings('._checkbox_answer').find('._checkbox_content').not(':hidden');
+        var checkbox_answers_length = checkbox_answers.length;
+        var half_checkbox_answers_length = checkbox_answers_length/2;
+        checkbox_answers.each(function(idx, ele){
+          var element = $(ele);
+          if(idx == checkbox_current_indx_of){
+            element.remove();
+            $(checkbox_answers[half_checkbox_answers_length + idx]).remove();
+          }else if(idx > checkbox_current_indx_of ){
+            var checkbox_next_alp = alps[checkbox_current_indx_of];
+            element.find('input').attr('value', ('choice' + checkbox_next_alp));
+            element.find('._answer_text').html(checkbox_next_alp);
+
+            $(checkbox_answers[half_checkbox_answers_length + idx]).find('input').attr('value', ('choice' + checkbox_next_alp));
+            $(checkbox_answers[half_checkbox_answers_length + idx]).find('._answer_text').html(checkbox_next_alp);
+            checkbox_current_indx_of = checkbox_current_indx_of + 1;
+          }
+          if((idx >= half_checkbox_answers_length) && (checkbox_answers_content_length > 1)){
+            return false;
+          }
+        })
+        closest_div.remove();
+      });
+
+      // 添加选项
+      $('._tpo_read_form').on('click', '._add_tpo_question_choice', function(event){
+        var alps = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+        var current_all_choices_length = $(this).prevAll('._choice').not(':hidden').length;
+        var next_alp = alps[current_all_choices_length];
+        var templ = $(this).prev('._question_choice_templete');
+
+        var question_num = $('._tpo_question_material').length
+        templ.find('label._question_num').html('选项'+ next_alp + '：')
+        var templ_input_name = templ.find('input').attr('name');
+        var templ_alp = templ_input_name.split('choice')[1].slice(0, 1);
+        var input_names = templ_input_name.split(templ_alp);
+        templ.find('input').attr('name', input_names[0] + next_alp + input_names[1]);
+        templ.before(templ.clone().show());
+        // add answer checkbox
+        var answer_templs = $(this).siblings('._checkbox_answer').find('._checkbox_answer_templete:last');
+        answer_templs.each(function(idx, answer_templ){
+          var answer_templ = $(answer_templ);
+          answer_templ.find('input').attr('value', ('choice' + next_alp));
+          answer_templ.find('._answer_text').html(next_alp);
+          answer_templ.before(answer_templ.clone().show());
+        })
+      });
+
+      $('._tpo_read_form').on('click', '._add_question_content', function(event){
+        var current_question_content_length = $('._tpo_question_content').length;
+        var add_question_content = $(this);
+        $.get('/tpo_reads/change_question_type', {type: 'add_question', current_question_num: current_question_content_length}, function(result){
+          add_question_content.before($(result));
+        });
+      });
+
+      $('._tpo_read_form').on('change', '._change_question_type', function(event){
+        // var question_content_num = $(this).prev('label').children('._question_content_num').html();
+        var question_content_num = $(this).closest('._tpo_question_content').prevAll('._tpo_question_content').length + 1;
+        var question_content = $(this).closest('._tpo_question_content');
+        $.get('/tpo_reads/change_question_type', {type: 'change_question', change_question_type_to: $(this).val(), current_question_num: question_content_num}, function(result){
+          question_content.replaceWith($(result));
+        });
+      });
+
+      $('._tpo_read_form').on('click', '._delete_tpo_question_content', function(){
+        var next_all_question_contents = $(this).closest('._tpo_question_content').nextAll('._tpo_question_content');
+        $(this).closest('._tpo_question_content').remove();
+        var question_id = $('._tpo_read_form').attr('action').split('/')[2];
+        next_all_question_contents.each(function(idx, ele){
+          var question_content_num = $(ele).prevAll('._tpo_question_content').length + 1;
+          var change_question_type_to = $(ele).find('._change_question_type').val();
+          $.get('/tpo_reads/change_question_type', {type: 'change_question', change_question_type_to: change_question_type_to, current_question_num: question_content_num, question_id: question_id}, function(result){
+            $(ele).replaceWith($(result));
+          });
+        })
+      });
+
+    })
+  </script>
+<% end %>

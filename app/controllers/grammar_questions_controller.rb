@@ -54,7 +54,14 @@ class GrammarQuestionsController < ApplicationController
 
   def destroy
     grammar = GrammarQuestion.find params[:id]
+    number = grammar.sequence_number
+    group_id = grammar.grammar_group_id
     if grammar.destroy
+      questions = GrammarQuestion.where("sequence_number > ? and grammar_group_id = ?", number, group_id)
+      questions.each do |quesion|
+        quesion.sequence_number = quesion.sequence_number.to_i - 1
+        quesion.save
+      end
       system("rm public/system/xml/syntax/#{params[:id]}.xml")
     end
     redirect_to grammar_questions_path

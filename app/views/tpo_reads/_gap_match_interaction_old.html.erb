@@ -1,0 +1,93 @@
+<p class="para">&nbsp;</p>
+<div class="form-shade _tpo_question_content" >
+  <%= hidden_field_tag :"#{num}[question_type]", 3 %>
+  <label for="oral_question_data_url" class="col-sm-2 control-label">题目：</label>
+  <div class="col-sm-10">
+    <%= text_field_tag :"#{num}[prompt][]", nil, class: 'form-control' %>
+  </div>
+  <div class="_choice">
+    <label for="oral_question_data_url" class="col-sm-2 control-label">选项A：</label>
+    <div class="col-sm-10">
+      <%= text_field_tag :"#{num}[choiceA][]", nil, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="_choice">
+    <label for="oral_question_data_url" class="col-sm-2 control-label">选项B：</label>
+    <div class="col-sm-10">
+      <%= text_field_tag :"#{num}[choiceB][]", nil, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="_choice">
+    <label for="oral_question_data_url" class="col-sm-2 control-label">选项C：</label>
+    <div class="col-sm-10">
+      <%= text_field_tag :"#{num}[choiceC][]", nil, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="_choice">
+    <label for="oral_question_data_url" class="col-sm-2 control-label">选项D：</label>
+    <div class="col-sm-10">
+      <%= text_field_tag :"#{num}[choiceD][]", nil, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="_question_choice_templete _choice">
+    <label for="oral_question_data_url" class="col-sm-2 control-label">选项E：</label>
+    <div class="col-sm-10">
+      <%= text_field_tag :"#{num}[choiceE][]", nil, id: '', class: 'form-control' %>
+      <a href="javascript:void(0);" class="_delete_tpo_question_choice">删除</a>
+    </div>
+  </div>
+
+  <!--choice tempelte begin -->
+  <div class="_question_choice_templete _choice" style="display:none;">
+    <label for="oral_question_data_url" class="col-sm-2 control-label _question_num">选项E：</label>
+    <div class="col-sm-10">
+      <%= text_field_tag :"#{num}[choiceE][]", nil, id: '', class: 'form-control' %>
+      <a href="javascript:void(0);" class="_delete_tpo_question_choice">删除</a>
+    </div>
+  </div>
+  <!--choice tempelte end -->
+
+  <p class="para _add_tpo_question_choice"><img src="<%= asset_path 'i3.png'%>">添加选项</p>
+
+  <div class="col-sm-10 _checkbox_answer">
+    <% choices = ['choiceA', 'choiceB', 'choiceC', 'choiceD', 'choiceE'] %>
+    <%= text_field_tag :"#{num}G1", nil, class: 'form-control', placeholder: '问题描述', style: 'width: 120px;' %>
+    <% choices.each do |choice| %>
+      <label class="checkbox-inline _checkbox_content">
+       <%= check_box_tag "#{num}[answer1][]", choice, nil, id: nil, style: 'width: 20px;margin-top: -10px;' %><%= choice %>
+      </label>
+    <% end %>
+
+    <!--choice answer tempelte begin -->
+    <label class="checkbox-inline _checkbox_answer_templete _checkbox_content" style="display:none;">
+      <%= check_box_tag "#{num}[answer][]", 'choiceA', nil, id: nil, style: 'width: 20px;margin-top: -10px;' %><span class="_answer_text">choiceA</span>
+    </label>
+    <!--choice answer tempelte end -->
+  </div>
+
+  <div class="col-sm-10 _checkbox_answer">
+    <% choices = ['choiceA', 'choiceB', 'choiceC', 'choiceD', 'choiceE'] %>
+    <%= text_field_tag :"#{num}G2", nil, class: 'form-control', placeholder: '问题描述', style: 'width: 120px;' %>
+    <% choices.each do |choice| %>
+      <label class="checkbox-inline _checkbox_content">
+       <%= check_box_tag "#{num}[answer2][]", choice, nil, id: nil, style: 'width: 20px;margin-top: -10px;' %><%= choice %>
+      </label>
+    <% end %>
+
+    <!--choice answer tempelte begin -->
+    <label class="checkbox-inline _checkbox_answer_templete _checkbox_content" style="display:none;">
+      <%= check_box_tag "#{num}[answer][]", 'choiceA', nil, id: nil, style: 'width: 20px;margin-top: -10px;' %><span class="_answer_text">choiceA</span>
+    </label>
+    <!--choice answer tempelte end -->
+  </div>
+
+  <label for="oral_question_data_url" class="col-sm-2 control-label">解析：</label>
+  <div class="col-sm-10">
+    <%= text_field_tag :"#{num}[analysis][]", nil, class: 'form-control', placeholder: '解析' %>
+  </div>
+
+  <label for="oral_question_data_url" class="col-sm-2 control-label">名师讲解：</label>
+  <div class="col-sm-10">
+    <%= text_field_tag :"#{num}[audio][]", nil, class: 'form-control', placeholder: '输入视频地址' %>
+  </div>
+</div>
