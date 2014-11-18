@@ -22,8 +22,11 @@ class TpoQuestion < ActiveRecord::Base
           tpo_question_options = tpo_questions[num]
           question_type = tpo_question_options[:question_type]
           if question_type == '3'
-            cardinality = 'multiple'
+            cardinality = 'complex'
             baseType = 'directedPair'
+          elsif question_type == '2'
+            cardinality = 'multiple'
+            baseType = 'identifier'
           else
             cardinality = 'single'
             baseType = 'identifier'
@@ -153,8 +156,11 @@ class TpoQuestion < ActiveRecord::Base
             question_content = questioin_sheet.row(question_content_row)
             question_type = question_content[2].to_i
             if question_type == 3
-              cardinality = 'multiple'
+              cardinality = 'complex'
               baseType = 'directedPair'
+            elsif question_type == 2
+              cardinality = 'multiple'
+              baseType = 'identifier'
             else
               cardinality = 'single'
               baseType = 'identifier'
