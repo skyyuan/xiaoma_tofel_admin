@@ -7,14 +7,14 @@
     <div class="tab-pane active" id="voc_list">
       <table class="table table-bordered table-striped " id="table1">
         <tr class="info" id="tr1" >
-           <td >题目部分</td>
+           <td>机经</td>
            <td>题号</td>
            <td>题目</td>
            <td>操作</td>
         </tr>
         <% @works.each do |work| %>
           <tr id="tr2">
-            <td><%=work.content_type%></td>
+            <td><%=work.jijing_group.name %></td>
             <td><%=work.sequence_number%></td>
             <td><%=truncate(work.content, length: 17) %></td>
             <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>

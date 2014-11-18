@@ -1,0 +1,63 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gtpo" %>
+<% end %>
+
+<!-- right content -->
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'nav' %>
+
+  <div class="tab-content">
+    <div class="" id="voc_entry">
+      <%=form_tag "/vocabulary_questions/#{@question.id}", class: "form-horizontal _read_form", method: 'PUT', id: "form6" do %>
+        <div class="form-shade _question_content" style="height:auto !important;">
+          <div class="form-group group2">
+            <div class="form-group group2">
+              <div>
+                <label class="question-index">
+                  Question：
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group group2">
+            <label for="inputtext1" class="col-sm-2 control-label">单词：</label>
+            <div class="col-sm-10">
+              <input class="form-control question-answer" name="word" type="text" value="<%=@question_content[:prompt] %>">
+              <input class="form-control question-answer" name="before_word" type="hidden" value="<%=@question_content[:prompt] %>">
+            </div>
+          </div>
+          <div class="form-group group2">
+            <label for="inputtext1" class="col-sm-2 control-label">词性：</label>
+            <div class="col-sm-10">
+              <input class="form-control question-answer" name="speech" type="text" value="<%=@question_content[:speech].split(".")[0] %>.">
+            </div>
+          </div>
+          <div class="form-group group2">
+            <label for="inputtext1" class="col-sm-2 control-label">翻译：</label>
+            <div class="col-sm-10">
+              <input class="form-control question-answer" name="cn" type="text" value="<%=@question_content[:speech].split(".")[1] %>">
+            </div>
+          </div>
+          <div class="form-group group2">
+            <label for="inputtext1" class="col-sm-2 control-label">正确选项：</label>
+            <div class="col-sm-10">
+              <%=  select_tag "answer", options_for_select(@question_content[:simple_choice_identifier] ,@question_content[:answer]),class: "form-control se5 _unit"  %>
+            </div>
+          </div>
+          <% @question_content[:simple_choice_identifier].each_with_index do |option,index| %>
+            <div class="form-group group2">
+              <label for="inputtext1" class="col-sm-2 control-label">选项<%=option%>：</label>
+              <div class="col-sm-10">
+                <input class="form-control question-answer" name="option[<%=option%>]" type="text" value="<%=@question_content[:simple_choice_value][index]%>">
+              </div>
+            </div>
+          <% end %>
+          <div class="form-group group2">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-default b1 _btn" id="btn_sub">提交</button>
+      <% end %>
+    </div>
+  </div>
+</div>

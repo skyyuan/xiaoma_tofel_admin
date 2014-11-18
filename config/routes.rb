@@ -7,6 +7,7 @@ XiaomaTofelAdmin::Application.routes.draw do
   resources :vocabulary_questions do
     get :index_upload, on: :collection
     post :upload_vocabulary, on: :collection
+    post :delete, on: :collection
   end
 
   resources :grammar_groups

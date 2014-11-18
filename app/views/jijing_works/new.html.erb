@@ -2,50 +2,40 @@
   <%= stylesheet_link_tag "g9" %>
 <% end %>
  <div class="content W730">
+    <%= render "nav" %>
+    <p style="color:red;"><%=flash[:notice] %></p>
     <div class="tab-pane" id="voc_entry">
-      <nav class="navbar navbar-default" role="navigation" id="navbar">
-        <p><span class="task"><%=params[:type_name]%></span><span>第<%=params[:number]%>题</span><span><a href="<%=new_type_jijing_works_path(group_id: params[:group_id])%>">更改</a></span></p>
-
-      </nav>
       <%=form_tag jijing_works_path, class: 'form-horizontal' do %>
         <p style="font-weight:bold;padding-left:20px;">Question:</p>
         <div class="form-group">
+           <label for="inputtext1" class="col-sm-2 control-label">题号选择：</label>
+           <div class="col-sm-10">
+             <select class="" id="" name="number">
+              <option value>题号</option>
+              <% (1..15).each do |i| %>
+                 <option value="<%=i%>"><%=i%></option>
+              <% end %>
+            </select>
+           </div>
+        </div>
+        <div class="form-group">
           <label for="inputtext1" class="col-sm-2 control-label">口语题目：</label>
           <div class="col-sm-10">
-            <textarea class="form-control" rows="3" name="content"></textarea>
+            <textarea class="form-control" rows="3" name="question_name"></textarea>
           </div>
         </div>
         <div class="form-group">
-           <label for="inputtext1" class="col-sm-2 control-label">解析：</label>
+           <label for="inputtext1" class="col-sm-2 control-label">名师讲解：</label>
            <div class="col-sm-10">
-            <textarea class="form-control" rows="3" name="resolution"></textarea>
+            <input type="text" name="question_analysis" class="form-control" id="inputtext2" placeholder="输入讲解视频地址">
            </div>
         </div>
-        <% if params[:type_name] == "独立写作"%>
-          <div class="form-group speaking" id="speaking-form">
-            <label for="inputtext1" class="col-sm-2 control-label">答案范例：</label>
-            <div class="col-sm-10">
-              <select class="form-control se1" name="standpoint[]" style="margin-top: 4px;margin-left: -2px;">
-                <option value="同意">同意</option>
-                <option value="反对">反对</option>
-                <option value="中立">中立</option>
-              </select>
-            </div>
-            <div class="col-sm-10">
-              <textarea class="form-control sample" rows="3" name="sample[]" style="margin-top: 10px;margin-left: 121px;"></textarea>
-            </div>
+        <div class="form-group">
+          <label for="inputtext1" class="col-sm-2 control-label" >答案范例：</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" rows="3" name="sample_name"></textarea>
           </div>
-          <p  id="new_gra"><img src="<%=asset_path 'i3.png'%>">新语法点</p>
-        <% else %>
-          <div class="form-group">
-            <label for="inputtext1" class="col-sm-2 control-label" >答案范例：</label>
-            <div class="col-sm-10">
-              <textarea class="form-control" rows="3" name="sample"></textarea>
-            </div>
-          </div>
-        <% end %>
-        <input type="hidden" name="type_name" value="<%=params[:type_name]%>">
-        <input type="hidden" name="number" value="<%=params[:number]%>">
+        </div>
         <input type="hidden" name="group_id" value="<%=params[:group_id]%>">
         <button type="submit" class="btn btn-default b1" id="btn_sub">提交</button>
       <% end %>
