@@ -16,7 +16,12 @@ module TpoListenQuestion
             num = (idx + 1).to_s
             tpo_question_options = tpo_questions[num]
             question_type = tpo_question_options[:question_type]
-            xml.responseDeclaration 'identifier' => "RESPONSE#{num}", 'cardinality' => 'single', 'baseType' => 'identifier' do
+            if question_type == '2'
+              cardinality = 'multiple'
+            else
+              cardinality = 'single'
+            end
+            xml.responseDeclaration 'identifier' => "RESPONSE#{num}", 'cardinality' => cardinality, 'baseType' => 'identifier' do
               xml.correctResponse do
                 case question_type
                 when '1'
@@ -95,144 +100,160 @@ module TpoListenQuestion
       question_sheet = read_sheet.worksheet 0
       alps = ('A'..'F').to_a
       tpos = []
+      # question_content_rows {33=>{1=>{1=>[5], 2=>[21]}, 2=>{1=>[10], 2=>[16], 3=>[27], 4=>[33]}}}
       question_content_rows = {}
       question_sheet.each_with_index do |question_row, question_idx|
         next if question_idx.zero?
         tpo_group_name = question_row[0].to_i
-        tpo_type_name = question_row[1].to_i # 1 => conversation, 2 => lecture
-        sequence_number = question_row[3]
+        tpo_type_name = question_row[2].to_i # 1 => conversation, 2 => lecture
+        sequence_number = question_row[3].to_i
         next if tpo_group_name.blank? || tpo_type_name.blank? || sequence_number.blank?
-        if question_content_row.keys.include?(tpo_group_name)
-      end
-
-
-      # question_sheet.each_with_index do |section_row, section_idx|
-      question_sheet.each_with_index do |question_row, question_idx|
-        next if question_idx.zero?
-        tpo_group_name = question_row[0].to_i
-        tpo_type_name = question_row[1].to_i # 1 => conversation, 2 => lecture
-        sequence_number = question_row[3]
-        next if tpo_group_name.blank? || tpo_type_name.blank? || sequence_number.blank?
-
-        question_content_rows = [] # 所属文章的小题row number
-        questioin_sheet.each_with_index do |content_row, content_idx|
-          next if content_idx.zero?
-          content_tpo_group_name = question_row[0].to_i
-          content_tpo_group_name = question_row[0].to_i
-          content_tpo_type_name = question_row[1].to_i
-          content_sequence_number = question_row[3]
-          next if content_tpo_group_name.blank? || content_tpo_type_name.blank? || content_sequence_number.blank?
-
-          if tpo_group_name == content_tpo_group_name
-            question_content_rows.push(content_idx)
-          end
-        end
-
-        content_builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
-          xml.assessmentItem 'xmlns'=>"http://www.imsglobal.org/xsd/imsqti_v2p1", 'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance",
-          'xsi:schemaLocation'=>"http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd", 'identifier'=>"choice",
-          'title'=>"", 'adaptive'=>"false", 'timeDependent'=>"false" do
-            # 遍历每一道题
-            question_content_rows.each_with_index do |question_content_row, idx|
-              num = (idx + 1).to_s
-              # tpo_question_options = tpo_questions[num]
-              question_content = questioin_sheet.row(question_content_row)
-              question_type = tpo_question_options[:question_type]
-              xml.responseDeclaration 'identifier' => "RESPONSE#{num}", 'cardinality' => 'single', 'baseType' => 'identifier' do
-                xml.correctResponse do
-                  case question_type
-                  when '1'
-                    # 单选
-                    # <value>ChoiceA</value>
-                    xml.value tpo_question_options[:answer]
-                  when '2'
-                    # 多选
-                    # <value>ChoiceA</value>
-                    # <value>ChoiceB</value>
-                    (tpo_question_options[:answer] || []).each do |answer|
-                      xml.value answer
-                    end
-                  end
-                end
-              end
-            end
-
-            xml.outcomeDeclaration 'identifier' => "SCORE", 'cardinality' => "single", 'baseType' => "integer"
-
-            xml.itemBody do
-              # 文章
-              xml.blockquote do
-                xml.audio do
-                  xml.source 'src' => options[:audio]
-                end
-                material = options[:material]
-                roles = ('a'..'e').to_a
-                material_roles = []
-                case tpo_type_name
-                when 'Lecture'
-                  xml.p material
-                when 'Conversion'
-                  materials = material.split(TpoQuestion::LISTEN_QUESTION_MATERIAL_MARKER)
-                  materials.each do |section|
-                    role, content = section.split('=').map{|role_content| role_content.strip }
-                    next if role.blank?
-                    material_roles.push(role) unless material_roles.include?(role)
-                    role_idx = material_roles.index(role)
-                    xml.send("p_#{roles[role_idx]}", "#{role}:#{content}")
-                  end
-                end
-              end
-
-              question_count.times do |idx|
-                num = (idx + 1).to_s
-                tpo_question_options = tpo_questions[num]
-                question_type = tpo_question_options[:question_type]
-                # 名师讲解-视频地址
-                xml.audio do
-                  xml.source 'src' => tpo_question_options[:audio]
-                end
-                # 解析
-                xml.p tpo_question_options[:analysis]
-
-                #问题及选项
-                xml.choiceInteraction 'responseIdentifier' => "RESPONSE#{num}", 'shuffle' => "false", 'maxChoices' => "#{question_type}" do
-                  xml.prompt tpo_question_options[:prompt]
-                  tpo_question_options[:option].each do |option, content|
-                    xml.simpleChoice content, 'identifier' => option
-                  end
-                end
-              end
-            end
-            xml.responseProcessing 'template'=>"http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"
-          end
-        end
-
-        #puts "~~~~~~~~~~~~~#{content_builder.to_xml}@@@@@@@@@@@@"
-
-        tpo_group = TpoGroup.where(name: ["tpo#{section_tpo_group_name}", "Tpo#{section_tpo_group_name}"]).first
-        if tpo_group
-          tpo_type = TpoType.where(tpo_group_id: tpo_group.id, name: 'Passage').first
-          unless tpo_type
-            tpo_type = TpoType.new
-            tpo_type.name = 'Passage'
-            tpo_type.tpo_group_id = tpo_group.id
-            tpo_type.save
-          end
-
-          tpo_question = TpoQuestion.new
-          tpo_question.tpo_type_id = tpo_type.id
-          tpo_question.sequence_number = section_tpo_type_name
-          content = content_builder.to_xml
-          tpo_question.content = content
-          if tpo_question.save
-            File.open("#{Rails.root}/public/system/xml/tpo/reads/#{tpo_question.id}.xml", "wb") do |file|
-              file.write content
-            end
-          end
+        tpo_type = question_row[2].to_i
+        if !question_content_rows.keys.include?(tpo_group_name)
+          question_content_rows[tpo_group_name] = {tpo_type_name => {sequence_number => [question_idx]}}
         else
-          logger.info "所属tpo不存在"
+          if question_content_rows[tpo_group_name][tpo_type_name].blank?
+            question_content_rows[tpo_group_name][tpo_type_name] = {sequence_number => [question_idx]}
+          elsif !question_content_rows[tpo_group_name][tpo_type_name].keys.include?(sequence_number)
+            question_content_rows[tpo_group_name][tpo_type_name][sequence_number] = [question_idx]
+          else
+            question_content_rows[tpo_group_name][tpo_type_name][sequence_number].push(question_idx)
+          end
         end
       end
+      puts "~~~~~~~~~~question_content_rows~~~~~~~~#{question_content_rows}"
+
+      question_content_rows.each do |tpo_name, tpo_types|
+        # tpo_types {1=>{1=>[5], 2=>[21]}, 2=>{1=>[10], 2=>[16], 3=>[27], 4=>[33]}}
+        tpo_types.each do |tpo_type, questions|
+          # question {1=>[5], 2=>[21]}
+          questions.each do |sequence_number, question_rows|
+            # 遍历每一个小题
+          end
+        end
+        end
+      end
+
+
+      # # question_sheet.each_with_index do |section_row, section_idx|
+      # question_content_rows.each do |group_name, question_rows|
+
+      #   content_builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
+      #     xml.assessmentItem 'xmlns'=>"http://www.imsglobal.org/xsd/imsqti_v2p1", 'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance",
+      #     'xsi:schemaLocation'=>"http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd", 'identifier'=>"choice",
+      #     'title'=>"", 'adaptive'=>"false", 'timeDependent'=>"false" do
+      #       # 遍历每一道题
+      #       question_rows.each_with_index do |question_content_row, idx|
+      #         num = (idx + 1).to_s
+      #         # tpo_question_options = tpo_questions[num]
+      #         question_content = question_sheet.row(question_content_row)
+      #         question_type = question_content[2].to_i
+      #         if question_type == 2
+      #           cardinality = 'multiple'
+      #         else
+      #           cardinality = 'single'
+      #         end
+      #         question_answer = question_content[9]
+      #         xml.responseDeclaration 'identifier' => "RESPONSE#{num}", 'cardinality' => cardinality, 'baseType' => 'identifier' do
+      #           xml.correctResponse do
+      #             case question_type
+      #             when '1'
+      #               # 单选
+      #               # <value>ChoiceA</value>
+      #               xml.value "choice#{question_answer}"
+      #             when '2'
+      #               # 多选
+      #               # <value>ChoiceA</value>
+      #               # <value>ChoiceB</value>
+      #               (question_answer || '').each_char do |answer|
+      #                 xml.value "choice#{answer}"
+      #               end
+      #             end
+      #           end
+      #         end
+      #       end
+
+      #       xml.outcomeDeclaration 'identifier' => "SCORE", 'cardinality' => "single", 'baseType' => "integer"
+
+      #       xml.itemBody do
+      #         # 文章
+      #         xml.blockquote do
+      #           xml.audio do
+      #             xml.source 'src' => question_content[8]
+      #           end
+      #           material = question_content[18]
+      #           roles = ('a'..'e').to_a
+      #           material_roles = []
+      #           case tpo_type_name
+      #           when 2
+      #             xml.p material
+      #           when 1
+      #             materials = material.split(TpoQuestion::LISTEN_QUESTION_MATERIAL_MARKER)
+      #             materials.each do |section|
+      #               role, content = section.split('=').map{|role_content| role_content.strip }
+      #               next if role.blank?
+      #               material_roles.push(role) unless material_roles.include?(role)
+      #               role_idx = material_roles.index(role)
+      #               xml.send("p_#{roles[role_idx]}", "#{role}:#{content}")
+      #             end
+      #           end
+      #         end
+
+      #         question_rows.each_with_index do |question_content_row, idx|
+      #           num = (idx + 1).to_s
+      #           question_content = question_sheet.row(question_content_row)
+      #           question_type = question_content[2].to_i
+      #           # 名师讲解-视频地址
+      #           xml.audio do
+      #             xml.source 'src' => question_content[16]
+      #           end
+      #           # 解析
+      #           xml.p question_content[7]
+
+      #           #问题及选项
+      #           xml.choiceInteraction 'responseIdentifier' => "RESPONSE#{num}", 'shuffle' => "false", 'maxChoices' => "#{question_type}" do
+      #             xml.prompt question_content[5]
+
+      #             option_distance = 9
+      #             6.times do |option_idx|
+      #               option_distance += 1
+      #               option_content = question_content[option_distance]
+      #               break if option_content.blank?
+      #               xml.simpleChoice option_content, 'identifier' => "choice#{alps[option_idx]}"
+      #             end
+      #           end
+      #         end
+      #       end
+      #       xml.responseProcessing 'template'=>"http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"
+      #     end
+      #   end
+
+      #   #puts "~~~~~~~~~~~~~#{content_builder.to_xml}@@@@@@@@@@@@"
+
+      #   tpo_group = TpoGroup.where(name: ["tpo#{group_name}", "Tpo#{group_name}"]).first
+      #   if tpo_group
+      #     tpo_type = TpoType.where(tpo_group_id: tpo_group.id, name: 'Passage').first
+      #     unless tpo_type
+      #       tpo_type = TpoType.new
+      #       tpo_type.name = 'Passage'
+      #       tpo_type.tpo_group_id = tpo_group.id
+      #       tpo_type.save
+      #     end
+
+      #     tpo_question = TpoQuestion.new
+      #     tpo_question.tpo_type_id = tpo_type.id
+      #     tpo_question.sequence_number = section_tpo_type_name
+      #     content = content_builder.to_xml
+      #     tpo_question.content = content
+      #     if tpo_question.save
+      #       File.open("#{Rails.root}/public/system/xml/tpo/reads/#{tpo_question.id}.xml", "wb") do |file|
+      #         file.write content
+      #       end
+      #     end
+      #   else
+      #     logger.info "所属tpo不存在"
+      #   end
+      # end
       # puts "~~~~~~~~~~~~~#{question_sheet.columns[0].count}"
     end
 
