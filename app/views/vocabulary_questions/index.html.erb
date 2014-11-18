@@ -13,7 +13,9 @@
               <input type="image" src="<%#=asset_path 'i1.png'%>" class="search"> -->
           </div>
       </form>
-      <%= link_to '清除数据', "/vocabulary_questions/delete", data: { confirm: '确定清空全部数据嘛?' }, :method => :post, style: "padding-left: 600px;" if current_admin.role == 1 %>
+      <div class="text-right">
+        <%= link_to '清除数据', "/vocabulary_questions/delete", data: { confirm: '确定清空全部数据嘛?' }, :method => :post if current_admin.role == 1 %>
+      </div>
       <table class="table table-bordered table-striped " id="table1">
         <tr class="info" id="tr1" >
           <td >单元</td>
