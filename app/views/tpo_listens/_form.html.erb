@@ -19,7 +19,7 @@
    <label for="inputtext2" class="col-sm-2 control-label">文章标题：</label>
    <div class="col-sm-10">
       <% title_value = @from == 'edit' ? @tpo_question_content[:title] : nil %>
-      <%= text_field_tag :title, content_audio_value, class: 'form-control', placeholder: '文章标题' %>
+      <%= text_field_tag :title, title_value, class: 'form-control', placeholder: '文章标题' %>
    </div>
 </div>
 
