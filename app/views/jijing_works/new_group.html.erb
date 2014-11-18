@@ -29,7 +29,7 @@
     <p style="color:red;"><%=flash[:notice] %></p>
     <div class="clearfix list">
       <% @jijing_groups.each do |group| %>
-        <a href="<%=new_type_jijing_works_path(group_id: group.id)%>"><%=group.name%></a>
+        <a href="<%=new_jijing_work_path(group_id: group.id)%>"><%=group.name%></a>
       <% end %>
       <a href="javascript:;" id="i3"><img src="<%=asset_path 'i3.png'%>">新机经</a>
       <%= form_tag jijing_groups_path,class: 'jijing' do %>
