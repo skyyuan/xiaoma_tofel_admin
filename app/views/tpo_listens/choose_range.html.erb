@@ -1,0 +1,22 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "g8" %>
+<% end %>
+
+<!-- right content -->
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <div class="tab-content">
+
+    <div class="" id="voc_entry">
+      <nav class="navbar navbar-default" role="navigation" id="navbar">
+        <%= form_tag new_tpo_listen_path, method: :get, id: 'form5' do %>
+          <%= select_tag :tpo_group, options_for_select(TpoGroup.name_for_selection), :class => 'se1', id: 'se1' %>
+          <%= select_tag :tpo_type, options_for_select(TpoType::LISTEN_TYPE.invert.to_a), id: 'se2', :class => 'se2', style: 'width: 107px' %>
+           <button type="submit" class="but_1" id="btn_read" style="margin-left: 10px;">确定</button>
+        <% end %>
+      </nav>
+    </div>
+  </div>
+</div>
