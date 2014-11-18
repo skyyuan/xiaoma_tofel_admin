@@ -7,10 +7,19 @@
     <!-- list2 -->
     <p style="color:red;"><%=flash[:notice] %></p>
     <div class="tab-pane active" id="voc_entry">
-      <nav class="navbar navbar-default" role="navigation" id="navbar">
-        <p><span><%=@task.name%></span><span>第<%=params[:number]%>题</span><span><a href="<%=new_jijing_task_path(task_id: @task.id, group_id: @task.jijing_group.id)%>">更改</a></span></p>
-      </nav>
+
       <%=form_tag jijing_questions_path, class: 'form-horizontal' do %>
+        <div class="form-group">
+           <label for="inputtext1" class="col-sm-2 control-label">题号选择：</label>
+           <div class="col-sm-10">
+             <select class="" id="" name="number">
+              <option value>题号</option>
+              <% (1..30).each do |i| %>
+                 <option value="<%=i%>"><%=i%></option>
+              <% end %>
+            </select>
+           </div>
+        </div>
         <div class="form-group">
            <label for="inputtext1" class="col-sm-2 control-label">口语题目：</label>
            <div class="col-sm-10">
@@ -29,8 +38,7 @@
                 <input type="text" name="question_analysis" class="form-control" id="inputtext2" placeholder="输入讲解视频地址">
            </div>
         </div>
-        <input type="hidden" name="task_id" value="<%=@task.id %>">
-        <input type="hidden" name="number" value="<%=params[:number] %>">
+        <input type="hidden" name="group_id" value="<%=params[:group_id]%>">
         <button type="submit" class="btn btn-default b1" id="btn_sub">提交</button>
       <% end %>
     </div>
