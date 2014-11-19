@@ -1,0 +1,30 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag    "g" %>
+<% end %>
+<div class="content W730">
+  <%= render "nav" %>
+  <div class="tab-content">
+    <div class="tab-pane active" id="voc_list">
+
+      <form class="navbar-form navbar-left" role="search">
+          <div class="form-group form1">
+          </div>
+      </form>
+
+      <table class="table table-bordered table-striped " id="table1">
+        <tr class="info" id="tr1" >
+          <td >Unit</td>
+          <td>个数</td>
+        </tr>
+        <% @groups.each do |g| %>
+          <tr id="tr2">
+            <td>Unit：<%=g.sequence_number %></td>
+            <td><%=g.vocabulary_questions.count %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+<% content_for :tail do %>
+<% end %>

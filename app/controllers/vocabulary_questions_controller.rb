@@ -10,6 +10,10 @@ class VocabularyQuestionsController < ApplicationController
     end
   end
 
+  def unit
+    @groups = VocabularyGroup.order("(sequence_number + 0) asc")
+  end
+
   def show
     @question = VocabularyQuestion.find(params[:id])
     @question_content = @question.parse_xml_to_object

@@ -10,34 +10,37 @@
           <div class="form-group form1">
             <%#=  select_tag "unit", options_from_collection_for_select(VocabularyGroup.all, "id", "sequence_number",params[:unit]),:prompt=>'单元',class: "form-control se1", style: "width:150px;height:40px;"   %>
 
-              <input type="text" class="form-control fr" name="word" placeholder="Search" style="margin-top: 13px;">
+              <input type="text" class="form-control fr" name="type" placeholder="Search" style="margin-top: 13px;">
               <input type="image" src="<%=asset_path 'i1.png'%>" class="search" style="margin-top: -60px;">
           </div>
       </form>
-
       <div class="text-right">
-        <%= link_to '清除数据', "/vocabulary_questions/delete", data: { confirm: '确定清空全部数据嘛?' }, :method => :post if current_admin.role == 1 %>
+        <%= link_to '清除数据', "/beck_questions/delete", data: { confirm: '确定清空全部数据嘛?' }, :method => :post if current_admin.role == 1 %>
       </div>
       <table class="table table-bordered table-striped " id="table1">
         <tr class="info" id="tr1" >
-          <td >单元</td>
-          <td>单词</td>
+          <td>机经</td>
+          <td>类型</td>
+          <td>题号</td>
+          <td>题目</td>
           <td>操作</td>
         </tr>
-        <% @vocabularies.each do |voc| %>
+        <% @questions.each do |question| %>
           <tr id="tr2">
-            <td>Unit：<%=voc.vocabulary_group.sequence_number %></td>
-            <td><%=truncate(voc.word, length: 17) %></td>
+            <td><%=question.jijing_group.name %></td>
+            <td><%=question.question_type.to_i == 1 ? '口语' : '写作' %></td>
+            <td><%=question.sequence_number %></td>
+            <td><%=truncate(question.content, length: 17) %></td>
             <td>
-              <a href="<%=vocabulary_question_path(voc)%>">查看</a>
-              <a href="<%=edit_vocabulary_question_path(voc)%>">编辑</a>
-              <%= link_to '删除', "/vocabulary_questions/#{voc.id}", data: { confirm: '确定删除?' }, :method => :delete %>
+              <a href="">查看</a>
+              <a href="">编辑</a>
+              <%= link_to '删除', "/beck_questions/#{question.id}", data: { confirm: '确定删除?' }, :method => :delete %>
             </td>
           </tr>
         <% end %>
       </table>
       <div class="text-center">
-        <%= paginate @vocabularies %>
+        <%= paginate @questions %>
       </div>
     </div>
   </div>

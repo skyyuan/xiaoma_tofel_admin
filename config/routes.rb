@@ -8,11 +8,14 @@ XiaomaTofelAdmin::Application.routes.draw do
     get :index_upload, on: :collection
     post :upload_vocabulary, on: :collection
     post :delete, on: :collection
+    get :unit, on: :collection
   end
 
   resources :grammar_groups
 
-  resources :beck_questions
+  resources :beck_questions do
+    post :delete, on: :collection
+  end
 
   resources :grammar_questions do
     get :select_unit, on: :collection
