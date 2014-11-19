@@ -8,6 +8,7 @@ XiaomaTofelAdmin::Application.routes.draw do
     get :index_upload, on: :collection
     post :upload_vocabulary, on: :collection
     post :delete, on: :collection
+    get :unit, on: :collection
   end
 
   resources :grammar_groups
