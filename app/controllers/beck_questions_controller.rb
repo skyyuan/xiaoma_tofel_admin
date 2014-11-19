@@ -1,24 +1,22 @@
 # encoding: utf-8
-# -*- encoding: utf-8 -*-
-class VocabularyQuestionsController < ApplicationController
-
+class BeckQuestionsController < ApplicationController
   def index
-    @vocabularies = VocabularyQuestion.order("id desc").page(params[:page])
+    @vocabularies = JijingQuestion.order("id desc").page(params[:page])
   end
 
   def show
-    @question = VocabularyQuestion.find(params[:id])
+    @question = JijingQuestion.find(params[:id])
     @question_content = @question.parse_xml_to_object
   end
 
   def edit
-    @question = VocabularyQuestion.find(params[:id])
+    @question = JijingQuestion.find(params[:id])
     @question_content = @question.parse_xml_to_object
   end
 
   def update
-    @question = VocabularyQuestion.find(params[:id])
-    xml_content = VocabularyQuestion.content_fromat_xml(params)
+    @question = JijingQuestion.find(params[:id])
+    xml_content = JijingQuestion.content_fromat_xml(params)
     @question.word = params[:word]
     @question.content = xml_content
     if @question.save
@@ -31,7 +29,7 @@ class VocabularyQuestionsController < ApplicationController
   end
 
   def destroy
-    @question = VocabularyQuestion.find(params[:id])
+    @question = JijingQuestion.find(params[:id])
     word = @question.word
     if @question.destroy
       system("rm public/system/xml/word/#{word}.xml")
@@ -40,13 +38,8 @@ class VocabularyQuestionsController < ApplicationController
   end
 
   def delete
-    @question = VocabularyQuestion.destroy_all
-    system("rm public/system/xml/word/*.xml")
+    @question = JijingQuestion.destroy_all
     redirect_to vocabulary_questions_path
-  end
-
-  def index_upload
-
   end
 
   def upload_vocabulary

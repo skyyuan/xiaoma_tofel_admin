@@ -43,10 +43,7 @@ class HardWorker
                 if (index+1) == rand_num
                   xml.simpleChoice "#{row[3]}#{row[2]}", 'identifier'=>"#{i}"
                 else
-                  count = rand(sheet1.count)
-                  if count == 0
-                    count = count + 1
-                  end
+                  count = rand(1..sheet1.count)
                   xml.simpleChoice "#{sheet1.row(count)[3]}#{sheet1.row(count)[2]}", 'identifier'=>"#{i}"
                 end
               end
