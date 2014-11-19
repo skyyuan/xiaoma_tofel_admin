@@ -10,8 +10,8 @@
       <a href="#" class="list-group-item">配音</a>
       <a href="javascript:void(0);" class="list-group-item menu_head1">tpo题库</a>
       <div class="menu_body1" >
-        <a href="<%= tpo_reads_path %>" class="side_nav <%= 'active' if @left_nav == 'tpo_reads' %>">阅读</a>
-        <a href="speaking4.html" class="side_nav">听力</a>
+        <a href="<%= tpo_reads_path %>" class="side_nav <%= 'active list-group-item' if @left_nav == 'tpo_reads' %>">阅读</a>
+        <a href="<%= tpo_listens_path %>" class="side_nav <%= 'active list-group-item' if @left_nav == 'tpo_listens' %>">听力</a>
         <a href="<%=tpo_spokens_path%>" class="side_nav">口语</a>
         <a href="/tpo_questions/writ_index" class="side_nav">写作</a>
       </div>

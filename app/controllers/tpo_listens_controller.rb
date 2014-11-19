@@ -1,78 +1,137 @@
 # encoding: utf-8
 class TpoListensController < ApplicationController
   def index
-    @questions = TpoQuestion.order("created_at desc").page(params[:page])
+    @left_nav = 'tpo_listens'
+    @top_nav = 'list'
+    session[:_tofel_tpo_listen_group] = nil
+    session[:_tofel_tpo_listen_type] = nil
+
+    @tpo_questions = TpoQuestion.includes(:tpo_type).joins(tpo_type: :tpo_group).where(tpo_types: {name: ['conversation', 'lecture']}).order("tpo_groups.name, tpo_types.name, sequence_number").page(params[:page])
   end
 
-  def new_type
-    @groups = TpoGroup.all
-  end
-
-  def new_type_create
-    if params[:group_id].present? && params[:type_name].present?
-      type = TpoType.find_by(name: params[:type_name], tpo_group_id: params[:group_id])
-      if !type.present?
-        type = TpoType.create(name: params[:type_name], tpo_group_id: params[:group_id])
-      end
-      redirect_to new_tpo_listen_path(type_id: type.id)
-    else
-      redirect_to new_type_tpo_listens_path, notice: "套数、题目不能为空！"
-    end
+  def choose_range
+    @left_nav = 'tpo_listens'
+    session[:_tofel_tpo_listen_group] = nil
+    session[:_tofel_tpo_listen_type] = nil
   end
 
   def new
-    @type = TpoType.find params[:type_id]
+    @left_nav = 'tpo_listens'
+    session[:_tofel_tpo_listen_group] ||= params[:tpo_group]
+    session[:_tofel_tpo_listen_type] ||= params[:tpo_type]
+    if !TpoGroup.ids.include?(session[:_tofel_tpo_listen_group].to_i) || !TpoType::LISTEN_TYPE.keys.include?(session[:_tofel_tpo_listen_type].to_i)
+      redirect_to tpo_listens_path and return
+    end
+    @tpo_group_name = TpoGroup.where(id: session[:_tofel_tpo_listen_group]).first.name
+  end
+
+  def change_question_type
+    if params[:type] == 'add_question'
+      render :partial => 'simple_choice', locals: { num: params[:current_question_num].to_i + 1 }
+    elsif params[:type] == 'change_question'
+      case params[:change_question_type_to]
+      when '1'
+        _partial = 'simple_choice'
+      when '2'
+        _partial = 'multiple_choice'
+      end
+
+      if params[:question_id].present?
+        tpo_question = TpoQuestion.find(params[:question_id])
+        tpo_question_content = tpo_question.parse_xml_to_object
+        change_type = 'edit'
+      end
+      render :partial => _partial, locals: { num: params[:current_question_num], tpo_question_content: tpo_question_content, change_type: change_type }
+    end
   end
 
   def create
-    count = TpoQuestion.where(tpo_type_id: params[:type_id]).count
-    question = TpoQuestion.new
-    question.content = params[:content]
-    question.tpo_type_id = params[:type_id]
-    question.sequence_number = count + 1
-    if question.save
-      if params[:resolution].present?
-        TpoResolution.create(content: params[:resolution],tpo_question_id: question.id,user_id: 1)
-      end
-      if params[:sample].present?
-        TpoSample.create(content: params[:sample],tpo_question_id: question.id,user_id: 1,standpoint: 1)
-      end
+    listen_type = TpoType::LISTEN_TYPE[session[:_tofel_tpo_listen_type].to_i]
+    tpo_type_name = listen_type[0..-2]
+    sequence_number = listen_type[-1]
+    tpo_type = TpoType.where(tpo_group_id: session[:_tofel_tpo_listen_group], name: tpo_type_name).first
+    unless tpo_type
+      tpo_type = TpoType.new
+      tpo_type.name = tpo_type_name
+      tpo_type.tpo_group_id = session[:_tofel_tpo_listen_group]
+      tpo_type.save
+    end
 
-      if question.tpo_type.name == 'Integrated'
-        b = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
-          xml.assessmentItem 'xmlns'=>"http://www.imsglobal.org/xsd/imsqti_v2p1", 'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance",
-          'xsi:schemaLocation'=>"http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd", 'identifier'=>"extendedText1",
-          'title'=>"Writing a Postcard", 'adaptive'=>"false", 'timeDependent'=>"false" do
-            xml.responseDeclaration 'identifier'=>"RESPONSE", 'cardinality'=>"single", 'baseType'=>"string"
-            xml.outcomeDeclaration 'identifier'=>"SCORE", 'cardinality'=>"single", 'baseType'=>"float"
-
-            xml.itemBody do
-              xml.p "#{params[:contents_articles]}"
-              xml.audio do
-                xml.source 'src'=>"#{params[:url]}", 'type'=>"audio/mpeg"
-              end
-              xml.extendedTextInteraction 'responseIdentifier'=>"RESPONSE", 'expectedLength'=>"200" do
-                xml.prompt "#{params[:listening_script]}"
-              end
-            end
-          end
-        end
-        xml_file = File.new("#{Rails.root}/public/system/xml/writing/#{question.id}.xml", 'wb') #{ |f| f.write(b.to_xml) }
-        xml_file.puts b.to_xml #写入数据
-        xml_file.close #关闭文件流
+    tpo_question = TpoQuestion.new
+    tpo_question.tpo_type_id = tpo_type.id
+    # 因为type分为 Conversion与Lecture1
+    tpo_type_ids = TpoType.where(tpo_group_id: session[:_tofel_tpo_listen_group]).ids
+    tpo_question.sequence_number = sequence_number
+    content = TpoQuestion.listen_content_fromat_xml(params, tpo_type_name)
+    tpo_question.content = content
+    if tpo_question.save
+      File.open("#{Rails.root}/public/system/xml/tpo/listens/#{tpo_question.id}.xml", "wb") do |file|
+        file.write content
       end
     end
-    redirect_to writ_index_tpo_questions_path
+    redirect_to tpo_listen_path(tpo_question)
+  end
+
+  def show
+    @left_nav = 'tpo_listens'
+    @tpo_question = TpoQuestion.find(params[:id])
+    @tpo_type = @tpo_question.tpo_type
+    @tpo_group = @tpo_type.tpo_group
+    @tpo_question_content = @tpo_question.parse_listen_xml_to_object
+  end
+
+  def edit
+    @left_nav = 'tpo_listens'
+    @from = 'edit'
+    @tpo_question = TpoQuestion.find(params[:id])
+    tpo_type = @tpo_question.tpo_type
+    @tpo_type_name = tpo_type.name
+    @tpo_group = tpo_type.tpo_group
+    @tpo_group_name = @tpo_group.name
+    @tpo_question_content = @tpo_question.parse_listen_xml_to_object
+  end
+
+  def update
+    tpo_question = TpoQuestion.find(params[:id])
+    tpo_type_name = tpo_question.tpo_type.name
+    content = TpoQuestion.listen_content_fromat_xml(params, tpo_type_name)
+    tpo_question.content = content
+    if tpo_question.save
+      File.open("#{Rails.root}/public/system/xml/tpo/listens/#{tpo_question.id}.xml", "wb") do |file|
+        file.write content
+      end
+    end
+    redirect_to tpo_listen_path(tpo_question, from: params[:from])
   end
 
   def destroy
-    tpo = TpoQuestion.find params[:id]
-    if tpo.tpo_type.name == "Integrated"
-      tpo.destroy
-      system("rm public/system/xml/syntax/#{params[:id]}.xml")
-    else
-      tpo.destroy
+    tpo_question = TpoQuestion.find(params[:id])
+    tpo_type_id = tpo_question.tpo_type.id
+    sequence_number = tpo_question.sequence_number
+    TpoQuestion.transaction do
+      if tpo_question.destroy
+        TpoQuestion.where('tpo_type_id = ? and sequence_number > ?', tpo_type_id, sequence_number).each do |tpo_question|
+          tpo_question.decrement!(:sequence_number)
+        end
+      end
     end
-    redirect_to writ_index_tpo_questions_path
+    redirect_to tpo_listens_path
+  end
+
+  def upload_file
+    @left_nav = 'tpo_listens'
+    @top_nav = 'upload_file'
+  end
+
+  def batch_import
+    if params[:tpo_listen_file].present?
+      listen_file = params[:tpo_listen_file]
+      if listen_file.original_filename.split(".").last == 'xls'
+        TpoQuestion.listen_batch_import(listen_file)
+      else
+        redirect_to upload_file_tpo_listens_path, alert: "请上传XLS格式文件!" and return
+      end
+    end
+    redirect_to tpo_listens_path
   end
 end

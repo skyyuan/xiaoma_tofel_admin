@@ -1,38 +1,38 @@
-<%- content_for :head do %>
-  <%= stylesheet_link_tag    "g8" %>
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "g8" %>
 <% end %>
+
+<!-- right content -->
 <div class="content W730">
-  <%= render "nav" %>
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <!-- Tab panes -->
   <div class="tab-content">
-
-<!-- list1 -->
+    <!-- list1 -->
     <div class="tab-pane active" id="voc_list">
-
       <!-- table -->
       <table class="table table-bordered table-striped " id="table1">
         <tr class="info" id="tr1" >
-          <td >单元</td>
-          <td>题目</td>
-          <td>内容</td>
+          <td >Tpo套数</td>
+          <td>题目部分</td>
           <td>操作</td>
         </tr>
-        <% @questions.each do |question| %>
+        <% @tpo_questions.each do |tpo_question| %>
           <tr id="tr2">
-            <td><%=question.tpo_type.tpo_group.name %></td>
-            <td><%=question.tpo_type.name %></td>
-            <td><%=truncate(question.content, length: 17) %></td>
-            <td><a href="#">查看</a><a href="#">编辑</a>
-              <%= link_to '删除', "/tpo_questions/#{question.id}", data: { confirm: '确定删除?' }, :method => :delete %>
+            <td><%= tpo_question.tpo_type.tpo_group.name %></td>
+            <td>
+              <%= "#{tpo_question.tpo_type.name}#{tpo_question.sequence_number}" %>
+            </td>
+            <td>
+              <%= link_to '查看', tpo_listen_path(tpo_question, from: 'index') %>
+              <%= link_to '编辑', edit_tpo_listen_path(tpo_question, from: 'index') %>
+              <%= link_to '删除', tpo_listen_path(tpo_question), method: :delete, data: {confirm: '确定删除？'} %>
             </td>
           </tr>
         <% end %>
       </table>
-
-      <div class="text-center">
-        <%= paginate @questions %>
-      </div>
+      <%= paginate @tpo_questions %>
     </div>
   </div>
 </div>
-<% content_for :tail do %>
-<% end %>

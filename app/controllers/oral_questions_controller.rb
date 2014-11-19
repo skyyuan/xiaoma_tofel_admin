@@ -16,9 +16,12 @@ class OralQuestionsController < ApplicationController
 
   def choose_range
     @left_nav = 'oral_questions'
-    relation = OralOrigin.where(name: 'tpo1').first.oral_groups.order('CONVERT(sequence_number,SIGNED)')
-    @sources = relation.pluck(:name)
-    @unit_for_selection = relation.map {|oral_group| [oral_group.sequence_number, oral_group.id]}
+    oral_origin = OralOrigin.where(name: 'tpo1').first
+    if oral_origin
+      relation = oral_origin.oral_groups.order('CONVERT(sequence_number,SIGNED)')
+      @sources = relation.pluck(:name)
+      @unit_for_selection = relation.map {|oral_group| [oral_group.sequence_number, oral_group.id]}
+    end
     session[:_tofel_oral_question_tpo] = nil
     session[:_tofel_oral_question_unit] = nil
   end

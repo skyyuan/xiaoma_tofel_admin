@@ -68,4 +68,13 @@ XiaomaTofelAdmin::Application.routes.draw do
       post :batch_import
     end
   end
+
+  resources :tpo_listens do
+    collection do
+      get :choose_range
+      get :change_question_type
+      get :upload_file
+      post :batch_import
+    end
+  end
 end
