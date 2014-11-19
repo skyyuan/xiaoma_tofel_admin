@@ -9,9 +9,9 @@
 </nav>
 <div class="form-group ">
   <label for="inputtext1" class="col-sm-2 control-label" >文章标题：</label>
-  <div class="col-sm-1">
+  <div class="col-sm-9">
     <% title_value = @from == 'edit' ? @tpo_question_content[:title] : nil %>
-    <%= text_field_tag :title, title_value, class: 'form-control question-answer', placeholder: '文章标题', style: 'width:90px' %>
+    <%= text_field_tag :title, title_value, class: 'form-control question-answer', placeholder: '文章标题' %>
   </div>
 </div>
 

@@ -127,7 +127,11 @@ class TpoListensController < ApplicationController
     if params[:tpo_listen_file].present?
       listen_file = params[:tpo_listen_file]
       if listen_file.original_filename.split(".").last == 'xls'
-        TpoQuestion.listen_batch_import(listen_file)
+        # TpoQuestion.listen_batch_import(listen_file)
+        File.open("#{Rails.root}/public/system/xls/#{listen_file.original_filename}", "wb+") do |f|
+          f.write(listen_file.read)
+        end
+        TpoListenQuestionWorker.perform_async(listen_file.original_filename)
       else
         redirect_to upload_file_tpo_listens_path, alert: "请上传XLS格式文件!" and return
       end

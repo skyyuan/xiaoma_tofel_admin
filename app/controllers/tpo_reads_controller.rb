@@ -8,7 +8,7 @@ class TpoReadsController < ApplicationController
     session[:_tofel_tpo_read_type] = nil
     query_params = {}
 
-    @tpo_questions = TpoQuestion.includes(:tpo_type).joins(tpo_type: :tpo_group).where(tpo_types: {name: 'passange'}).order(:sequence_number).page(params[:page])
+    @tpo_questions = TpoQuestion.includes(:tpo_type).joins(tpo_type: :tpo_group).where(tpo_types: {name: 'passage'}).order(:sequence_number).page(params[:page])
   end
 
   def choose_range
@@ -50,10 +50,10 @@ class TpoReadsController < ApplicationController
   end
 
   def create
-    tpo_type = TpoType.where(tpo_group_id: session[:_tofel_tpo_read_group], name: 'passange').first
+    tpo_type = TpoType.where(tpo_group_id: session[:_tofel_tpo_read_group], name: 'passage').first
     unless tpo_type
       tpo_type = TpoType.new
-      tpo_type.name = 'passange'
+      tpo_type.name = 'passage'
       tpo_type.tpo_group_id = session[:_tofel_tpo_read_group]
       tpo_type.save
     end
@@ -134,7 +134,11 @@ class TpoReadsController < ApplicationController
         # File.open("#{Rails.root}/public/system/xls/#{read_file.original_filename}", "wb+") do |f|
         #   f.write(read_file.read)
         # end
-        TpoQuestion.read_batch_import(read_file)
+        # TpoQuestion.read_batch_import(read_file)
+        File.open("#{Rails.root}/public/system/xls/#{read_file.original_filename}", "wb+") do |f|
+          f.write(read_file.read)
+        end
+        TpoReadQuestionWorker.perform_async(read_file.original_filename)
       else
         redirect_to upload_file_tpo_reads_path, alert: "请上传XLS格式文件!" and return
       end
