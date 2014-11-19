@@ -8,6 +8,8 @@ class HardWorker
     Spreadsheet.client_encoding ="UTF-8"
     book = Spreadsheet.open "#{Rails.root}/public/system/xls/#{name}"
     sheet1 = book.worksheet 0
+    p "sssssssssssssssssssss"
+    p sheet1.count
     sheet1.each do |row|
       next if row[0] == '分组' || row[1].blank?
       rand_num = rand(1..4)
@@ -43,7 +45,9 @@ class HardWorker
                 if (index+1) == rand_num
                   xml.simpleChoice "#{row[3]}#{row[2]}", 'identifier'=>"#{i}"
                 else
-                  count = rand(1..sheet1.count)
+                  count = rand(1..(sheet1.count - 1))
+                  p "#{sheet1.row(count)[3]}" + "#{sheet1.row(count)[2]}"
+                  p count
                   xml.simpleChoice "#{sheet1.row(count)[3]}#{sheet1.row(count)[2]}", 'identifier'=>"#{i}"
                 end
               end
