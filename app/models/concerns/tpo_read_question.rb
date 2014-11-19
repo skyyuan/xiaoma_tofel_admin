@@ -85,12 +85,14 @@ module TpoReadQuestion
                     xml.gapText content, 'identifier' => option, 'matchMax' => "1"
                   end
                   xml.blockquote do
-                    xml.p do
-                      xml.text tpo_question_options[:G1]
-                      xml.gap 'identifier' => "G1"
-                      xml.text tpo_question_options[:G2]
-                      xml.gap 'identifier' => "G2"
-                    end
+                    xml.G1 tpo_question_options[:G1]
+                    xml.G2 tpo_question_options[:G2]
+                    # xml.p do
+                    #   xml.text tpo_question_options[:G1]
+                    #   xml.gap 'identifier' => "G1"
+                    #   xml.text tpo_question_options[:G2]
+                    #   xml.gap 'identifier' => "G2"
+                    # end
                   end
                 end
               else
@@ -321,10 +323,13 @@ module TpoReadQuestion
         question_options[:question_type] = '3'
         question_options[:options]
         options = gap_match_interaction.search('gapText')
-        gaps = gap_match_interaction.search('blockquote p gap')
+        # gaps = gap_match_interaction.search('blockquote')
+        gap_blockquote = gap_match_interaction.search('blockquote')[0]
         question_options[:prompt] = gap_match_interaction.search('prompt')[0].content
-        question_options[:G1] = gaps[0].previous.try(:content)
-        question_options[:G2] = gaps[1].previous.try(:content)
+        # question_options[:G1] = gaps[0].previous.try(:content)
+        # question_options[:G2] = gaps[1].previous.try(:content)
+        question_options[:G1] = gap_blockquote.search('G1')[0].content
+        question_options[:G2] = gap_blockquote.search('G2')[0].content
         tpo_questions[:tpo_question][num][:answer1] = []
         tpo_questions[:tpo_question][num][:answer2] = []
         response_declarations[idx].search('correctResponse value').each do |answer|

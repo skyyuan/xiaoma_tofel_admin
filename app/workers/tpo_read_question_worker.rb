@@ -69,8 +69,8 @@ class TpoReadQuestionWorker
                   # 托拽
                   # <value>F G1</value>
                   # <value>C G2</value>
-                  answers1 = question_answer.split('/')[0]
-                  answers2 = question_answer.split('/')[1]
+                  answers1 = question_answer.split('/')[0].gsub(/\s/, '')
+                  answers2 = question_answer.split('/')[1].gsub(/\s/, '')
                   (answers1 || '').each_char do |answer|
                     xml.value "choice#{answer} G1"
                   end
@@ -121,12 +121,14 @@ class TpoReadQuestionWorker
                     xml.gapText option_content, 'identifier' => "choice#{alps[option_idx]}", 'matchMax' => "1"
                   end
                   xml.blockquote do
-                    xml.p do
-                      xml.text question_content[6]
-                      xml.gap 'identifier' => "G1"
-                      xml.text question_content[7]
-                      xml.gap 'identifier' => "G2"
-                    end
+                    xml.G1 question_content[6]
+                    xml.G2 question_content[7]
+                    # xml.p do
+                    #   xml.text question_content[6]
+                    #   xml.gap 'identifier' => "G1"
+                    #   xml.text question_content[7]
+                    #   xml.gap 'identifier' => "G2"
+                    # end
                   end
                 end
               else
