@@ -1,48 +1,21 @@
 # encoding: utf-8
 class BeckQuestionsController < ApplicationController
   def index
-    @vocabularies = JijingQuestion.order("id desc").page(params[:page])
-  end
-
-  def show
-    @question = JijingQuestion.find(params[:id])
-    @question_content = @question.parse_xml_to_object
-  end
-
-  def edit
-    @question = JijingQuestion.find(params[:id])
-    @question_content = @question.parse_xml_to_object
-  end
-
-  def update
-    @question = JijingQuestion.find(params[:id])
-    xml_content = JijingQuestion.content_fromat_xml(params)
-    @question.word = params[:word]
-    @question.content = xml_content
-    if @question.save
-      File.open("#{Rails.root}/public/system/xml/word/#{@question.word}.xml", "wb") do |file|
-        file.write xml_content
+    @questions = JijingQuestion.joins(:jijing_group).where("jijing_groups.group_type = 2")
+    if params[:type].present?
+      type = nil
+      if params[:type] == '口语'
+        type = 1
       end
-      system("rm public/system/xml/word/#{params[:before_word]}.xml")
+      if params[:type] == '写作'
+        type = 2
+      end
+      @questions = @questions.where(question_type: type)
     end
-    redirect_to vocabulary_questions_path
+    @questions = @questions.order("id desc").page(params[:page])
   end
 
-  def destroy
-    @question = JijingQuestion.find(params[:id])
-    word = @question.word
-    if @question.destroy
-      system("rm public/system/xml/word/#{word}.xml")
-    end
-    redirect_to vocabulary_questions_path
-  end
-
-  def delete
-    @question = JijingQuestion.destroy_all
-    redirect_to vocabulary_questions_path
-  end
-
-  def upload_vocabulary
+  def create
     if params[:upload].present?
       file = params[:upload]
       file_name = file.original_filename.split(".")
@@ -50,13 +23,39 @@ class BeckQuestionsController < ApplicationController
         File.open("#{Rails.root}/public/system/xls/#{file.original_filename}", "wb+") do |f|
           f.write(file.read)
         end
-        HardWorker.perform_async(file.original_filename)
-        redirect_to vocabulary_questions_path and return
+        Jijing.perform_async(file.original_filename)
+        redirect_to beck_questions_path and return
       else
-        redirect_to index_upload_vocabulary_questions_path, notice: "请上传XLS格式文件!" and return
+        redirect_to beck_questions_path, notice: "请上传XLS格式文件!" and return
       end
     else
-      redirect_to index_upload_vocabulary_questions_path, notice: "请上传XLS格式文件!" and return
+      redirect_to beck_questions_path, notice: "请上传XLS格式文件!" and return
     end
   end
+
+  def show
+    @question = JijingQuestion.find(params[:id])
+  end
+
+  def edit
+    @question = JijingQuestion.find(params[:id])
+  end
+
+  def update
+    @question = JijingQuestion.find(params[:id])
+
+    redirect_to beck_questions_path
+  end
+
+  def destroy
+    @question = JijingQuestion.find(params[:id])
+    @question.destroy
+    redirect_to beck_questions_path
+  end
+
+  def delete
+    @question = JijingQuestion.destroy_all
+    redirect_to beck_questions_path
+  end
+
 end

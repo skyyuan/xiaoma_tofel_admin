@@ -12,7 +12,9 @@ XiaomaTofelAdmin::Application.routes.draw do
 
   resources :grammar_groups
 
-  resources :beck_questions
+  resources :beck_questions do
+    post :delete, on: :collection
+  end
 
   resources :grammar_questions do
     get :select_unit, on: :collection
