@@ -12,6 +12,8 @@ XiaomaTofelAdmin::Application.routes.draw do
 
   resources :grammar_groups
 
+  resources :beck_questions
+
   resources :grammar_questions do
     get :select_unit, on: :collection
     get :edit_title, on: :collection
