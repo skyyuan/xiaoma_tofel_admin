@@ -6,7 +6,7 @@ class TpoListensController < ApplicationController
     session[:_tofel_tpo_listen_group] = nil
     session[:_tofel_tpo_listen_type] = nil
 
-    @tpo_questions = TpoQuestion.includes(:tpo_type).joins(tpo_type: :tpo_group).where(tpo_types: {name: ['Conversion', 'Lecture']}).order("tpo_groups.name, tpo_types.name, sequence_number").page(params[:page])
+    @tpo_questions = TpoQuestion.includes(:tpo_type).joins(tpo_type: :tpo_group).where(tpo_types: {name: ['conversation', 'lecture']}).order("tpo_groups.name, tpo_types.name, sequence_number").page(params[:page])
   end
 
   def choose_range
@@ -119,6 +119,7 @@ class TpoListensController < ApplicationController
   end
 
   def upload_file
+    @left_nav = 'tpo_listens'
     @top_nav = 'upload_file'
   end
 

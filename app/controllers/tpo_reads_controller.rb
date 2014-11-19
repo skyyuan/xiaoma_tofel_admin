@@ -8,7 +8,7 @@ class TpoReadsController < ApplicationController
     session[:_tofel_tpo_read_type] = nil
     query_params = {}
 
-    @tpo_questions = TpoQuestion.includes(:tpo_type).joins(tpo_type: :tpo_group).where(tpo_types: {name: 'Passage'}).order(:sequence_number).page(params[:page])
+    @tpo_questions = TpoQuestion.includes(:tpo_type).joins(tpo_type: :tpo_group).where(tpo_types: {name: 'passange'}).order(:sequence_number).page(params[:page])
   end
 
   def choose_range
@@ -50,10 +50,10 @@ class TpoReadsController < ApplicationController
   end
 
   def create
-    tpo_type = TpoType.where(tpo_group_id: session[:_tofel_tpo_read_group], name: 'Passage').first
+    tpo_type = TpoType.where(tpo_group_id: session[:_tofel_tpo_read_group], name: 'passange').first
     unless tpo_type
       tpo_type = TpoType.new
-      tpo_type.name = 'Passage'
+      tpo_type.name = 'passange'
       tpo_type.tpo_group_id = session[:_tofel_tpo_read_group]
       tpo_type.save
     end
@@ -123,6 +123,7 @@ class TpoReadsController < ApplicationController
   end
 
   def upload_file
+    @left_nav = 'tpo_reads'
     @top_nav = 'upload_file'
   end
 

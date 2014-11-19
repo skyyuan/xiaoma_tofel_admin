@@ -26,7 +26,7 @@ namespace :xiaoma do
     # sequence_number = 198
     sequence_number = 0
     # oral_from = ['lecture4', 'lecture3', 'lecture2', 'lecture1', 'conversion2', 'conversion1' ]
-    oral_from = ['conversion1', 'conversion2', 'lecture1', 'lecture2', 'lecture3', 'lecture4']
+    oral_from = ['conversation1', 'conversation2', 'lecture1', 'lecture2', 'lecture3', 'lecture4']
     OralOrigin.transaction do
       33.times do |origin_idx|
         # save oral origin

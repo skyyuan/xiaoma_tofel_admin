@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class OralGroup < ActiveRecord::Base
-  ORAL_FROM = {'conversion1' => 'conversion1', 'conversion2' => 'conversion2', 'lecture1' => 'lecture1', 'lecture2' => 'lecture2',
+  ORAL_FROM = {'conversation1' => 'conversation1', 'conversation2' => 'conversation2', 'lecture1' => 'lecture1', 'lecture2' => 'lecture2',
     'lecture3' => 'lecture3', 'lecture4' => 'lecture4'}
 
   has_many :oral_questions

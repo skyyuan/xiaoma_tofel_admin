@@ -52,9 +52,9 @@ module TpoListenQuestion
               roles = ('a'..'e').to_a
               material_roles = []
               case tpo_type_name
-              when 'Lecture'
+              when 'lecture'
                 xml.p material
-              when 'Conversion'
+              when 'conversation'
                 materials = material.split(TpoQuestion::LISTEN_QUESTION_MATERIAL_MARKER)
                 materials.each do |section|
                   role, content = section.split('=').map{|role_content| role_content.strip }
@@ -98,7 +98,7 @@ module TpoListenQuestion
       listen_sheet = Spreadsheet.open listen_file.path
       question_sheet = listen_sheet.worksheet 0
       alps = ('A'..'F').to_a
-      listen_types = ['Conversion', 'Lecture']
+      listen_types = ['conversation', 'lecture']
       # question_content_rows {33=>{1=>{1=>[5], 2=>[21]}, 2=>{1=>[10], 2=>[16], 3=>[27], 4=>[33]}}}
       question_content_rows = {}
       question_sheet.each_with_index do |question_row, question_idx|
@@ -255,9 +255,9 @@ module TpoListenQuestion
     tpo_questions[:audio] = blockquote_tag.search('audio source')[0].attribute('src').content
     tpo_questions[:title] = content_xml.css('assessmentItem').attribute('title').content
     tpo_type_name = tpo_type.name
-    tpo_questions[:material] = if tpo_type_name == 'Lecture'
+    tpo_questions[:material] = if tpo_type_name == 'lecture'
       blockquote_tag.search('p')[0].content
-    elsif tpo_type_name == 'Conversion'
+    elsif tpo_type_name == 'conversation'
       section_tags = []
       materials = ''
       blockquote_tag.search('audio ~ *').each do |section|

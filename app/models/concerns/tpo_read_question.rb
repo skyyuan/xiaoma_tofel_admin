@@ -263,10 +263,10 @@ module TpoReadQuestion
 
         tpo_group = TpoGroup.where(name: ["tpo#{section_tpo_group_name}", "Tpo#{section_tpo_group_name}"]).first
         if tpo_group
-          tpo_type = TpoType.where(tpo_group_id: tpo_group.id, name: 'Passage').first
+          tpo_type = TpoType.where(tpo_group_id: tpo_group.id, name: 'passange').first
           unless tpo_type
             tpo_type = TpoType.new
-            tpo_type.name = 'Passage'
+            tpo_type.name = 'passange'
             tpo_type.tpo_group_id = tpo_group.id
             tpo_type.save
           end
