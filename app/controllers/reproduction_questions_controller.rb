@@ -69,6 +69,6 @@ class ReproductionQuestionsController < ApplicationController
   private
 
   def reproduction_question_params
-    params.permit({en: []}, {ch: []}, reproduction_question: [:content])
+    params.permit({en: []}, {ch: []}, reproduction_question: [:content, :content_ch])
   end
 end

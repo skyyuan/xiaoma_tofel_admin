@@ -9,7 +9,8 @@
   <div class="tab-content">
     <div class="" id="voc_entry">
       <p><% unless params[:from] == 'index' %>已录入<%= @reproduction_question_amount %>个记忆复写<% end %></p>
-      <p class="num"><%= @reproduction_question.content %></p>
+      <p class="num">题干：<%= @reproduction_question.content %></p>
+      <p class="num">翻译：<%= @reproduction_question.content_ch %></p>
       <% @reproduction_question.reproduction_samples.each do |reproduction_sample| %>
         <p class="p1"><%= reproduction_sample.en %></p>
         <p class="p2"><%= reproduction_sample.ch %></p>
