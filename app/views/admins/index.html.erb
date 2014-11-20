@@ -1,0 +1,35 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag    "gtpo" %>
+<% end %>
+<div class="content W730 register-body2">
+  <ul class="nav nav-tabs" role="tablist" id="myTab">
+    <li class="active"><a href="" role="tab"  class="black">添加录入人员</a></li>
+  </ul>
+  <p class="para"><a href="<%=new_admin_path%>"><img src="<%=asset_path 'i3.png'%>" >添加</a></p>
+  <div class="tab-pane active" id="voc_list">
+
+    <table class="table table-bordered table-striped register-table" id="table1">
+      <tr class="info" id="tr1" >
+        <td >用户名</td>
+        <td>邮箱</td>
+        <td>创建时间</td>
+        <td>角色</td>
+        <td>操作</td>
+      </tr>
+      <% @admins.each do |admin| %>
+        <tr id="tr2">
+          <td><%= admin.username %></td>
+          <td><%= admin.email %></td>
+          <td><%= admin.created_at.to_date %></td>
+          <td><%= admin.role_name %></td>
+          <td>
+            <a href="<%=edit_admin_path(admin) %>">编辑</a>
+            <%= link_to '删除', "/admins/#{admin.id}", data: { confirm: '确定删除?' }, :method => :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+
