@@ -13,7 +13,7 @@ class Admin < ActiveRecord::Base
 
   def role_name
     if self.role == 1
-      "超级管理员"
+      "管理员"
     elsif self.role == 2
       "录入人员"
     end
