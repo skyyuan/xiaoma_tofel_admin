@@ -1,0 +1,36 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gtpo" %>
+<% end %>
+
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'nav' %>
+
+  <div class="tab-content">
+    <div class="" id="voc_entry">
+      <form class="form-horizontal " role="form" action="" id="form6">
+        </div>
+          <div>
+            <p >Qestions</p>
+            <hr style="width: 610px;margin-right: 30px;float: right;margin-top: -29px;">
+            <div class="radio-list" style=" margin-left: 53px;margin-top: -9px;">
+
+              <label>
+                <p>Unit：<%=@grammar_question.grammar_group.sequence_number %></p>
+                <p>题号：<%=@grammar_question.sequence_number %></p>
+                <p>句子：<%=@question_content[:jz] %></p>
+                <p>语法名称：<%=@question_content[:name] %></p>
+                <p>语法构成：<%=@question_content[:gc] %></p>
+              </label>
+            </div>
+          </div>
+
+        <div class="tab-pane active" id="voc_entry">
+            <%= link_to '修改', edit_grammar_question_path(@grammar_question), id: 'btn3', class: 'btn btn-primary active', style: 'margin-left:80px;' %>
+
+            <%= link_to '返回首页', grammar_questions_path, id: 'btn3', class: 'btn btn-primary active' %>
+       </div>
+      </form>
+    </div>
+  </div>
+</div>
