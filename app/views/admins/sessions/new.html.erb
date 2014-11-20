@@ -1,20 +1,27 @@
-<%- content_for :head do %>
-  <%= stylesheet_link_tag "g9" %>
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "register" %>
+  <style type="text/css">
+  .register-box{
+    position: relative;
+    top: 100px;
+  }
+  </style>
 <% end %>
-<h2>Sign in</h2>
+<div style="clear:both"></div>
+<div class="register-box">
+  <p class="register-title">登陆小马托福管理后台</p>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <!-- <input type="text"  placeholder="手机号/邮箱" class="register-input1" > -->
+    <%= f.email_field :email, autofocus: true, style: "width: 280px;height: 40px;margin-top: 5px;margin-left: 32px;", placeholder: "手机号/邮箱" %>
+    <!-- <input type="text" placeholder="密码" class="register-input2" > -->
+    <%= f.password_field :password, autocomplete: "off", style: "width: 280px;height: 40px;margin-top: 5px;margin-left: 32px;", placeholder: "密码" %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+    <div class="register-checkbox">
+      <% if devise_mapping.rememberable? -%>
+        <span class="register-remember"><%= f.check_box :remember_me %> 记住登录状态</span>
+      <% end -%>
+    </div>
+    <button type="submit" class="btn btn-default register-btn1">登录</button>
+  <% end %>
+</div>
 
-  <div><%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
-
-<%#= render "admins/shared/links" %>

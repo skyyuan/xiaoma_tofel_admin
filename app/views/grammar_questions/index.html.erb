@@ -24,11 +24,12 @@
            <td>操作</td>
         </tr>
         <% @grammars.each do |grammar| %>
-
           <tr id="tr2">
             <td>Unit：<%=grammar.grammar_group.sequence_number %></td>
             <td><%=grammar.sequence_number %></td>
-            <td><a href="#">查看</a><a href="#">编辑</a>
+            <td>
+              <a href="<%=grammar_question_path(grammar)%>">查看</a>
+              <a href="<%=edit_grammar_question_path(grammar)%>">编辑</a>
               <%= link_to '删除', "/grammar_questions/#{grammar.id}", data: { confirm: '确定删除?' }, :method => :delete %>
             </td>
           </tr>

@@ -1,0 +1,46 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag "g6" %>
+  <style type="text/css">
+    div.gram1 {
+      width: 680px;
+      height: 57px;
+      background: #f8f8f8;
+      margin-left: 20px;
+      padding: 20px 10px;
+      margin-top: 10px;
+      }
+  </style>
+<% end %>
+<div class="content W730">
+  <%= render "nav" %>
+   <!-- list 2-->
+
+  <div class="tab-pane" id="voc_entry">
+    <div class="gram1" style="display:none;"></div>
+      <%= form_for @grammar_question, html: {class: "form-horizontal", id: "form3"} do %>
+        <div id="group1">
+          <div class="form-group" >
+             <label for="inputtext3" class="col-sm-2 control-label">句子：</label>
+             <div class="col-sm-10">
+                 <input type="text" class="form-control" name="title" value="<%=@question_content[:jz]%>" placeholder="text">
+             </div>
+          </div>
+          <div class="form-group" >
+               <label for="inputtext3" class="col-sm-2 control-label">语法名称：</label>
+               <div class="col-sm-10">
+                   <input type="text" class="form-control" name="grammar_name" value="<%=@question_content[:name]%>" placeholder="text">
+               </div>
+          </div>
+          <div class="form-group">
+            <label for="inputtext4" class="col-sm-2 control-label">语法构成：</label>
+            <div class="col-sm-10">
+              <input type="text" name="composition" class="form-control" value="<%=@question_content[:gc]%>" placeholder="text">
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-default b1" id="btn_sub">保存</button>
+
+      <% end %>
+    </div>
+  </div>
+</div>
