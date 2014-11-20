@@ -13,6 +13,11 @@ XiaomaTofelAdmin::Application.routes.draw do
 
   resources :grammar_groups
 
+  resources :admins do
+    post :create_admin, on: :collection
+    post :update_admin, on: :collection
+  end
+
   resources :beck_questions do
     post :delete, on: :collection
   end

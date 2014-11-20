@@ -1,0 +1,59 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag    "gtpo" %>
+<% end %>
+
+<div class="content W730 register-body">
+<!-- Nav tabs -->
+  <%=render 'nav'%>
+  <!-- <p style="color:red;"><%#=flash[:errors] %></p> -->
+  <% flash[:errors].to_a.each do |error| %>
+    <span style="color:red;"><%= error %></span><br>
+  <% end %>
+  <!-- <span style="color:red;"><%#= flash[:errors].each {|error| error } %></span> -->
+  <%= form_tag create_admin_admins_path, :class => "form-horizontal", id: 'form6' do  %>
+    <div class="form-group" >
+      <label for="inputtext2" class="col-sm-2 control-label register-label">用户名：</label>
+      <div class="col-sm-10">
+        <%= text_field :admins, :username, :class => "form-control weike-input" %>
+      </div>
+    </div>
+
+    <div class="form-group" >
+      <label for="inputtext2" class="col-sm-2 control-label register-label">电子邮箱：</label>
+      <div class="col-sm-10">
+        <%= text_field :admins, :email, :class => "form-control weike-input" %>
+      </div>
+    </div>
+
+
+
+    <div class="form-group" >
+      <label for="inputtext2" class="col-sm-2 control-label register-label">密码：</label>
+      <div class="col-sm-10">
+        <%= text_field :admins, :password, :class => "form-control weike-input" %>
+      </div>
+    </div>
+
+
+    <div class="form-group" >
+      <label for="inputtext2" class="col-sm-2 control-label register-label">确认密码：</label>
+      <div class="col-sm-10">
+        <%= text_field :admins, :password_confirmation, :class => "form-control weike-input" %>
+      </div>
+    </div>
+
+
+    <div class="form-group" >
+      <label for="inputtext2" class="col-sm-2 control-label register-label">角色：</label>
+      <div class="col-sm-10 ">
+        <%= select_tag "admins[role]", options_for_select([["录入人员","2"], ["管理员", "1"]], @admin.role), class: "form-control registrations weike-select"%>
+      </div>
+    </div>
+     <div class="tab-pane active" id="voc_entry">
+      <button class="btn-primary active inputer-button" id="btn3">确认</button>
+      <button class="btn-default active inputer-button" id="btn4">取消</button>
+    </div>
+  <% end %>
+</div>
+
+
