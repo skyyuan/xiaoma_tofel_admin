@@ -1,0 +1,63 @@
+<%= form_for @live_broadcast, html:{class: 'form-horizontal',id: 'form6'} do |f| %>
+
+  <div class="form-group" >
+    <label for="inputtext2" class="col-sm-2 control-label weike-label">标题：</label>
+    <div class="col-sm-10">
+      <%= f.text_field :title, class: "form-control weike-input" -%>
+    </div>
+  </div>
+
+  <div class="form-group" >
+    <label for="inputtext2" class="col-sm-2 control-label weike-label">讲师：</label>
+    <div class="col-sm-10">
+      <%= f.text_field :teacher, class: "form-control weike-input" -%>
+    </div>
+  </div>
+
+  <div class="form-group" >
+    <label for="inputtext2" class="col-sm-2 control-label weike-label">封面：</label>
+    <div class="col-sm-10">
+      <%= f.text_field :cover, class: "form-control weike-input" -%>
+    </div>
+  </div>
+
+  <div class="form-group" >
+    <label for="inputtext2" class="col-sm-2 control-label weike-label">直播地址：</label>
+    <div class="col-sm-10">
+      <%= f.text_field :video_url, class: "form-control weike-input" -%>
+    </div>
+  </div>
+
+
+  <div class="form-group" >
+    <label for="inputtext2" class="col-sm-2 control-label weike-label">状态：</label>
+    <div class="col-sm-10 ">
+      <%= f.select :status, options_for_select([["未开始","1"],["正在直播","2"], ["已结束", "3"]], @live_broadcast.status),{}, class: "form-control se5 weike-select"%>
+    </div>
+  </div>
+
+  <div class="form-group" >
+    <label for="inputtext2" class="col-sm-2 control-label weike-label">开始时间：</label>
+    <div class="col-sm-10 date" id="dp3">
+      <%= f.text_field :start_at, class: "form-control weike-input form_datetime" -%>
+    </div>
+  </div>
+
+  <div class="form-group" >
+    <label for="inputtext2" class="col-sm-2 control-label weike-label">结束时间：</label>
+    <div class="col-sm-10 date" id="dp3">
+      <%= f.text_field :end_at, class: "form-control weike-input form_datetime" -%>
+    </div>
+  </div>
+
+  <div class="form-group" >
+    <label for="inputtext2" class="col-sm-2 control-label weike-label">简介：</label>
+    <div class="col-sm-10">
+      <!-- <input type="text" name="inputtext2"class="form-control weike-input1" id="inputtext2" > -->
+      <%= f.text_area :summary, class: "form-control weike-input1" -%>
+    </div>
+  </div>
+
+
+  <button type="submit" class="btn btn-default b1 " id="btn_sub">提交</button>
+<% end %>
