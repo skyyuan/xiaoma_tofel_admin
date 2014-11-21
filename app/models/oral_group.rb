@@ -4,6 +4,8 @@ class OralGroup < ActiveRecord::Base
   ORAL_FROM = {'conversation1' => 'conversation1', 'conversation2' => 'conversation2', 'lecture1' => 'lecture1', 'lecture2' => 'lecture2',
     'lecture3' => 'lecture3', 'lecture4' => 'lecture4'}
 
+  attr_accessible :sequence_number, :name, :oral_origin_id
+
   has_many :oral_questions
   belongs_to :oral_origin
 

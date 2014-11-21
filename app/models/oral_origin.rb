@@ -2,6 +2,8 @@
 
 class OralOrigin < ActiveRecord::Base
 
+  attr_accessible :name
+
   has_many :oral_groups
 
   def self.name_for_selection

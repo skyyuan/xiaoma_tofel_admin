@@ -21,7 +21,7 @@ class TpoListenQuestionWorker
       tpo_group_name = question_row[0].to_i
       tpo_type_name = question_row[2].to_i # 1 => conversation, 2 => lecture
       sequence_number = question_row[3].to_i
-      next if tpo_group_name.blank? || tpo_type_name.blank? || sequence_number.blank?
+      next if tpo_group_name.zero? || tpo_type_name.zero? || sequence_number.zero?
       tpo_type = question_row[2].to_i
       if !question_content_rows.keys.include?(tpo_group_name)
         question_content_rows[tpo_group_name] = {tpo_type_name => {sequence_number => [question_idx]}}
@@ -110,7 +110,7 @@ class TpoListenQuestionWorker
                   question_type = question_content[6].to_i
                   # 名师讲解-视频地址
                   xml.audio do
-                    xml.source 'src' => question_content[16]
+                    xml.source 'src' => TpoQuestion.parse_audio(question_content[16])
                   end
                   # 解析
                   xml.p question_content[7]

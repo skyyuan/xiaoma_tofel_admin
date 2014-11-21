@@ -1,4 +1,7 @@
 class TpoType < ActiveRecord::Base
+
+  attr_accessible :name, :tpo_group_id
+
   READ_TYPE = {1 => 'Passage1', 2 => 'Passage2', 3 => 'Passage3'}
   LISTEN_TYPE = {1 => 'conversation1', 2 => 'conversation2', 3 => 'lecture1', 4 => 'lecture2', 5 => 'lecture3', 6 => 'lecture4'}
   LISTEN_CONVERSION_TYPE = 'conversation'

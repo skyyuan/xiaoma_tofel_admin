@@ -1,6 +1,9 @@
 # encoding: utf-8
 
 class DictationGroup < ActiveRecord::Base
+
+  attr_accessible :name
+
   validates :name, uniqueness: true
 
   has_many :dictation_questions

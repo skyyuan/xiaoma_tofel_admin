@@ -75,7 +75,7 @@ module TpoReadQuestion
               xml.p tpo_question_options[:analysis]
               # 名师讲解-视频地址
               xml.audio do
-                xml.source 'src' => tpo_question_options[:audio]
+                xml.source 'src' => TpoQuestion.parse_audio(tpo_question_options[:audio])
               end
 
               if question_type == '3'

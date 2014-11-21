@@ -18,14 +18,14 @@ class TpoReadQuestionWorker
       next if section_idx.zero?
       section_tpo_group_name = section_row[0].to_i
       section_tpo_type_name = section_row[1].to_i
-      next if section_tpo_group_name.blank? || section_tpo_type_name.blank?
+      next if section_tpo_group_name.zero? || section_tpo_type_name.zero?
 
       question_content_rows = [] # 所属文章的小题row number
       questioin_sheet.each_with_index do |question_row, question_idx|
         next if question_idx.zero?
         question_tpo_group_name = question_row[0].to_i
         question_tpo_type_name = question_row[1].to_i
-        next if question_tpo_group_name.blank? || question_tpo_type_name.blank?
+        next if question_tpo_group_name.zero? || question_tpo_type_name.zero?
         if section_tpo_group_name == question_tpo_group_name && section_tpo_type_name == question_tpo_type_name
           question_content_rows.push(question_idx)
         end
@@ -107,7 +107,7 @@ class TpoReadQuestionWorker
               xml.p question_content[16]
               # 名师讲解-视频地址
               xml.audio do
-                xml.source 'src' => question_content[19]
+                xml.source 'src' => TpoQuestion.parse_audio(question_content[19])
               end
 
               if question_type == 3
