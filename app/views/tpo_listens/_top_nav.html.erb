@@ -1,5 +1,8 @@
 <ul class="nav nav-tabs" role="tablist" id="myTab">
   <li class="<%= 'active' if @top_nav == 'list' %>"><a href="<%= tpo_listens_path %>" role="tab" class="black">听力列表</a></li>
-  <li class="<%= 'active' if @top_nav != 'list' && @top_nav != 'upload_file' %>"><a href="<%= choose_range_tpo_listens_path %>" role="tab">听力录入</a></li>
+  <li class="<%= 'active' unless ['list', 'upload_file', 'add_tpo'].include?(@top_nav) %>">
+    <a href="<%= choose_range_tpo_listens_path %>" role="tab">听力录入</a>
+  </li>
   <li class="<%= 'active' if @top_nav == 'upload_file' %>"><a href="<%= upload_file_tpo_listens_path %>" role="tab">听力批量录入</a></li>
+  <li class="<%= 'active' if @top_nav == 'add_tpo' %>"><a href="<%= add_tpo_tpo_listens_path %>" role="tab">添加tpo</a></li>
 </ul>

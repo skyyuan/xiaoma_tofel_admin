@@ -12,6 +12,7 @@ class TpoReadsController < ApplicationController
   end
 
   def choose_range
+    redirect_to add_tpo_tpo_reads_path and return unless TpoGroup.where(true).exists?
     @left_nav = 'tpo_reads'
     session[:_tofel_tpo_read_group] = nil
     session[:_tofel_tpo_read_type] = nil
@@ -144,6 +145,21 @@ class TpoReadsController < ApplicationController
       end
     end
     redirect_to tpo_reads_path
+  end
+
+  def add_tpo
+    @top_nav = 'add_tpo'
+    @left_nav = 'tpo_reads'
+    @tpo_groups = TpoGroup.all
+  end
+
+  def create_tpo
+    if TpoGroup.where(name: params[:name]).exists?
+      alert = 'tpo已经存在'
+    else
+      TpoGroup.create(name: params[:name])
+    end
+    redirect_to add_tpo_tpo_reads_path, alert: alert
   end
 
   private
