@@ -76,6 +76,8 @@ XiaomaTofelAdmin::Application.routes.draw do
       get :change_question_type
       get :upload_file
       post :batch_import
+      get :add_tpo
+      post :create_tpo
     end
   end
 
@@ -85,6 +87,8 @@ XiaomaTofelAdmin::Application.routes.draw do
       get :change_question_type
       get :upload_file
       post :batch_import
+      get :add_tpo
+      post :create_tpo
     end
   end
 end
