@@ -4,7 +4,7 @@ select .se2{width:150px;height:40px;} */
 .form1 input.form-control{width:250px;height:40px;margin-left:440px;margin-top:-65px;}
 .form1 input.form-control{width:250px;height:40px;margin-left:440px;margin-top:-65px;}
 
-#form6 textarea.question-answer{width:560px;height:25px; !important}
+#form6 textarea.question-answer{width:560px;height:25px;!important}
 #form6 label.question-index{height:12px;margin-left: 60px;margin-bottom: 0px;!important}
 #form6 #question-checkbox {width:300px;height:15px;}
 
