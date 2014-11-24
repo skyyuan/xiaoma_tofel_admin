@@ -4,12 +4,12 @@ select .se2{width:150px;height:40px;} */
 .form1 input.form-control{width:250px;height:40px;margin-left:440px;margin-top:-65px;}
 .form1 input.form-control{width:250px;height:40px;margin-left:440px;margin-top:-65px;}
 
-#form6 textarea.question-answer{width:560px;height:25px; !important}
-#form6 label.question-index{height:12px;margin-left: 60px;margin-bottom: 0px;!important}
+#form6 textarea.question-answer{width:560px;height:25px !important;}
+#form6 label.question-index{height:12px;margin-left: 60px;margin-bottom: 0px !important;}
 #form6 #question-checkbox {width:300px;height:15px;}
 
-/* #list4 #question-checkbox input li{width:40px;height:20px;float:left;margin-left:10px;!important}
-#question-checkbox li{width:40px;height:20px;float:left;margin-left:10px;!important}
+/* #list4 #question-checkbox input li{width:40px;height:20px;float:left;margin-left:10px !important}
+#question-checkbox li{width:40px;height:20px;float:left;margin-left:10px !important}
  */
 
 
@@ -22,11 +22,11 @@ input.search{margin-left:660px;margin-top:-110px;}
 #form6 a.delete-2{display: inline-block; position: relative;top: -29px;right: -26px;float: right;}
 #form6 a.delete-3{display: inline-block; position: relative;top: -41px;right: -4px;float: right;}
 
-#form6 .shade1{min-height:570px;height:auto;!important}
-#form6 .shade2{min-height:670px;height:auto; !important }
-#form6 .shade3{min-height:720px;height:auto; !important }
-#form6 .listen-content{height:100px;text-align:top;!important }
-#form6 .shade4{min-height:120px;height:auto; !important }
+#form6 .shade1{min-height:570px;height:auto !important;}
+#form6 .shade2{min-height:670px;height:auto !important; }
+#form6 .shade3{min-height:720px;height:auto !important; }
+#form6 .listen-content{height:100px;text-align:top !important; }
+#form6 .shade4{min-height:120px;height:auto !important; }
 #form6 .teacher-explain{display: inline-block;overflow-wrap: break-word;width: 659px;margin-left: 50px;}
 
 #form6 .weike-label{margin-left: 38px;}
@@ -38,20 +38,11 @@ input.search{margin-left:660px;margin-top:-110px;}
 #form6 #time li{margin-left: -27px;margin-top: 2px;width: 15%}
 #form6 .select-float{float:left;}
 
-.register-body{width:800px;margin-top:2px;margin-left:366px;"}
-.register-body2{width:800px;margin-top:28px;margin-left:366px;"}
+.register-body{width:800px;margin-top:2px;margin-left:366px;}
+.register-body2{width:800px;margin-top:28px;margin-left:366px;}
 
 #form6 .register-label{margin-left: 22px;}
 .inputer-list{width:300px;height:30px;margin-left:366px;margin-top:10px}
 #btn3.inputer-button{width:26px;height:15px}
 #btn4.inputer-button{width:26px;height:15px}
 #table1.register-table{margin-top:-12px}
-/* #form7{font-weight: normal;margin-left:;}*/
-
-/**13
-
-
-/* #form7{font-weight: normal;margin-left:;}*/
-
-/**13
-

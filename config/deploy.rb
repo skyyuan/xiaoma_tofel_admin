@@ -8,7 +8,10 @@ set :repo_url, 'git@github.com:skyyuan/xiaoma_tofel_admin.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/xiaomaxl/xiaoma_tofel_admin'
+#development
+# set :deploy_to, '/home/xiaomaxl/xiaoma_tofel_admin'
+#production
+set :deploy_to, '/home/xmtf/xiaoma_tofel_admin'
 
 
 # Default value for :scm is :git
