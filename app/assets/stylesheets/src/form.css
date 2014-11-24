@@ -29,6 +29,27 @@ input.search{margin-left:660px;margin-top:-110px;}
 #form6 .shade4{min-height:120px;height:auto; !important }
 #form6 .teacher-explain{display: inline-block;overflow-wrap: break-word;width: 659px;margin-left: 50px;}
 
+#form6 .weike-label{margin-left: 38px;}
+
+#form6 .weike-input{margin-left: 131px;margin-top: -25px;width: 30%;}
+
+#form6 .weike-input1{margin-left: 131px;margin-top: -25px;width:570px;height: 100px;}
+#form6 .weike-select{margin-left: 131px;margin-top:-24px;width: 30%;}
+#form6 #time li{margin-left: -27px;margin-top: 2px;width: 15%}
+#form6 .select-float{float:left;}
+
+.register-body{width:800px;margin-top:2px;margin-left:366px;"}
+.register-body2{width:800px;margin-top:28px;margin-left:366px;"}
+
+#form6 .register-label{margin-left: 22px;}
+.inputer-list{width:300px;height:30px;margin-left:366px;margin-top:10px}
+#btn3.inputer-button{width:26px;height:15px}
+#btn4.inputer-button{width:26px;height:15px}
+#table1.register-table{margin-top:-12px}
+/* #form7{font-weight: normal;margin-left:;}*/
+
+/**13
+
 
 /* #form7{font-weight: normal;margin-left:;}*/
 

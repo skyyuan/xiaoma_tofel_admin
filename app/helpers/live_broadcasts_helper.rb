@@ -1,0 +1,2 @@
+module LiveBroadcastsHelper
+end
