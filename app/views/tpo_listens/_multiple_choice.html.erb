@@ -3,6 +3,14 @@
     <div class="form-group group2" >
       <div class="">
         <label class="question-index">
+          <%
+            question_num = num.to_s
+            @tpo_question_content ||= (tpo_question_content ||= nil)
+            @from ||= (change_type ||= nil)
+            num = (num.to_i - 1).to_s if change_type.present?
+            question = @from == 'edit' ? @tpo_question_content[:tpo_question][question_num] : nil
+            prompt_value = @from == 'edit' ? question[:prompt] : nil
+          %>
           第<label class="_question_content_num"><%= num %></label>题：
           <a class="delete-1-2 _delete_tpo_question_content">删除</a>
         </label>
@@ -12,13 +20,6 @@
 
     <label for="inputtext1" class="col-sm-2 control-label">题目：</label>
     <div class="col-sm-10">
-      <%
-        question_num = num.to_s
-        @tpo_question_content ||= (tpo_question_content ||= nil)
-        @from ||= (change_type ||= nil)
-        question = @from == 'edit' ? @tpo_question_content[:tpo_question][question_num] : nil
-        prompt_value = @from == 'edit' ? question[:prompt] : nil
-      %>
       <%= text_field_tag :"tpo_question[#{num}][prompt]", prompt_value, class: 'form-control question-answer' %>
     </div>
   </div>

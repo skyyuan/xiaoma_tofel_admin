@@ -114,7 +114,7 @@
         $(this).closest('._tpo_question_content').remove();
         var question_id = $('._tpo_listen_form').attr('action').split('/')[2];
         next_all_question_contents.each(function(idx, ele){
-          var question_content_num = $(ele).prevAll('._tpo_question_content').length + 1;
+          var question_content_num = $(ele).prevAll('._tpo_question_content').length + 2;
           var change_question_type_to = $(ele).find('._change_question_type').val();
           $.get('/tpo_listens/change_question_type', {type: 'change_question', change_question_type_to: change_question_type_to, current_question_num: question_content_num, question_id: question_id}, function(result){
             $(ele).replaceWith($(result));
