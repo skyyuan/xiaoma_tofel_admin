@@ -1,9 +1,19 @@
-/*@import "src/base.css";*/
-@import "src/layout1.css";
-@import "src/layout2.css";
-@import "src/reset.css";
-@import "src/icon.css";
-@import "src/style.css";
-@import "src/button.css";
-@import "src/form.css";
-@import "src/table.css";
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require src/layout1
+ *= require src/layout2
+ *= require src/reset
+ *= require src/icon
+ *= require src/style
+ *= require src/button
+ *= require src/form
+ *= require src/table
+ */
