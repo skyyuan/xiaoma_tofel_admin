@@ -31,7 +31,7 @@
       <% @tpo_groups.each do |tpo_group| %>
         <a href="javascript:void(0);"><%= tpo_group.name %></a>
       <% end %>
-      <a href="javascript:;" id="i3"><img src="<%=asset_path 'i3.png'%>">新机经</a>
+      <a href="javascript:;" id="i3"><img src="<%=asset_path 'i3.png'%>">添加TPO套数</a>
       <%= form_tag create_tpo_tpo_listens_path, class: 'jijing' do %>
         <input type="text" name="name" class="_name" placeholder="请输入例如：tpo1">
         <input type="submit" class="_submit" >

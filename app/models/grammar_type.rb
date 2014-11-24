@@ -1,3 +1,3 @@
 class GrammarType < ActiveRecord::Base
-  attr_accessible :sequence_number
+  attr_accessible :name
 end
