@@ -20,7 +20,7 @@ task :add_admin => :environment  do
   admin.email = 'admin@xiaoma.cn'
   admin.password = 'xiaomatf'
   admin.role = 1
-  if admin.save
+  if admin.save(:validate => false)
     p "ok"
   else
     p "error"
