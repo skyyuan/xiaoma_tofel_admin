@@ -11,7 +11,7 @@ set :repo_url, 'git@github.com:skyyuan/xiaoma_tofel_admin.git'
 #development
 # set :deploy_to, '/home/xiaomaxl/xiaoma_tofel_admin'
 #production
-set :deploy_to, '/home/xmtf/xiaoma_tofel_admin'
+#set :deploy_to, '/home/xmtf/xiaoma_tofel_admin'
 
 
 # Default value for :scm is :git
