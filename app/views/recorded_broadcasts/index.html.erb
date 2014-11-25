@@ -1,0 +1,41 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag "gtpo" %>
+<% end %>
+
+<div class="content W730">
+<!-- Nav tabs -->
+  <%=render 'nav'%>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <!-- list1 -->
+    <div class="tab-pane active" id="voc_list">
+    <!-- table -->
+      <table class="table table-bordered table-striped " id="table1">
+        <tr class="info" id="tr1" >
+          <td >标题</td>
+          <td>系列</td>
+          <td>微课地址</td>
+          <td>操作</td>
+        </tr>
+        <% @recorded_broadcasts.each do |recorded_broadcast| %>
+          <tr id="tr2">
+            <td><%=recorded_broadcast.title%></td>
+
+            <td>
+              <%=recorded_broadcast.broadcast_set.title %>
+            </td>
+
+            <td><%=recorded_broadcast.video_url %></td>
+
+            <td>
+              <a href="<%=edit_recorded_broadcast_path(recorded_broadcast)%>">编辑</a>
+              <%= link_to '删除', recorded_broadcast_path(recorded_broadcast), data: { confirm: '确定删除?' }, :method => :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+
+    </div>
+  </div>
+<!-- page -->
+</div>

@@ -1,0 +1,5 @@
+<ul class="nav nav-tabs" role="tablist" id="myTab">
+  <li class="<%= 'active' if action_name == 'index' && controller_name == 'recorded_broadcasts'%>"><a href="<%= recorded_broadcasts_path %>" class="black">微课列表</a></li>
+  <li class="<%= 'active' if action_name == 'new' && controller_name == 'recorded_broadcasts'%>"><a href="<%= new_recorded_broadcast_path %>">微课录入</a></li>
+  <li class="<%= 'active' if controller_name == 'broadcast_sets' && action_name == 'index'%>"><a href="<%= broadcast_sets_path %>">微课系列</a></li>
+</ul>
