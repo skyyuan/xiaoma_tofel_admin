@@ -1,7 +1,7 @@
 # encoding: utf-8
 class RecordedBroadcastsController < ApplicationController
   def index
-    @recorded_broadcasts = RecordedBroadcast.order("created_at desc")
+    @recorded_broadcasts = RecordedBroadcast.order("created_at desc").page(params[:page])
   end
 
   def new
