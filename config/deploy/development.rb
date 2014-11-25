@@ -3,6 +3,7 @@
 # Supports bulk-adding hosts to roles, the primary server in each group
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
+set :deploy_to, '/home/xiaomaxl/xiaoma_tofel_admin'
 
 role :app, %w{xiaomaxl@192.168.1.5}
 role :web, %w{xiaomaxl@192.168.1.5}
