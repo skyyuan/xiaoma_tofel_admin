@@ -15,6 +15,10 @@ XiaomaTofelAdmin::Application.routes.draw do
 
   resources :live_broadcasts
 
+  resources :recorded_broadcasts
+
+  resources :broadcast_sets
+
   resources :admins do
     post :create_admin, on: :collection
     post :update_admin, on: :collection

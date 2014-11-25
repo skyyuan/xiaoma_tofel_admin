@@ -1,0 +1,42 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag "gtpo" %>
+<% end %>
+
+<div class="content W730">
+<!-- Nav tabs -->
+  <%=render 'recorded_broadcasts/nav'%>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <!-- list1 -->
+    <div class="tab-pane active" id="voc_list">
+      <p class="para"><a href="<%=new_broadcast_set_path%>"><img src="<%=asset_path 'i3.png'%>">新段落</a></p>
+    <!-- table -->
+      <table class="table table-bordered table-striped " id="table1">
+        <tr class="info" id="tr1" >
+          <td >标题</td>
+          <td>更新日期</td>
+          <td>封面</td>
+          <td>操作</td>
+        </tr>
+        <% @broadcast_sets.each do |broadcast_set| %>
+          <tr id="tr2">
+            <td><%=broadcast_set.title%></td>
+
+            <td>
+              <%=broadcast_set.description %>
+            </td>
+
+            <td><%=broadcast_set.cover%></td>
+
+            <td>
+              <a href="<%=edit_broadcast_set_path(broadcast_set)%>">编辑</a>
+              <%= link_to '删除', broadcast_set_path(broadcast_set), data: { confirm: '确定删除?' }, :method => :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+
+    </div>
+  </div>
+<!-- page -->
+</div>
