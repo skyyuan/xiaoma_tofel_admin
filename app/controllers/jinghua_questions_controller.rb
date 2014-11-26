@@ -25,4 +25,19 @@ class JinghuaQuestionsController < ApplicationController
       redirect_to new_jinghua_question_path, notice: "请上传XLS格式文件!" and return
     end
   end
+  def edit
+    @jinghua_question = JinghuaQuestion.find params[:id]
+  end
+
+  def update
+    @jinghua_question = JinghuaQuestion.find params[:id]
+    @jinghua_question.update_attributes(params[:jinghua_question])
+    redirect_to jinghua_questions_path
+  end
+
+  def destroy
+    @jinghua_question = JinghuaQuestion.find params[:id]
+    @jinghua_question.destroy
+    redirect_to jinghua_questions_path
+  end
 end

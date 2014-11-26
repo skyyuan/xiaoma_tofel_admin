@@ -19,9 +19,12 @@
         </tr>
         <% @questions.each do |question| %>
           <tr id="tr2">
-            <td><%=question.content_type %></td>
+            <td><%=question.type_name %></td>
             <td><%=truncate(question.content, length: 20) %></td>
-            <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
+            <td>
+              <a href="<%=edit_jinghua_question_path(question)%>">编辑</a>
+              <%= link_to '删除', jinghua_question_path(question), data: { confirm: '确定删除?' }, :method => :delete %>
+            </td>
           </tr>
         <% end %>
       </table>

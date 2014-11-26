@@ -1,0 +1,37 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "gtpo" %>
+<% end %>
+<div class="content W730">
+  <%=render 'nav'%>
+  <div class="tab-content">
+    <div class="tab-pane active" id="voc_entry">
+      <%= form_for @jinghua_question, html:{class: 'form-horizontal',id: 'form6'} do |f| %>
+        <div class="form-group" >
+          <label for="inputtext2" class="col-sm-2 control-label weike-label">题目：</label>
+          <div class="col-sm-10">
+            <!-- <input type="text" name="inputtext2"class="form-control weike-input1" id="inputtext2" > -->
+            <%= f.text_area :content, class: "form-control weike-input1" -%>
+          </div>
+        </div>
+
+        <div class="form-group" >
+          <label for="inputtext2" class="col-sm-2 control-label weike-label">分类：</label>
+          <div class="col-sm-10 ">
+            <%= f.select :content_type, options_for_select(JinghuaQuestion::TYPE_NAME, @jinghua_question.content_type),{}, class: "form-control se5 weike-select"%>
+          </div>
+        </div>
+
+        <div class="form-group" >
+          <label for="inputtext2" class="col-sm-2 control-label weike-label">解析：</label>
+          <div class="col-sm-10">
+            <!-- <input type="text" name="inputtext2"class="form-control weike-input1" id="inputtext2" > -->
+            <%= f.text_area :analysis, class: "form-control weike-input1" -%>
+          </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-default b1 " id="btn_sub">提交</button>
+      <% end %>
+    </div>
+  </div>
+</div>
