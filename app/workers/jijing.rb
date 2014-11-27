@@ -17,7 +17,7 @@ class Jijing
       jijing_group.group_type = 2
       if jijing_group.save
         question = JijingQuestion.new
-        question.sequence_number = row[1]
+        question.sequence_number = row[1].to_i
         question.jijing_group_id = jijing_group.id
         question.content = row[2]
         question.analysis = row[3]
@@ -34,6 +34,6 @@ class Jijing
       end
     end
     system("rm public/system/xls/#{name}")
-    sleep(60)
+    # sleep(60)
   end
 end
