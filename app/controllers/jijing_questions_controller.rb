@@ -1,7 +1,7 @@
 # encoding: utf-8
 class JijingQuestionsController < ApplicationController
   def index
-    @questions = JijingQuestion.where(question_type: 1).order("created_at desc").page(params[:page])
+    @questions = JijingQuestion.joins(:jijing_group).where("jijing_groups.group_type = 1").where(question_type: 1).order("created_at desc").page(params[:page])
   end
 
   def new
