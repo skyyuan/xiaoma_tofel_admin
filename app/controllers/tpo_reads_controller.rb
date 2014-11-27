@@ -59,6 +59,11 @@ class TpoReadsController < ApplicationController
       tpo_type.save
     end
 
+    exist_tpo_question = TpoQuestion.where(tpo_type_id: tpo_type.id, sequence_number: session[:_tofel_tpo_read_type])
+    if exist_tpo_question.exists?
+      exist_tpo_question.delete_all
+    end
+
     tpo_question = TpoQuestion.new
     tpo_question.tpo_type_id = tpo_type.id
     tpo_question.sequence_number = session[:_tofel_tpo_read_type]

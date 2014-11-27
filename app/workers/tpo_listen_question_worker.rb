@@ -133,7 +133,7 @@ class TpoListenQuestionWorker
             end
           end
 
-          tpo_group = TpoGroup.where(name: ["tpo#{tpo_group_name}", "Tpo#{tpo_group_name}"]).first
+          tpo_group = TpoGroup.where(name: ["tpo#{tpo_group_name}", "Tpo#{tpo_group_name}", "TPO#{tpo_group_name}"]).first
           if tpo_group
             type_name = listen_types[tpo_type_name - 1]
             tpo_type = TpoType.where(tpo_group_id: tpo_group.id, name: type_name).first
@@ -142,6 +142,11 @@ class TpoListenQuestionWorker
               tpo_type.name = type_name
               tpo_type.tpo_group_id = tpo_group.id
               tpo_type.save
+            end
+
+            exist_tpo_question = TpoQuestion.where(tpo_type_id: tpo_type.id, sequence_number: sequence_number)
+            if exist_tpo_question.exists?
+              exist_tpo_question.delete_all
             end
 
             tpo_question = TpoQuestion.new

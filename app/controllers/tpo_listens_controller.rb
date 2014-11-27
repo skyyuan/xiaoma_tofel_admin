@@ -58,6 +58,11 @@ class TpoListensController < ApplicationController
       tpo_type.save
     end
 
+    exist_tpo_question = TpoQuestion.where(tpo_type_id: tpo_type.id, sequence_number: sequence_number)
+    if exist_tpo_question.exists?
+      exist_tpo_question.delete_all
+    end
+
     tpo_question = TpoQuestion.new
     tpo_question.tpo_type_id = tpo_type.id
     # 因为type分为 Conversion与Lecture1
