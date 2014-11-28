@@ -42,4 +42,8 @@ class JijingWorksController < ApplicationController
     end
   end
 
+  def edit
+    @jijing_question = JijingQuestion.find params[:id]
+  end
+
 end

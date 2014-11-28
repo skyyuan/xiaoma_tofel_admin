@@ -36,4 +36,40 @@ class JijingQuestionsController < ApplicationController
       redirect_to new_jijing_question_path(group_id: params[:group_id]), notice: "题目、题号不能为空!"
     end
   end
+
+  def edit
+    @jijing_quesion = JijingQuestion.find params[:id]
+  end
+
+  def update
+    @jijing_quesion = JijingQuestion.find params[:id]
+    if @jijing_quesion.update_attributes(params[:jijing_question])
+      if params[:sample_name].present?
+        if @jijing_quesion.jijing_sample.present?
+          @jijing_quesion.jijing_sample.update_attributes(content: params[:sample_name])
+        else
+          samp = JijingSample.new
+          samp.content = params[:sample_name]
+          samp.user_id = 1
+          samp.jijing_question_id = @jijing_quesion.id
+          samp.save
+        end
+      end
+    end
+    if @jijing_quesion.question_type.to_i == 2
+      redirect_to jijing_works_path
+    else
+      redirect_to jijing_questions_path
+    end
+  end
+
+  def destroy
+    @jijing_quesion = JijingQuestion.find params[:id]
+    @jijing_quesion.destroy
+    if @jijing_quesion.question_type.to_i == 2
+      redirect_to jijing_works_path
+    else
+      redirect_to jijing_questions_path
+    end
+  end
 end
