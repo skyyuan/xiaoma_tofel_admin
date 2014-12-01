@@ -17,7 +17,10 @@
             <td><%=work.jijing_group.name %></td>
             <td><%=work.sequence_number%></td>
             <td><%=truncate(work.content, length: 17) %></td>
-            <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
+            <td>
+              <a href="<%=edit_jijing_work_path(work)%>">编辑</a>
+              <%= link_to '删除', jijing_question_path(work), data: { confirm: '确定删除?' }, :method => :delete  if current_admin.role == 1 %>
+            </td>
           </tr>
         <% end %>
       </table>

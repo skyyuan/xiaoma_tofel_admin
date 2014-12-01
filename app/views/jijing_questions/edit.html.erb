@@ -1,0 +1,16 @@
+<%- content_for :head do %>
+  <%= stylesheet_link_tag    "g9" %>
+<% end %>
+<div class="content W730">
+  <%= render "nav" %>
+  <div class="tab-content">
+    <!-- list2 -->
+    <p style="color:red;"><%=flash[:notice] %></p>
+    <div class="tab-pane active" id="voc_entry">
+
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>
+<% content_for :tail do %>
+<% end %>

@@ -20,7 +20,10 @@
             <td><%=question.jijing_group.name %></td>
             <td><%=question.sequence_number %></td>
             <td><%=truncate(question.content, length: 17) %></td>
-            <td><a href="#">查看</a><a href="#">编辑</a><a href="#">删除</a></td>
+            <td>
+              <a href="<%=edit_jijing_question_path(question)%>">编辑</a>
+              <%= link_to '删除', jijing_question_path(question), data: { confirm: '确定删除?' }, :method => :delete  if current_admin.role == 1 %>
+            </td>
           </tr>
         <% end %>
       </table>
