@@ -94,6 +94,12 @@
       $('._btn').on('click', function(){
         $('._reproduction_sample_templete:last').remove();
       })
+
+      $('._tpo_reproduction_input').on('click', function(event){
+        if(!confirm("确定重新录入？")){
+          return false;
+        }
+      })
     })
   </script>
 <% end %>

@@ -13,8 +13,8 @@
       <p class="unit">请上传excle文件:</p>
       <%= form_tag batch_import_tpo_listens_path, method: :post,class: 'navbar-form navbar-left', :multipart=>true do %>
         <div class="form-group ">
-          <input type="button" value="上传文件" class="file" onClick="t_file.click()" name="file">
-          <input name="tpo_listen_file" type="file" id="t_file"style="display:none"><br>
+          <!-- <input type="button" value="上传文件" class="file" onClick="t_file.click()" name="file"> -->
+          <input name="tpo_listen_file" type="file" id="t_file" class="file" style="margin-top: -20px;"><br>
           <span><div id="filename1"></div></span><br>
           <button type="submit" class="btn btn-default b1">确定</button>
         </div>
