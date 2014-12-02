@@ -2,6 +2,9 @@
 class BeckQuestionsController < ApplicationController
   def index
     @questions = JijingQuestion.joins(:jijing_group).where("jijing_groups.group_type = 2")
+    if params[:data].present?
+      @questions = @questions.where("jijing_groups.name like ?", "%#{params[:data]}%")
+    end
     if params[:type].present?
       type = nil
       if params[:type] == '口语'
@@ -12,7 +15,10 @@ class BeckQuestionsController < ApplicationController
       end
       @questions = @questions.where(question_type: type)
     end
-    @questions = @questions.order("id desc").page(params[:page])
+    if params[:content].present?
+      @questions = @questions.where("jijing_questions.content like ?", "%#{params[:content]}%")
+    end
+    @questions = @questions.order("created_at desc").page(params[:page])
   end
 
   def create
@@ -33,17 +39,29 @@ class BeckQuestionsController < ApplicationController
     end
   end
 
-  def show
-    @question = JijingQuestion.find(params[:id])
-  end
-
   def edit
     @question = JijingQuestion.find(params[:id])
   end
 
   def update
     @question = JijingQuestion.find(params[:id])
-
+    @question.sequence_number = params[:sequence_number]
+    @question.content = params[:content]
+    @question.analysis = params[:analysis]
+    if @question.save
+      if params[:sample_name].present?
+        if @question.jijing_sample.present?
+          @question.jijing_sample.content = params[:sample_name]
+          @question.jijing_sample.save
+        else
+          sample = JijingSample.new
+          sample.content = params[:sample_name]
+          sample.jijing_question_id = @question.id
+          sample.user_id = 1
+          sample.save
+        end
+      end
+    end
     redirect_to beck_questions_path
   end
 
@@ -54,7 +72,7 @@ class BeckQuestionsController < ApplicationController
   end
 
   def delete
-    @question = JijingQuestion.destroy_all
+    @question = JijingQuestion.joins(:jijing_group).where("jijing_groups.group_type = 2").destroy_all
     redirect_to beck_questions_path
   end
 

@@ -1,33 +1,35 @@
 <%- content_for :head do %>
-  <%= stylesheet_link_tag "g9" %>
+  <%= stylesheet_link_tag    "g9" %>
 <% end %>
- <div class="content W730">
-    <%= render "nav" %>
+<div class="content W730">
+  <%= render "nav" %>
+  <div class="tab-content">
+    <!-- list2 -->
     <p style="color:red;"><%=flash[:notice] %></p>
-    <div class="tab-pane" id="voc_entry">
-      <%= form_for @jijing_question, html:{class: 'form-horizontal'} do |f| %>
+    <div class="tab-pane active" id="voc_entry">
+      <%= form_tag "/beck_questions/#{@question.id}", class: 'form-horizontal', method: 'PUT' do |f| %>
         <div class="form-group">
            <label for="inputtext1" class="col-sm-2 control-label">题号选择：</label>
            <div class="col-sm-10">
-            <%= f.select :sequence_number, (1..30).collect {|i| [ i, i ]}, class: "form-control se5 weike-select"%>
+            <%= select_tag :sequence_number, options_for_select((1..100).collect {|i| [ i, i ]}, @question.sequence_number), class: "form-control se5 weike-select", style: "margin-left: 0px;"%>
            </div>
         </div>
         <div class="form-group">
-           <label for="inputtext1" class="col-sm-2 control-label">写作题目：</label>
+           <label for="inputtext1" class="col-sm-2 control-label">题目：</label>
            <div class="col-sm-10">
-            <%= f.text_area :content, class: "form-control" -%>
+            <%= text_area_tag :content, @question.content , class: "form-control" -%>
            </div>
         </div>
         <div class="form-group">
            <label for="inputtext1" class="col-sm-2 control-label">答案范例：</label>
            <div class="col-sm-10">
-           <textarea class="form-control" rows="3" name="sample_name"><%=@jijing_question.jijing_sample.content if @jijing_question.jijing_sample%></textarea>
+           <textarea class="form-control" rows="3" name="sample_name"><%=@question.jijing_sample.content if @question.jijing_sample%></textarea>
            </div>
         </div>
         <div class="form-group">
            <label for="inputtext2" class="col-sm-2 control-label">名师讲解：</label>
            <div class="col-sm-10">
-            <%= f.text_field :analysis, class: "form-control" -%>
+            <%= text_field_tag :analysis, @question.analysis, class: "form-control" -%>
            </div>
         </div>
         <button type="submit" class="btn btn-default b1" id="btn_sub">提交</button>

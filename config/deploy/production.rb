@@ -3,11 +3,11 @@
 # Supports bulk-adding hosts to roles, the primary server in each group
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
-set :deploy_to, '/home/xmtf/xiaoma_tofel_admin'
+set :deploy_to, '/home/xiaomatf/xiaoma_tofel_admin'
 
-role :app, %w{xmtf@192.168.1.18}
-role :web, %w{xmtf@192.168.1.18}
-role :db,  %w{xmtf@192.168.1.18}
+role :app, %w{xiaomatf@123.56.87.43}
+role :web, %w{xiaomatf@123.56.87.43}
+role :db,  %w{xiaomatf@123.56.87.43}
 
 
 # Extended Server Syntax
@@ -16,7 +16,7 @@ role :db,  %w{xmtf@192.168.1.18}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '192.168.1.18', user: 'xmtf', roles: %w{web app}, my_property: :my_value
+server '123.56.87.43', user: 'xiaomatf', roles: %w{web app}, my_property: :my_value
 
 
 # Custom SSH Options
