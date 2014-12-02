@@ -49,7 +49,7 @@ gem 'slim'
 gem 'sinatra', require: false
 gem 'sidekiq'
 
-gem 'capistrano-sidekiq' , group: :development
+# gem 'capistrano-sidekiq' , group: :development
 
 gem 'protected_attributes'
 
