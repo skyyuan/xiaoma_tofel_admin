@@ -69,8 +69,10 @@ class TpoReadQuestionWorker
                   # 托拽
                   # <value>F G1</value>
                   # <value>C G2</value>
-                  answers1 = question_answer.split('/')[0].gsub(/\s/, '')
-                  answers2 = question_answer.split('/')[1].gsub(/\s/, '')
+                  answers1 = question_answer.split('/')[0]
+                  answers1 = answers1.present? ? answers1.gsub(/\s/, '') : nil
+                  answers2 = question_answer.split('/')[1]
+                  answers2 = answers2.present? ? answers2.gsub(/\s/, '') : nil
                   (answers1 || '').each_char do |answer|
                     xml.value "choice#{answer} G1"
                   end
