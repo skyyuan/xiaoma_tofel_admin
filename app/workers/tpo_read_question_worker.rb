@@ -154,34 +154,30 @@ class TpoReadQuestionWorker
       #puts "~~~~~~~~~~~~~#{content_builder.to_xml}@@@@@@@@@@@@"
 
       tpo_group = TpoGroup.where(name: ["tpo#{section_tpo_group_name}", "Tpo#{section_tpo_group_name}", "TPO#{section_tpo_group_name}"]).first
-      if tpo_group
-        tpo_type = TpoType.where(tpo_group_id: tpo_group.id, name: 'passage').first
-        unless tpo_type
-          tpo_type = TpoType.new
-          tpo_type.name = 'passage'
-          tpo_type.tpo_group_id = tpo_group.id
-          tpo_type.save
-        end
-
-        exist_tpo_question = TpoQuestion.where(tpo_type_id: tpo_type.id, sequence_number: section_tpo_type_name)
-        if exist_tpo_question.exists?
-          exist_tpo_question.delete_all
-        end
-
-        tpo_question = TpoQuestion.new
-        tpo_question.tpo_type_id = tpo_type.id
-        tpo_question.sequence_number = section_tpo_type_name
-        content = content_builder.to_xml
-        tpo_question.content = content
-        if tpo_question.save
-          File.open("#{Rails.root}/public/system/xml/tpo/reads/#{tpo_question.id}.xml", "wb") do |file|
-            file.write content
-          end
-        end
-      else
-        logger.info "所属tpo不存在"
+      tpo_group = TpoGroup.create(name: "TPO#{section_tpo_group_name}") unless tpo_group
+      tpo_type = TpoType.where(tpo_group_id: tpo_group.id, name: 'passage').first
+      unless tpo_type
+        tpo_type = TpoType.new
+        tpo_type.name = 'passage'
+        tpo_type.tpo_group_id = tpo_group.id
+        tpo_type.save
       end
 
+      exist_tpo_question = TpoQuestion.where(tpo_type_id: tpo_type.id, sequence_number: section_tpo_type_name)
+      if exist_tpo_question.exists?
+        exist_tpo_question.delete_all
+      end
+
+      tpo_question = TpoQuestion.new
+      tpo_question.tpo_type_id = tpo_type.id
+      tpo_question.sequence_number = section_tpo_type_name
+      content = content_builder.to_xml
+      tpo_question.content = content
+      if tpo_question.save
+        File.open("#{Rails.root}/public/system/xml/tpo/reads/#{tpo_question.id}.xml", "wb") do |file|
+          file.write content
+        end
+      end
 
     end
     # puts "~~~~~~~~~~~~~#{questioin_sheet.columns[0].count}"

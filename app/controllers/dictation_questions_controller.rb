@@ -28,6 +28,9 @@ class DictationQuestionsController < ApplicationController
     @dictation_question = DictationQuestion.new(dictation_question_params)
     @dictation_question.dictation_group_id = session[:_tofel_dictation_question]
     @dictation_question.sequence_number = (DictationQuestion.where(dictation_group_id: session[:_tofel_dictation_question]).maximum('sequence_number') || 0) + 1
+    sample = dictation_question_params[:sample]
+    sample = sample.gsub('‘', "'").gsub('’', "'") if sample.present?
+    @dictation_question.sample = sample
     if @dictation_question.save
       redirect_to dictation_question_path(@dictation_question)
     end
@@ -47,7 +50,10 @@ class DictationQuestionsController < ApplicationController
 
   def update
     @dictation_question = DictationQuestion.find(params[:id])
-    if @dictation_question.update_attributes(dictation_question_params)
+
+    sample = dictation_question_params[:sample]
+    sample = sample.gsub('‘', "'").gsub('’', "'") if sample.present?
+    if @dictation_question.update_attributes(sample.present? ? dictation_question_params.merge!(sample: sample) : dictation_question_params)
       redirect_to dictation_question_path(@dictation_question, from: params[:from])
     end
   end

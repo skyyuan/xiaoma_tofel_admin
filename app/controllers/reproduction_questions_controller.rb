@@ -17,9 +17,14 @@ class ReproductionQuestionsController < ApplicationController
     @reproduction_question.sequence_number = ReproductionQuestion.count.to_i + 1
     ReproductionQuestion.transaction do
       # save reproduction question
+      content = reproduction_question_params[:reproduction_question][:content]
+      content = content.gsub('‘', "'").gsub('’', "'") if content.present?
+      @reproduction_question.content = content
+
       @reproduction_question.save
       # save reproduction sample
       reproduction_question_params[:en].each_with_index do |en, idx|
+        en = en.gsub('‘', "'").gsub('’', "'") if en.present?
         ReproductionSample.create(reproduction_question_id: @reproduction_question.id, en: en, ch: reproduction_question_params[:ch][idx])
       end
     end
@@ -42,10 +47,13 @@ class ReproductionQuestionsController < ApplicationController
     reproduction_question = ReproductionQuestion.find(params[:id])
     ReproductionQuestion.transaction do
       # save reproduction question
-      reproduction_question.update_attributes(reproduction_question_params[:reproduction_question])
+      content = reproduction_question_params[:reproduction_question][:content]
+      content = content.gsub('‘', "'").gsub('’', "'") if content.present?
+      reproduction_question.update_attributes(content.present? ? reproduction_question_params[:reproduction_question].merge(content: content) : reproduction_question_params[:reproduction_question])
       # save reproduction sample
       reproduction_question.reproduction_samples.delete_all
       reproduction_question_params[:en].each_with_index do |en, idx|
+        en = en.gsub('‘', "'").gsub('’', "'") if en.present?
         ReproductionSample.create(reproduction_question_id: reproduction_question.id, en: en, ch: reproduction_question_params[:ch][idx])
       end
     end

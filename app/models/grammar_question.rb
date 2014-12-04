@@ -18,11 +18,15 @@ class GrammarQuestion < ActiveRecord::Base
       'title'=>"#{params[:grammar_name]}", 'adaptive'=>"false", 'timeDependent'=>"false" do
         xml.responseDeclaration 'identifier'=>"RESPONSE", 'cardinality'=>"single", 'baseType'=>"string" do
           xml.correctResponse do
-            xml.value "#{params[:composition]}"
+            composition = params[:composition]
+            composition = composition.gsub('‘', "'").gsub('’', "'") if composition.present?
+            xml.value composition
           end
         end
         xml.itemBody do
-          xml.p "#{params[:title]}"
+          title = params[:title]
+          title = title.gsub('‘', "'").gsub('’', "'") if title.present?
+          xml.p title
           xml.textEntryInteraction 'responseIdentifier'=>'RESPONSE', 'expectedLength'=>'15'
         end
         xml.responseProcessing 'template'=>"http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"

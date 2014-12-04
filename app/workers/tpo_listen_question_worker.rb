@@ -134,33 +134,30 @@ class TpoListenQuestionWorker
           end
 
           tpo_group = TpoGroup.where(name: ["tpo#{tpo_group_name}", "Tpo#{tpo_group_name}", "TPO#{tpo_group_name}"]).first
-          if tpo_group
-            type_name = listen_types[tpo_type_name - 1]
-            tpo_type = TpoType.where(tpo_group_id: tpo_group.id, name: type_name).first
-            unless tpo_type
-              tpo_type = TpoType.new
-              tpo_type.name = type_name
-              tpo_type.tpo_group_id = tpo_group.id
-              tpo_type.save
-            end
+          tpo_group = TpoGroup.create(name: "TPO#{tpo_group_name}")  unless tpo_group
+          type_name = listen_types[tpo_type_name - 1]
+          tpo_type = TpoType.where(tpo_group_id: tpo_group.id, name: type_name).first
+          unless tpo_type
+            tpo_type = TpoType.new
+            tpo_type.name = type_name
+            tpo_type.tpo_group_id = tpo_group.id
+            tpo_type.save
+          end
 
-            exist_tpo_question = TpoQuestion.where(tpo_type_id: tpo_type.id, sequence_number: sequence_number)
-            if exist_tpo_question.exists?
-              exist_tpo_question.delete_all
-            end
+          exist_tpo_question = TpoQuestion.where(tpo_type_id: tpo_type.id, sequence_number: sequence_number)
+          if exist_tpo_question.exists?
+            exist_tpo_question.delete_all
+          end
 
-            tpo_question = TpoQuestion.new
-            tpo_question.tpo_type_id = tpo_type.id
-            tpo_question.sequence_number = sequence_number
-            content = content_builder.to_xml
-            tpo_question.content = content
-            if tpo_question.save
-              File.open("#{Rails.root}/public/system/xml/tpo/listens/#{tpo_question.id}.xml", "wb") do |file|
-                file.write content
-              end
+          tpo_question = TpoQuestion.new
+          tpo_question.tpo_type_id = tpo_type.id
+          tpo_question.sequence_number = sequence_number
+          content = content_builder.to_xml
+          tpo_question.content = content
+          if tpo_question.save
+            File.open("#{Rails.root}/public/system/xml/tpo/listens/#{tpo_question.id}.xml", "wb") do |file|
+              file.write content
             end
-          else
-            logger.info "所属tpo不存在"
           end
         end
       end
