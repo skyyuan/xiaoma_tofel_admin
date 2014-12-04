@@ -166,6 +166,6 @@ class TpoListenQuestionWorker
       end
     end
     system("rm #{file_path_name}")
-    sleep(60)
+    #sleep(60)
   end
 end

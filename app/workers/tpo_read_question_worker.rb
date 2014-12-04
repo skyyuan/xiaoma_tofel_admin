@@ -186,6 +186,6 @@ class TpoReadQuestionWorker
     end
     # puts "~~~~~~~~~~~~~#{questioin_sheet.columns[0].count}"
     system("rm #{file_path_name}")
-    sleep(60)
+    #sleep(60)
   end
 end
