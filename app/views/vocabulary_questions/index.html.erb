@@ -8,10 +8,10 @@
 
       <form class="navbar-form navbar-left" role="search">
           <div class="form-group form1">
-            <%#=  select_tag "unit", options_from_collection_for_select(VocabularyGroup.all, "id", "sequence_number",params[:unit]),:prompt=>'单元',class: "form-control se1", style: "width:150px;height:40px;"   %>
+            <%=  select_tag "unit", options_from_collection_for_select(VocabularyGroup.all, "id", "sequence_number",params[:unit]),:prompt=>'单元',class: "form-control se1", style: "width:150px;height:40px;"   %>
 
-              <input type="text" class="form-control fr" name="word" placeholder="Search" style="margin-top: 13px;">
-              <input type="image" src="<%=asset_path 'i1.png'%>" class="search" style="margin-top: -60px;">
+              <input type="text" class="form-control fr" name="word" placeholder="Search" style="">
+              <input type="image" src="<%=asset_path 'i1.png'%>" class="search" style="">
           </div>
       </form>
 

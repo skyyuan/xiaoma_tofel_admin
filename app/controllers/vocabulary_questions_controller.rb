@@ -3,11 +3,14 @@
 class VocabularyQuestionsController < ApplicationController
 
   def index
+    @vocabularies = VocabularyQuestion
     if params[:word].present?
-      @vocabularies = VocabularyQuestion.where(word: params[:word]).order("id desc").page(params[:page])
-    else
-      @vocabularies = VocabularyQuestion.order("id desc").page(params[:page])
+      @vocabularies = @vocabularies.where(word: params[:word])
     end
+    if params[:unit].present?
+      @vocabularies = @vocabularies.where(vocabulary_group_id: params[:unit])
+    end
+    @vocabularies = @vocabularies.order("id desc").page(params[:page])
   end
 
   def unit
