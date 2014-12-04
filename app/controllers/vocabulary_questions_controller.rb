@@ -64,8 +64,8 @@ class VocabularyQuestionsController < ApplicationController
       if file_name.last == 'xls'
         File.open("#{Rails.root}/public/system/xls/#{file.original_filename}", "wb+") do |f|
           f.write(file.read)
+          HardWorker.perform_async(file.original_filename)
         end
-        HardWorker.perform_async(file.original_filename)
         redirect_to vocabulary_questions_path and return
       else
         redirect_to index_upload_vocabulary_questions_path, notice: "请上传XLS格式文件!" and return
