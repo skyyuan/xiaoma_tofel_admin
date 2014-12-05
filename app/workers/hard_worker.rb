@@ -57,6 +57,11 @@ class HardWorker
       number = row[4].to_i
       group_number = row[0].to_i
       group = VocabularyGroup.find_by_sequence_number(group_number)
+      if !group.present?
+        group = VocabularyGroup.new
+        group.sequence_number = group_number
+        group.save
+      end
       question = group.vocabulary_questions.find_by_sequence_number(number)
       if question.present?
         vocabulary = question
