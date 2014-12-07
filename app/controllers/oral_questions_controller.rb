@@ -124,6 +124,27 @@ class OralQuestionsController < ApplicationController
     render json: records
   end
 
+  def add_group
+    @top_nav = 'add_group'
+    @left_nav = 'oral_questions'
+    @oral_groups = OralGroup.all.order('CONVERT(sequence_number, SIGNED)')
+  end
+
+  def create_group
+    if OralGroup.where(sequence_number: params[:sequence_number]).exists?
+      alert = 'Unit已经存在'
+    else
+      OralGroup.create(sequence_number: params[:sequence_number], name: params[:name], oral_origin_id: params[:oral_origin_id])
+    end
+    redirect_to add_group_oral_questions_path, alert: alert
+  end
+
+  def delete_group
+    oral_group = OralGroup.where(id: params[:id]).first
+    oral_group.destroy if oral_group.present?
+    redirect_to add_group_oral_questions_path
+  end
+
   private
 
   def oral_question_params

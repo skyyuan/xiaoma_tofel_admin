@@ -72,25 +72,41 @@ class DictationQuestionsController < ApplicationController
     redirect_to dictation_questions_path(unit: params[:unit])
   end
 
-  # def add_dictation_group
-  # end
+  def add_group
+    @top_nav = 'add_group'
+    @left_nav = 'dictation_questions'
+    @dictation_groups = DictationGroup.all.order('CONVERT(name,SIGNED)')
+  end
 
-  # def create_dictation_group
-  #   # 一次添加多个连续单元
-  #   if dictation_group_params =~ /^\d+-\d+$/
-  #     start, finish = dictation_group_params.split('-')
-  #     exists_group_names = DictationGroup.pluck(:name)
-  #     # 结束必须大于开始，不能添加已存在的单元
-  #     if finish > start && (exists_group_names - (start..finish).to_a == exists_group_names)
-  #       (start..finish).each do |group_name|
-  #         DictationGroup.create(name: group_name)
-  #       end
-  #     end
-  #   # 添加1个单元
-  #   elsif dictation_group_params[:units].persent? && !exists_group_names.include?(dictation_group_params[:units])
-  #     DictationGroup.create(name: dictation_group_params[:units])
-  #   end
-  # end
+  def create_group
+    if DictationGroup.where(name: params[:name]).exists?
+      alert = 'Unit已经存在'
+    else
+      DictationGroup.create(name: params[:name])
+    end
+    redirect_to add_group_dictation_questions_path, alert: alert
+
+    # # 一次添加多个连续单元
+    # if dictation_group_params =~ /^\d+-\d+$/
+    #   start, finish = dictation_group_params.split('-')
+    #   exists_group_names = DictationGroup.pluck(:name)
+    #   # 结束必须大于开始，不能添加已存在的单元
+    #   if finish > start && (exists_group_names - (start..finish).to_a == exists_group_names)
+    #     (start..finish).each do |group_name|
+    #       DictationGroup.create(name: group_name)
+    #     end
+    #   end
+    # # 添加1个单元
+    # elsif dictation_group_params[:units].persent? && !exists_group_names.include?(dictation_group_params[:units])
+    #   DictationGroup.create(name: dictation_group_params[:units])
+    # end
+  end
+
+  def delete_group
+    dictation_group = DictationGroup.where(id: params[:id]).first
+    dictation_group.destroy if dictation_group.present?
+    redirect_to add_group_dictation_questions_path
+  end
 
   private
 

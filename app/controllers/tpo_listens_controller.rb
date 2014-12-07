@@ -159,4 +159,10 @@ class TpoListensController < ApplicationController
     end
     redirect_to add_tpo_tpo_listens_path, alert: alert
   end
+
+  def delete_tpo
+    tpo_group = TpoGroup.where(id: params[:id]).first
+    tpo_group.destroy if tpo_group.present?
+    redirect_to add_tpo_tpo_listens_path
+  end
 end

@@ -1,4 +1,5 @@
 <ul class="nav nav-tabs" role="tablist" id="myTab">
   <li class="<%= 'active' if @top_nav == 'list' %>"><a href="<%= dictation_questions_path %>" role="tab" class="black">听写列表</a></li>
-  <li class="<%= 'active' if @top_nav != 'list' %>"><a href="<%= choose_unit_dictation_questions_path %>" class="_tpo_dictation_input" role="tab">听写录入</a></li>
+  <li class="<%= 'active' unless ['list', 'add_group'].include?(@top_nav) %>"><a href="<%= choose_unit_dictation_questions_path %>" class="_tpo_dictation_input" role="tab">听写录入</a></li>
+  <li class="<%= 'active' if @top_nav == 'add_group' %>"><a href="<%= add_group_dictation_questions_path %>" role="tab">添加Unit</a></li>
 </ul>

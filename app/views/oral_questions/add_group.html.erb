@@ -1,0 +1,78 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "gread1" %>
+  <style type="text/css">
+    #voc_entry .list{
+      padding-left: 30px;
+      line-height: 40px;
+      margin: 0 0 10px;
+    }
+    #voc_entry .list a{
+      float: left;
+      /*padding-right: 60px;*/
+      font-size: 12px;
+      color: #000;
+    }
+  </style>
+<% end %>
+
+<!-- right content -->
+<div class="content W730">
+  <!-- Nav tabs -->
+  <%= render 'top_nav' %>
+
+  <div class="tab-content">
+
+    <div class="" id="voc_entry">
+      <p style="color:red;" class="_alert"><%= flash[:alert] %></p>
+      <div class="clearfix list">
+        <% @oral_groups.each do |oral_group| %>
+          <a href="javascript:void(0);" class="_unit_name">Unit<%= oral_group.sequence_number %></a>
+          <%= link_to '删除', delete_group_oral_questions_path(id: oral_group.id), method: :delete, class: '_delete_unit', data: {confirm: "确认删除Unit#{oral_group.sequence_number}？"}, style: 'display:none;color: red;' %>
+        <% end %>
+        <a href="javascript:;" id="i3"><img src="<%=asset_path 'i3.png'%>">添加Unit</a>
+
+        <%= form_tag create_group_oral_questions_path, method: :post, class: "navbar-form navbar-left _oral_group_form", role: "search", style: "display:none;min-height:245px;height:auto !important;" do %>
+          <div class="form-group" style="width: 500px;">
+            <label class="col-sm-5 control-label">请输入要添加的Unit：</label>
+            <input type="text" name="sequence_number" class="form-control _sequence_number" placeholder="请输入例如：1" style="margin-left: -45px;">
+          </div>
+          <div class="form-group" >
+            <p >所属Tpo：</p>
+            <%= select_tag :oral_origin_id, options_for_select(OralOrigin.name_for_selection), :class => 'form-control _tpo', style: 'margin-left: 103px;' %>
+          </div>
+          <div class="form-group group1" style="margin-left: -140px;">
+            <p >来自于：</p>
+            <%= select_tag :name, options_for_select(OralGroup::ORAL_FROM), :class => 'form-control', style: 'margin-left: 103px;' %>
+          </div>
+          <div class="form-group " >
+           <button type="submit" class="btn btn-default b1 _submit">确定</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= content_for :tail do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#i3').click(function(){
+        $(this).hide();
+        $(this).closest('#voc_entry').find('._oral_group_form').show();
+      });
+
+      $('._submit').click(function(event){
+        var error_result = !(/^\d+$/.test($('._sequence_number').val()));
+        if(error_result){
+          $('._alert').html('请输入正确的Unit');
+          return false;
+        }
+      });
+
+      $('#voc_entry').on('mouseenter', '._unit_name', function(event){
+        // $('._delete_tpo').hide();
+        $(this).next('._delete_unit').show();
+      });
+    })
+  </script>
+<% end %>

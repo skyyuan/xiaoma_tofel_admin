@@ -38,8 +38,9 @@ XiaomaTofelAdmin::Application.routes.draw do
   resources :dictation_questions do
     collection do
       get :choose_unit
-      # get :add_dictation_group
-      # post :create_dictation_group
+      get :add_group
+      post :create_group
+      delete :delete_group
     end
   end
 
@@ -48,6 +49,9 @@ XiaomaTofelAdmin::Application.routes.draw do
       get :choose_range
       get :unit_list
       get :next_unit
+      get :add_group
+      post :create_group
+      delete :delete_group
     end
   end
 
@@ -84,6 +88,7 @@ XiaomaTofelAdmin::Application.routes.draw do
       post :batch_import
       get :add_tpo
       post :create_tpo
+      delete :delete_tpo
     end
   end
 
@@ -95,6 +100,7 @@ XiaomaTofelAdmin::Application.routes.draw do
       post :batch_import
       get :add_tpo
       post :create_tpo
+      delete :delete_tpo
     end
   end
 end

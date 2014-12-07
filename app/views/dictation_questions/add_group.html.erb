@@ -28,13 +28,13 @@
   <div class="tab-pane" id="voc_entry">
     <p style="color:red;" class="_alert"><%= flash[:alert] %></p>
     <div class="clearfix list">
-      <% @tpo_groups.each do |tpo_group| %>
-        <a href="javascript:void(0);" class="_tpo_name"><%= tpo_group.name %></a>
-        <%= link_to '删除', delete_tpo_tpo_listens_path(id: tpo_group.id), method: :delete, class: '_delete_tpo', data: {confirm: "确认删除#{tpo_group.name}？"}, style: 'display:none;color: red;' %>
+      <% @dictation_groups.each do |dictation_group| %>
+        <a href="javascript:void(0);" class="_tpo_name">Unit<%= dictation_group.name %></a>
+        <%= link_to '删除', delete_group_dictation_questions_path(id: dictation_group.id), method: :delete, class: '_delete_tpo', data: {confirm: "确认删除Unit#{dictation_group.name}？"}, style: 'display:none;color: red;' %>
       <% end %>
-      <a href="javascript:;" id="i3"><img src="<%=asset_path 'i3.png'%>">添加TPO套数</a>
-      <%= form_tag create_tpo_tpo_listens_path, class: 'jijing' do %>
-        <input type="text" name="name" class="_name" placeholder="请输入例如：TPO1">
+      <a href="javascript:;" id="i3"><img src="<%=asset_path 'i3.png'%>">添加Unit</a>
+      <%= form_tag create_group_dictation_questions_path, class: 'jijing' do %>
+        Unit&nbsp;  <input type="text" name="name" class="_name" placeholder="请输入例如：1">
         <input type="submit" class="_submit" >
       <% end %>
     </div>
@@ -51,9 +51,9 @@
     });
 
     $('._submit').click(function(event){
-      var error_result = !(/^(TPO)\d+/.test($('._name').val()));
+      var error_result = !(/^\d+$/.test($('._name').val()));
       if(error_result){
-        $('._alert').html('请输入正确的TPO');
+        $('._alert').html('请输入正确的Unit');
         return false;
       }
     });

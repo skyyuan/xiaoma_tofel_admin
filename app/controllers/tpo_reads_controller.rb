@@ -167,6 +167,12 @@ class TpoReadsController < ApplicationController
     redirect_to add_tpo_tpo_reads_path, alert: alert
   end
 
+  def delete_tpo
+    tpo_group = TpoGroup.where(id: params[:id]).first
+    tpo_group.destroy if tpo_group.present?
+    redirect_to add_tpo_tpo_reads_path
+  end
+
   private
 
   def tpo_read_params
