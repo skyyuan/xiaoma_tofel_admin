@@ -5,7 +5,7 @@ God.watch do |w|
 
   w.name = "sidekiq"
   w.interval = 60.seconds
-  w.start = "bundle exec sidekiq -C #{RAILS_ROOT}config/sidekiq.yml"
+  w.start = "bundle exec sidekiq -C #{RAILS_ROOT}/config/sidekiq.yml"
   #w.start = "cd #{RAILS_ROOT} && bundle exec sidekiq -q upload_xls,jijing_xls"
   w.stop = "kill -s QUIT $(cat #{pid_file})"
   w.restart = "kill -s HUP $(cat #{pid_file})"
