@@ -6,7 +6,7 @@ class OralGroup < ActiveRecord::Base
 
   attr_accessible :sequence_number, :name, :oral_origin_id
 
-  has_many :oral_questions
+  has_many :oral_questions, dependent: :destroy
   belongs_to :oral_origin
 
   # def self.short_unit_for_selection

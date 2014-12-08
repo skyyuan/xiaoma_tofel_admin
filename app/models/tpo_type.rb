@@ -8,5 +8,5 @@ class TpoType < ActiveRecord::Base
   LISTEN_LECTURE_TYPE = 'lecture'
 
   belongs_to :tpo_group
-  has_many :tpo_questions
+  has_many :tpo_questions, dependent: :destroy
 end

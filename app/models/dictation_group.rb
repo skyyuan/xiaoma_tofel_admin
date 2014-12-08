@@ -6,7 +6,7 @@ class DictationGroup < ActiveRecord::Base
 
   validates :name, uniqueness: true
 
-  has_many :dictation_questions
+  has_many :dictation_questions, dependent: :destroy
 
   def self.short_name_for_selection
     DictationGroup.order('CONVERT(name,SIGNED)').map {|dictation_group| [dictation_group.name, dictation_group.id]}
