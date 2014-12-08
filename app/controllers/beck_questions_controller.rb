@@ -72,7 +72,8 @@ class BeckQuestionsController < ApplicationController
   end
 
   def delete
-    @question = JijingQuestion.joins(:jijing_group).where("jijing_groups.group_type = 2").destroy_all
+    jijing_group_id = JijingGroup.where(group_type: 2).map &:id
+    @question = JijingQuestion.where(jijing_group_id: jijing_group_id).destroy_all
     redirect_to beck_questions_path
   end
 

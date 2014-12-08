@@ -1,0 +1,16 @@
+---
+:verbose: false
+:concurrency: 18
+:pidfile: tmp/pids/sidekiq.pid
+
+# differs in every deploy stage.
+:namespace: xiaoma_fofel_admin
+
+:queues:
+  - default
+  - [upload_xls, 3]
+  - [jijing_xls, 3]
+  - [live_broadcast_status, 3]
+  - [question_xls, 3]
+  - [tpo_listen_question_xls, 3]
+  - [tpo_read_question_xls, 3]

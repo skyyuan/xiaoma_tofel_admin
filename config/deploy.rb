@@ -61,3 +61,10 @@ namespace :deploy do
   end
 
 end
+namespace :sidekiq do
+  desc "restart sidekiq"
+  task :restart, :roles => :app do
+    run "god restart critical"
+  end
+end
+after 'deploy:create_symlink', 'sidekiq:restart'
