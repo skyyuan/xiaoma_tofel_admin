@@ -4,7 +4,6 @@
 :pidfile: tmp/pids/sidekiq.pid
 
 # differs in every deploy stage.
-:namespace: xiaoma_fofel_admin
 
 :queues:
   - default

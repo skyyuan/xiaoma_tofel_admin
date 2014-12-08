@@ -1,17 +1,18 @@
 RAILS_ROOT = File.dirname(File.dirname(__FILE__))
 
 God.watch do |w|
-  pid_file = File.join(RAILS_ROOT, "tmp/pids/sidekiq.pid")
+  pid_file = File.join(RAILS_ROOT, "/tmp/pids/sidekiq.pid")
 
   w.name = "sidekiq"
   w.interval = 60.seconds
-  w.start = "bundle exec sidekiq -C #{RAILS_ROOT}/config/sidekiq.yml"
-  #w.start = "cd #{RAILS_ROOT} && bundle exec sidekiq -q upload_xls,jijing_xls"
+  w.pid_file = pid_file
+  #w.start = "bundle exec sidekiq -C #{RAILS_ROOT}/config/sidekiq.yml"
+  #w.start = "cd #{RAILS_ROOT} && bundle exec sidekiq -q upload_xls,jijing_xls,tpo_read_question_xls,live_broadcast_status,question_xls,tpo_listen_question_xls"
   w.stop = "kill -s QUIT $(cat #{pid_file})"
   w.restart = "kill -s HUP $(cat #{pid_file})"
   w.start_grace = 20.seconds
   w.restart_grace = 20.seconds
-  w.pid_file = pid_file
+
 
   w.behavior(:clean_pid_file)
 
