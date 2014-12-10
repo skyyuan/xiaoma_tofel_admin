@@ -6,8 +6,8 @@
 set :deploy_to, '/home/xiaomaxl/xiaoma_tofel_admin'
 # set :deploy_to, '/home/xiaomaxl/xiaoma_tofel'
 
-# set :sidekiq_concurrency, 10
-# set :sidekiq_queue, ['upload_xls,2', 'jijing_xls,2', 'question_xls,2', 'tpo_listen_question_xls,2','tpo_read_question_xls,2']
+set :pty, false
+set :sidekiq_config, "#{current_path}/config/sidekiq.yml"
 
 role :app, %w{xiaomaxl@192.168.1.5}
 role :web, %w{xiaomaxl@192.168.1.5}

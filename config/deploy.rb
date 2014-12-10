@@ -13,9 +13,6 @@ set :repo_url, 'git@github.com:skyyuan/xiaoma_tofel_admin.git'
 #production
 #set :deploy_to, '/home/xmtf/xiaoma_tofel_admin'
 
-set :pty, false
-set :sidekiq_config, "#{current_path}/config/sidekiq.yml"
-
 # Default value for :scm is :git
 # set :scm, :git
 
@@ -41,19 +38,11 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # set :keep_releases, 5
 
 namespace :deploy do
-  # task :start do
-  #   on roles(:app), in: :sequence, wait: 5 do
-  #     execute "god -c #{deploy_to}/current/config/sidekiq.god -D"
-  #     # execute "god load #{deploy_to}/current/config/sidekiq.god"
-  #   end
-  # end
-  task :stop do ; end
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
       # execute :touch, release_path.join('tmp/restart.txt')
-      execute "god restart sidekiq"
     end
   end
   # after 'deploy:starting', :start
