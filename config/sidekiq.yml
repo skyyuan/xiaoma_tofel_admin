@@ -1,7 +1,6 @@
 ---
-:verbose: false
 :concurrency: 18
-:pidfile: tmp/pids/sidekiq.pid
+:pidfile: ./tmp/pids/sidekiq.pid
 
 # differs in every deploy stage.
 

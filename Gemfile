@@ -47,7 +47,8 @@ gem 'spreadsheet'
 
 gem 'slim'
 gem 'sinatra', require: false
-gem 'sidekiq'
+gem 'sidekiq', "3.3.0"
+gem 'capistrano-sidekiq' , group: :development
 
 # gem 'capistrano-sidekiq' , group: :development
 

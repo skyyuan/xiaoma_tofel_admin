@@ -13,7 +13,8 @@ set :repo_url, 'git@github.com:skyyuan/xiaoma_tofel_admin.git'
 #production
 #set :deploy_to, '/home/xmtf/xiaoma_tofel_admin'
 
-# set :pty, false
+set :pty, false
+set :sidekiq_config, "#{current_path}/config/sidekiq.yml"
 
 # Default value for :scm is :git
 # set :scm, :git
