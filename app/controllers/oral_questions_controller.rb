@@ -39,6 +39,7 @@ class OralQuestionsController < ApplicationController
 
   def create
     data_url = oral_question_params[:oral_question][:data_url]
+    data_url = data_url.strip if data_url.present?
     show_oral_question = nil
     OralQuestion.transaction do
       oral_question_params[:original_text].each_with_index do |original_text, idx|
@@ -81,6 +82,7 @@ class OralQuestionsController < ApplicationController
 
   def update
     data_url = oral_question_params[:oral_question][:data_url]
+    data_url = data_url.strip if data_url.present?
     update_oral_question = nil
     oral_group_id = OralQuestion.find(params[:id]).oral_group_id
     OralQuestion.transaction do
