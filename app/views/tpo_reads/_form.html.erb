@@ -19,16 +19,39 @@
 
 <%= render 'read_question_content' %>
 
-<button type="submit" class="btn btn-default b1 _btn" id="btn_sub">提交</button>
+<button type="submit" class="btn btn-default b1 _btn" id="" style="margin-left: 250px;">提交</button>
 
 <%= content_for :tail do %>
   <script type="text/javascript">
     $(document).ready(function(){
       $('._btn').on('click', function(){
-        //$('._tpo_question_content_templete:last').remove();
-        $('._tpo_question_material_templete:hidden').remove();
-        $('._question_choice_templete:hidden').remove();
-        $('._checkbox_answer_templete:hidden').remove();
+        var is_submit = true;
+        var input_tags = $('input[type="text"]').not(':hidden');
+        input_tags.each(function(idx, ele){
+          if($(ele).val() == ''){
+            is_submit = false;
+            return false;
+          }
+        });
+        if(is_submit){
+          var text_area_tags = $('textarea').not(':hidden');
+          text_area_tags.each(function(idx, ele){
+            if($(ele).val() == ''){
+              is_submit = false;
+              return false;
+            }
+          });
+        }
+
+        if(is_submit){
+          //$('._tpo_question_content_templete:last').remove();
+          $('._tpo_question_material_templete:hidden').remove();
+          $('._question_choice_templete:hidden').remove();
+          $('._checkbox_answer_templete:hidden').remove();
+        }else{
+          alert('不能为空');
+          return false;
+        }
       })
     })
   </script>
