@@ -26,6 +26,7 @@
     <p style="display:none;" id="new_gra"><img src="<%= asset_path 'i3.png'%>">新语法点</p>
     <p style="display:none" id="new_gra1"><img src="<%= asset_path 'i3.png'%>">新语法点</p>
     <form class="form-horizontal " role="form" method="post" id="form3">
+      <input type="hidden" id="title_1" value="<%=params[:title]%>">
       <div id="group1">
        <div class="form-group" >
            <label for="inputtext3" class="col-sm-2 control-label">语法名称：</label>
@@ -62,7 +63,8 @@
         if(content1 == "" || content2 == ""){
           alert("语法名或语法点不能为空！")
         }else{
-          $.post('/grammar_questions',{grammar_name: content1, composition: content2, title: "<%=params[:title]%>",unit_id: "<%=params[:unit_id]%>"},function(result){
+          t = $("#title_1").val();
+          $.post('/grammar_questions',{grammar_name: content1, composition: content2, title: t,unit_id: "<%=params[:unit_id]%>"},function(result){
             if(result.result == 1){
               $(".grammar-point").after('<div class="gram1">'+content1 + "：" + content2+'</div>');
               $("#form3")[0].reset();
