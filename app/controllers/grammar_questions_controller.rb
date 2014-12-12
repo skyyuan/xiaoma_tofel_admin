@@ -64,7 +64,7 @@ class GrammarQuestionsController < ApplicationController
     number = grammar.sequence_number
     group_id = grammar.grammar_group_id
     if grammar.destroy
-      questions = GrammarQuestion.where("sequence_number > ? and grammar_group_id = ?", number, group_id)
+      questions = GrammarQuestion.where("(sequence_number + 0) > ? and grammar_group_id = ?", number, group_id)
       questions.each do |quesion|
         quesion.sequence_number = quesion.sequence_number.to_i - 1
         quesion.save
