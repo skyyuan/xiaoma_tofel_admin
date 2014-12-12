@@ -30,3 +30,18 @@ Things you may want to cover:
 * cap development deploy (development)
 
 * cap production deploy (production)
+
+* 如果在一台服务器上配置2个想通的项目，需要配置初始化文件，config/initializers/sidekiq.rb
+/*
+
+project_name = Rails.root.to_s.split('/').last
+env_num = project_name == 'xiaoma_tofel' ? 5 : 6
+
+Sidekiq.configure_server do |config|
+  config.redis = { url: "redis://0.0.0.0:7372/#{env_num}", namespace: project_name }
+end
+
+Sidekiq.configure_client do |config|
+  config.redis = { url: "redis://0.0.0.0:7372/#{env_num}", namespace: project_name }
+end
+*/

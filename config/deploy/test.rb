@@ -6,7 +6,7 @@
 # set :deploy_to, '/home/xiaomaxl/xiaoma_tofel_admin'
 set :deploy_to, '/home/xiaomaxl/xiaoma_tofel'
 set :pty, false
-set :sidekiq_config, "#{current_path}/config/sidekiq.yml"
+set :sidekiq_config, "#{deploy_to}/current/config/sidekiq.yml"
 
 role :app, %w{xiaomaxl@192.168.1.5}
 role :web, %w{xiaomaxl@192.168.1.5}
